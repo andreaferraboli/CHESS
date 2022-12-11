@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<!--<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="@../../../java/main/chess69/gameController.java">-->
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <HBox alignment="CENTER" prefHeight="540.0" prefWidth="640.0" styleClass="board" stylesheets="@css/style.css">
+         <children>
+            <GridPane alignment="CENTER" prefHeight="65.0" prefWidth="65.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="65.0" prefWidth="65.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="65.0" prefHeight="65.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Group>
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="12.0" GridPane.columnIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="12.0" GridPane.columnIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="12.0" GridPane.columnIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="12.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" nodeOrientation="INHERIT" pickOnBounds="true" smooth="false">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="12.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="12.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="400.0" layoutY="12.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="12.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="12.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="12.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="400.0" layoutY="12.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="80.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="205.0" layoutY="80.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="335.0" layoutY="80.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="465.0" layoutY="80.0" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="148.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="148.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="400.0" layoutY="148.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="216.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="205.0" layoutY="216.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="335.0" layoutY="216.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="465.0" layoutY="216.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="283.0" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="283.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="400.0" layoutY="283.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="350.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="205.0" layoutY="350.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="335.0" layoutY="350.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="465.0" layoutY="350.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="417.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="148.0" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/light.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="12.0" GridPane.columnIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="12.0" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="10.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="75.0" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="140.0" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="75.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="75.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="10.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="75.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="140.0" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="205.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="335.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="205.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="270.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="75.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="10.0" GridPane.columnIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="75.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="140.0" GridPane.columnIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="205.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="335.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="205.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="270.0" GridPane.columnIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="75.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="335.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="75.0" layoutY="400.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="10.0" layoutY="465.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="140.0" layoutY="465.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="205.0" layoutY="400.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="335.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="205.0" layoutY="270.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="205.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@board/dark.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </HBox.margin>
+            </GridPane>
+         </children>
+      </HBox>
+      <VBox prefHeight="540.0" prefWidth="320.0" styleClass="board" stylesheets="@css/style.css">
+         <children>
+            <VBox alignment="CENTER" prefHeight="540.0" prefWidth="320.0" styleClass="game_menu" stylesheets="@css/style.css">
+               <padding>
+                  <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <ListView prefHeight="280.0" prefWidth="280.0" styleClass="board" stylesheets="@css/style.css" />
+                  <VBox prefHeight="142.0" prefWidth="280.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="41.0" prefWidth="280.0">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="button_menu" stylesheets="@css/style.css" text="Nuova" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="button_menu" stylesheets="@css/style.css" text="Rivincita" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="button_menu" stylesheets="@css/style.css" text="Annulla mossa">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children></VBox>
+   </children>
+</FlowPane>
