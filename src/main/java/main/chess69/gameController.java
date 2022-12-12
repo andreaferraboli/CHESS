@@ -29,6 +29,15 @@ public class gameController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
         fillBoard();
+//        board.getChildren().forEach(
+//                (child)->{
+//                    child.setOnAction(event -> {
+//                                primaryStage.close();
+//                                System.exit(-1);
+//                            }
+//                    );
+//                }
+//        );
     }
 
     public static gameController getInstance() {
