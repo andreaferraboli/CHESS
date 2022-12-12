@@ -1,5 +1,6 @@
 package main.chess69.Pieces;
 
+
 import main.chess69.Position;
 
 import java.util.ArrayList;

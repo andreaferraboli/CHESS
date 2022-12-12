@@ -35,4 +35,16 @@ public class Square extends Group {
     public Piece getPiece() {
         return this.piece;
     }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "x=" + x +
+                ", y=" + y +
+                ", occupied=" + occupied +
+                ", piece=" + piece +
+                ", pieceimage=" + pieceimage +
+                ", possibleMove=" + possibleMove +
+                '}';
+    }
 }

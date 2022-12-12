@@ -42,9 +42,9 @@ public class mainController implements Initializable {
         Parent root = FXMLLoader.load(url);
 //        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 //
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
     }
 
