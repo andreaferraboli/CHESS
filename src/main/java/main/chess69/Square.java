@@ -28,7 +28,7 @@ public class Square extends Group {
     }
 
     public static Square getSquareById(int x, int y) {
-        return (Square) gameController.getNodeByCoordinate(x, y);
+        return (Square) gameController.getInstance().getNodeByCoordinate(x, y);
     }
 
 

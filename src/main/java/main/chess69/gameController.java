@@ -6,16 +6,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import main.chess69.Pieces.*;
+import main.chess69.Pieces.Piece;
+import main.chess69.Pieces.Rook;
 
 import java.awt.*;
 import java.net.URL;
+import java.security.cert.PolicyNode;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class gameController implements Initializable {
     @FXML
-    private static GridPane board;
+    private GridPane board=new GridPane();
 
     private static gameController instance;
 
@@ -48,18 +50,25 @@ public class gameController implements Initializable {
         Objects.requireNonNull(getNodeByCoordinate(piece.position.row, piece.position.colomn)).setPiece(piece);
     }
 
-    public static Square getNodeByCoordinate(int row, int column) {
-        for (Node node : board.getChildren()) {
-            if (GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+    public Square getNodeByCoordinate(Integer row, Integer col) {
+        for (Node node : getBoard().getChildren())
+            if (GridPane.getColumnIndex(node) != null
+                    && GridPane.getColumnIndex(node) != null
+                    && Objects.equals(GridPane.getRowIndex(node), row)
+                    && Objects.equals(GridPane.getColumnIndex(node), col))
                 return (Square) node;
-            }
-        }
         return null;
     }
 
-    private void fillBoard() {
+    public GridPane getBoard() {
+        return board;
+    }
+
+    public void fillBoard() {
 //        //create rooks
-        addPiece(new Piece(new Position(0, 0), new Type(), Color.WHITE));
+        System.out.println( getNodeByCoordinate(2,3).toString());
+//        r1.getAllPossibleMoves(new Position("a0"));
+//        addPiece(new Piece(new Position(0, 0), r1, Color.WHITE));
 //        addPiece(new Piece(new Position(0, 7), new Rook(), Color.white));
 //        addPiece(new Piece(new Position(7, 0), new Rook(), Color.black));
 //        addPiece(new Piece(new Position(7, 7), new Rook(), Color.black));
