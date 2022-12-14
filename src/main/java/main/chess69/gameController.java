@@ -48,16 +48,22 @@ public class gameController implements Initializable {
         Objects.requireNonNull(getNodeByCoordinate(piece.position.row, piece.position.colomn)).setPiece(piece);
     }
 
-    public static Square getNodeByCoordinate(int row, int column) {
-        for (Node node : board.getChildren()) {
-            if (GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+    public Square getNodeByCoordinate(Integer row, Integer col) {
+        for (Node node : getBoard().getChildren())
+            if (GridPane.getColumnIndex(node) != null
+                    && GridPane.getColumnIndex(node) != null
+                    && Objects.equals(GridPane.getRowIndex(node), row)
+                    && Objects.equals(GridPane.getColumnIndex(node), col))
                 return (Square) node;
-            }
-        }
+
         return null;
     }
 
-    private void fillBoard() {
+    public GridPane getBoard() {
+        return board;
+    }
+
+    public void fillBoard() {
 //        //create rooks
         addPiece(new Rook(new Position(0, 0), Color.white));
         addPiece(new Rook(new Position(0, 7),  Color.white));
