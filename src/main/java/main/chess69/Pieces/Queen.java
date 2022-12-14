@@ -3,27 +3,27 @@ package main.chess69.Pieces;
 
 import main.chess69.Position;
 
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Queen extends Type {
+public class Queen extends Piece {
     public Queen() {
     }
 
-    public Queen(ArrayList<Position> possibleMoves) {
-        super(possibleMoves);
+    public Queen(Position position, Color color) {
+        super(position, color);
+        getAllPossibleMoves();
     }
 
     @Override
-    public void getAllPossibleMoves(Position position) {
+    public void getAllPossibleMoves() {
 
         this.possibleMoves = new ArrayList<>();
 
         //queen is like having a bishop and a rook
-        Bishop bishop=new Bishop();
-        bishop.getAllPossibleMoves(position);
+        Bishop bishop=new Bishop(this.position,this.getColor());
         possibleMoves.addAll(bishop.possibleMoves);
-        Rook rook=new Rook();
-        rook.getAllPossibleMoves(position);
+        Rook rook=new Rook(this.position,this.getColor());
         possibleMoves.addAll(rook.possibleMoves);
 
 

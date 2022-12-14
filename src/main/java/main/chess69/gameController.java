@@ -59,37 +59,37 @@ public class gameController implements Initializable {
 
     private void fillBoard() {
 //        //create rooks
-        addPiece(new Piece(new Position(0, 0), new Type(), Color.WHITE));
-//        addPiece(new Piece(new Position(0, 7), new Rook(), Color.white));
-//        addPiece(new Piece(new Position(7, 0), new Rook(), Color.black));
-//        addPiece(new Piece(new Position(7, 7), new Rook(), Color.black));
-//        //create bishops
-//        addPiece(new Piece(new Position(0, 5), new Bishop(), Color.white));
-//        addPiece(new Piece(new Position(0, 2), new Bishop(), Color.white));
-//        addPiece(new Piece(new Position(7, 5), new Bishop(), Color.black));
-//        addPiece(new Piece(new Position(7, 2), new Bishop(), Color.black));
-//        //crete knights
-//        addPiece(new Piece(new Position(0, 6), new Knight(), Color.white));
-//        addPiece(new Piece(new Position(0, 1), new Knight(), Color.white));
-//        addPiece(new Piece(new Position(7, 6), new Knight(), Color.black));
-//        addPiece(new Piece(new Position(7, 1), new Knight(), Color.black));
-//        //create kings
-//        addPiece(new Piece(new Position(7, 4), new King(), Color.black));
-//        addPiece(new Piece(new Position(0, 4), new King(), Color.white));
-//        //create queens
-//        addPiece(new Piece(new Position(7, 3), new Queen(), Color.black));
-//        addPiece(new Piece(new Position(0, 3), new Queen(), Color.white));
-//        //create pawns
-//        for (int i = 0; i < 2; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                if (i == 0)
-//                    addPiece(new Piece(new Position(1, j), new Pawn(), Color.white));
-//                else
-//                    addPiece(new Piece(new Position(6, j), new Pawn(), Color.black));
-//
-//            }
-//
-//        }
-//
+        addPiece(new Rook(new Position(0, 0), Color.white));
+        addPiece(new Rook(new Position(0, 7),  Color.white));
+        addPiece(new Rook(new Position(7, 0),  Color.black));
+        addPiece(new Rook(new Position(7, 7),  Color.black));
+        //create bishops
+        addPiece(new Bishop(new Position(0, 5),  Color.white));
+        addPiece(new Bishop(new Position(0, 2),  Color.white));
+        addPiece(new Bishop(new Position(7, 5),  Color.black));
+        addPiece(new Bishop(new Position(7, 2),  Color.black));
+        //crete knights
+        addPiece(new Knight(new Position(0, 6),  Color.white));
+        addPiece(new Knight(new Position(0, 1),  Color.white));
+        addPiece(new Knight(new Position(7, 6),  Color.black));
+        addPiece(new Knight(new Position(7, 1),  Color.black));
+        //create kings
+        addPiece(new King(new Position(7, 4),  Color.black));
+        addPiece(new King(new Position(0, 4),  Color.white));
+        //create queens
+        addPiece(new Queen(new Position(7, 3),  Color.black));
+        addPiece(new Queen(new Position(0, 3),  Color.white));
+        //create pawns
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (i == 0)
+                    addPiece(new Pawn(new Position(1, j),  Color.white));
+                else
+                    addPiece(new Pawn(new Position(6, j),  Color.black));
+
+            }
+
+        }
+
     }
 }

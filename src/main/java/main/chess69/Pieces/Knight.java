@@ -6,18 +6,16 @@ import main.chess69.Game;
 import main.chess69.Position;
 import main.chess69.Square;
 
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Knight extends Type {
-    public Knight() {
+public class Knight extends Piece {
+    public Knight(Position position, Color color) {
+        super(position, color);
+        getAllPossibleMoves();
     }
-
-    public Knight(ArrayList<Position> possibleMoves) {
-        super(possibleMoves);
-    }
-
     @Override
-    public void getAllPossibleMoves(Position position) {
+    public void getAllPossibleMoves() {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();

@@ -5,21 +5,21 @@ import main.chess69.Game;
 import main.chess69.Position;
 import main.chess69.Square;
 
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Rook extends Type {
+public class Rook extends Piece {
 
-    public Rook(ArrayList<Position> possibleMoves) {
-        super(possibleMoves);
-    }
 
-    public Rook() {
+    public Rook(Position position, Color color) {
+        super(position, color);
+        getAllPossibleMoves();
     }
 
     @Override
-    public void getAllPossibleMoves(Position position) {
-        int x = position.row;
-        int y = position.colomn;
+    public void getAllPossibleMoves() {
+        int x = this.position.row;
+        int y = this.position.colomn;
         this.possibleMoves = new ArrayList<>();
 
         int sides = 4;

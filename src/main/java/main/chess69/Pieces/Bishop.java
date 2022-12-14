@@ -5,20 +5,21 @@ import main.chess69.Game;
 import main.chess69.Position;
 import main.chess69.Square;
 
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Bishop extends Type {
+public class Bishop extends Piece {
 
-    public Bishop(ArrayList<Position> possibleMoves) {
-        super(possibleMoves);
+    public Bishop(Position position, Color color) {
+        super(position, color);
+        getAllPossibleMoves();
     }
-
     public Bishop() {
         super();
     }
 
     @Override
-    public void getAllPossibleMoves(Position position) {
+    public void getAllPossibleMoves() {
         int x = position.row;
         int y = position.colomn;
 

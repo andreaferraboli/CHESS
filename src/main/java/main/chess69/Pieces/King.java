@@ -5,19 +5,18 @@ import main.chess69.Game;
 import main.chess69.Position;
 import main.chess69.Square;
 
+import java.awt.*;
 import java.util.ArrayList;
 
-public class King extends Type {
+public class King extends Piece {
 
-    public King() {
-    }
-
-    public King(ArrayList<Position> possibleMoves) {
-        super(possibleMoves);
+    public King(Position position, Color color) {
+        super(position, color);
+        getAllPossibleMoves();
     }
 
     @Override
-    public void getAllPossibleMoves(Position position) {
+    public void getAllPossibleMoves() {
         int x = position.row;
         int y = position.colomn;
         ArrayList<Position> moves = new ArrayList<>();

@@ -7,17 +7,15 @@ import main.chess69.Square;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Pawn extends Type {
+public class Pawn extends Piece{
 
-    public Pawn() {
-    }
-
-    public Pawn(ArrayList<Position> possibleMoves) {
-        super(possibleMoves);
+    public Pawn(Position position, Color color) {
+        super(position, color);
+        getAllPossibleMoves();
     }
 
     @Override
-    public void getAllPossibleMoves(Position position) {
+    public void getAllPossibleMoves() {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();
