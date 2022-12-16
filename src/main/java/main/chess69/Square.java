@@ -2,21 +2,32 @@ package main.chess69;
 
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import main.chess69.Pieces.Piece;
 
 
 public class Square extends Group {
 
-    int x, y;
+    int row, col;
     public boolean occupied;
     private Piece piece;
     private ImageView pieceimage;
     private ImageView possibleMove;
 
-    public Square(int x, int y) {
-        this.x = x;
-        this.y = y;
+    private ImageView color;
+
+    public Square(int row, int col) {
+        this.row = row;
+        this.col = col;
         this.occupied = false;
+    }
+
+    public Square(Piece piece, ImageView pieceimage, ImageView possibleMove,ImageView color, int row, int col){
+        this.row = row;
+        this.col = col;
+        this.occupied = false;
+        this.piece=piece;
+        this.pieceimage=pieceimage;
+        this.possibleMove=possibleMove;
+        this.color=color;
     }
 
     public void setPieceImage() {
@@ -28,7 +39,7 @@ public class Square extends Group {
     }
 
     public static Square getSquareById(int x, int y) {
-        return (Square) gameController.getInstance().getNodeByCoordinate(x, y);
+        return gameController.getNodeByCoordinate(x, y);
     }
 
 
@@ -39,8 +50,8 @@ public class Square extends Group {
     @Override
     public String toString() {
         return "Square{" +
-                "x=" + x +
-                ", y=" + y +
+                "x=" + row +
+                ", y=" + col +
                 ", occupied=" + occupied +
                 ", piece=" + piece +
                 ", pieceimage=" + pieceimage +

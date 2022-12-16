@@ -1,14 +1,12 @@
-package main.chess69.Pieces;
+package main.chess69;
 
-
-import main.chess69.Position;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Piece {
     public Position position;
     public ArrayList<Position> possibleMoves;
-    private Color color;
+    public Color color;
 
     public Piece() {
     }
@@ -26,3 +24,4 @@ public class Piece {
     }
 
 }
+

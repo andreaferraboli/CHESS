@@ -1,21 +1,27 @@
 package main.chess69;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import main.chess69.Pieces.*;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class gameController implements Initializable {
     @FXML
-    private static GridPane board;
+    private GridPane board=new GridPane();
 
     private static gameController instance;
 
@@ -25,6 +31,24 @@ public class gameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
+        ArrayList<Square> squares = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                ImageView color=new ImageView();
+
+                    String imageUrl;
+                    if ((i + j) % 2 == 0) {
+                        imageUrl="C:\\Users\\andre\\IdeaProjects\\CHESS69\\src\\main\\resources\\main\\chess69\\board\\dark.jpg";
+                    } else {
+                        imageUrl="C:\\Users\\andre\\IdeaProjects\\CHESS69\\src\\main\\resources\\main\\chess69\\board\\light.jpg";
+                    }
+                    color.setImage(new Image(imageUrl));
+                Square square = new Square(new Piece(),new ImageView(),new ImageView(),color,i,j);
+                squares.add(square);
+                instance.getBoard().add(square, j, i);
+            }
+        }
         fillBoard();
 //        board.getChildren().forEach(
 //                (child)->{
@@ -44,18 +68,21 @@ public class gameController implements Initializable {
 
     public void addPiece(Piece piece) {
         System.out.println(getNodeByCoordinate(piece.position.row,piece.position.colomn).toString());
-        Objects.requireNonNull(getNodeByCoordinate(piece.position.row, piece.position.colomn)).setPieceImage();
-        Objects.requireNonNull(getNodeByCoordinate(piece.position.row, piece.position.colomn)).setPiece(piece);
+//        Objects.requireNonNull(getNodeByCoordinate(piece.position.row, piece.position.colomn)).setPieceImage();
+//        Objects.requireNonNull(getNodeByCoordinate(piece.position.row, piece.position.colomn)).setPiece(piece);
     }
 
-    public Square getNodeByCoordinate(Integer row, Integer col) {
-        for (Node node : getBoard().getChildren())
-            if (GridPane.getColumnIndex(node) != null
-                    && GridPane.getColumnIndex(node) != null
-                    && Objects.equals(GridPane.getRowIndex(node), row)
-                    && Objects.equals(GridPane.getColumnIndex(node), col))
-                return (Square) node;
+    public static Square getNodeByCoordinate( int row, int col) {
+        int colNode, rowNode;
+        ObservableList<Node> children = instance.getBoard().getChildren();
 
+        for (Node node : children) {
+            if (node instanceof Square square) {
+                if (square.col == col && square.row == row) {
+                    return square;
+                }
+            }
+        }
         return null;
     }
 

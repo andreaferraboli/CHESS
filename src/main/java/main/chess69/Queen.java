@@ -1,7 +1,5 @@
-package main.chess69.Pieces;
+package main.chess69;
 
-
-import main.chess69.Position;
 
 import java.awt.*;
 import java.util.ArrayList;

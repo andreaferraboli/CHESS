@@ -1,9 +1,5 @@
-package main.chess69.Pieces;
+package main.chess69;
 
-
-import main.chess69.Game;
-import main.chess69.Position;
-import main.chess69.Square;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -43,11 +39,13 @@ public class Rook extends Piece {
                     default:
                         break;
                 }
-                if (!Square.getSquareById(x, y).occupied || (Square.getSquareById(x, y).occupied && !Square.getSquareById(x, y).getPiece().getColor().equals(Game.currentPlayer.color))) {
+                Square squareById = Square.getSquareById(x, y);
+
+                if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.currentPlayer.color)) {
                     this.possibleMoves.add(new Position(x, y));
                     nextDiagonal = true;
                 }
-            } while (x != 8 || y != 8 || !nextDiagonal);
+            } while (x != 7 && y != 7 || !nextDiagonal);
             x = position.row;
             y = position.colomn;
         }
