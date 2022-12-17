@@ -34,7 +34,7 @@ public class Position {
         return convention.get(this.colomn) + Integer.toString(colomn);
     }
 
-    public Position posToIndex(String move){
+    public static Position posToIndex(String move){
         Position position=new Position();
         position.colomn=move.indexOf(0);
         position.row=move.indexOf(1);

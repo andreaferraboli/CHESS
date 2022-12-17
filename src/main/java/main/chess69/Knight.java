@@ -29,9 +29,13 @@ public class Knight extends Piece {
 
 
         for(Position move : moves){
-            if(Square.getSquareById(move.row,move.colomn) != null){
-                if(!Square.getSquareById(move.row,move.colomn).occupied && !Square.getSquareById(move.row,move.colomn).getPiece().getColor().equals(Game.currentPlayer.color))
+            Square squareById = Square.getSquareById(move.row, move.colomn);
+            if(squareById != null){
+                if (!squareById.occupied)
                     this.possibleMoves.add(move);
+                else if (!squareById.getPiece().getColor().equals(Game.currentPlayer.color)) {
+                    this.possibleMoves.add(move);
+                }
             }
         }
 

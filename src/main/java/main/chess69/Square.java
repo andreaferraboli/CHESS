@@ -31,11 +31,12 @@ public class Square extends Group {
     }
 
     public void setPieceImage() {
-        this.pieceimage = new ImageView("src/main/resources/pieces/" + piece.toString() + ".png");
+//        this.pieceimage = new ImageView("src/main/resources/pieces/" + piece.toString() + ".png");
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
+        setPieceImage();
     }
 
     public static Square getSquareById(int x, int y) {

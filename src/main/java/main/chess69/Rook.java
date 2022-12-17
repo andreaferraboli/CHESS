@@ -25,31 +25,44 @@ public class Rook extends Piece {
             do {
                 switch (i) {
                     case 1:
-                        x++;
+                        if (x != 7)
+                            x++;
+                        else
+                            nextDiagonal = true;
                         break;
                     case 2:
-                        y++;
+                        if (y != 7)
+                            y++;
+                        else
+                            nextDiagonal = true;
                         break;
                     case 3:
-                        x--;
+                        if (x != 0)
+                            x--;
+                        else
+                            nextDiagonal = true;
                         break;
                     case 4:
-                        y--;
+                        if (y != 0)
+                            y--;
+                        else
+                            nextDiagonal = true;
                         break;
                     default:
                         break;
                 }
-                Square squareById = Square.getSquareById(x, y);
+                if (!nextDiagonal) {
+                    Square squareById = Square.getSquareById(x, y);
 
-                if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.currentPlayer.color)) {
-                    this.possibleMoves.add(new Position(x, y));
-                    nextDiagonal = true;
+                    if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.currentPlayer.color))
+                        this.possibleMoves.add(new Position(x, y));
+                    else
+                        nextDiagonal = true;
                 }
-            } while (x != 7 && y != 7 || !nextDiagonal);
+            } while ((x != 7 && x >= 0 && y >= 0 && y != 7) && !nextDiagonal);
             x = position.row;
             y = position.colomn;
+            nextDiagonal = false;
         }
-
-
     }
 }

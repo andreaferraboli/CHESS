@@ -1,7 +1,13 @@
 package main.chess69;
 
-import javafx.scene.paint.Color;
+
+import java.awt.*;
 
 public class Player {
     public Color color;
+
+    public Player(Color color) {
+        this.color = color;
+    }
+
 }

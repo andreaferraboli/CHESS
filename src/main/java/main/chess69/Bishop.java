@@ -10,6 +10,7 @@ public class Bishop extends Piece {
         super(position, color);
         getAllPossibleMoves();
     }
+
     public Bishop() {
         super();
     }
@@ -28,31 +29,48 @@ public class Bishop extends Piece {
             do {
                 switch (i) {
                     case 1:
-                        y++;
-                        x++;
+                        if (x != 7 && y != 7) {
+                            x++;
+                            y++;
+                        } else
+                            nextDiagonal = true;
                         break;
                     case 2:
-                        x--;
-                        y++;
+                        if (x != 0 && y != 7) {
+                            x--;
+                            y++;
+                        } else
+                            nextDiagonal = true;
                         break;
                     case 3:
-                        x--;
-                        y--;
+                        if (x != 0 && y != 0) {
+                            x--;
+                            y--;
+                        } else
+                            nextDiagonal = true;
                         break;
                     case 4:
-                        x++;
-                        y--;
+                        if (x != 7 && y != 0) {
+                            x++;
+                            y--;
+                        } else
+                            nextDiagonal = true;
                         break;
                     default:
                         break;
                 }
-                if (!Square.getSquareById(x, y).occupied || (Square.getSquareById(x, y).occupied && !Square.getSquareById(x, y).getPiece().getColor().equals(Game.currentPlayer.color))) {
-                    this.possibleMoves.add(new Position(x, y));
-                    nextDiagonal = true;
+                if (!nextDiagonal) {
+                    Square squareById = Square.getSquareById(x, y);
+
+                    if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.currentPlayer.color))
+                        this.possibleMoves.add(new Position(x, y));
+                    else
+                        nextDiagonal = true;
                 }
-            } while (x != 8 || y != 8 || !nextDiagonal);
+            } while ((x != 7 && x >= 0 && y >= 0 && y != 7) && !nextDiagonal);
             x = position.row;
             y = position.colomn;
+            nextDiagonal = false;
         }
     }
 
