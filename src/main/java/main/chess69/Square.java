@@ -1,13 +1,16 @@
 package main.chess69;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.File;
 
 
 public class Square extends Group {
 
     int row, col;
-    public boolean occupied;
+    public boolean occupied, selected;
     private Piece piece;
     private ImageView pieceimage;
     private ImageView possibleMove;
@@ -20,23 +23,64 @@ public class Square extends Group {
         this.occupied = false;
     }
 
-    public Square(Piece piece, ImageView pieceimage, ImageView possibleMove,ImageView color, int row, int col){
+    public Square(Piece piece, ImageView pieceimage, ImageView possibleMove, ImageView color, int row, int col) {
         this.row = row;
         this.col = col;
         this.occupied = false;
-        this.piece=piece;
-        this.pieceimage=pieceimage;
-        this.possibleMove=possibleMove;
-        this.color=color;
+        this.selected = false;
+        this.piece = piece;
+        this.pieceimage = pieceimage;
+        this.possibleMove = possibleMove;
+        this.color = color;
     }
 
     public void setPieceImage() {
-//        this.pieceimage = new ImageView("src/main/resources/pieces/" + piece.toString() + ".png");
+        this.pieceimage.setImage(new Image(new File("/main/chess69/pieces/bb.png").toURI().toString()));
+    }
+    public void setPieceImage(Image image){
+        this.pieceimage.setImage(image);
+    }
+
+    public void setColorOfSquare() {
+        String image;
+        if ((this.col + this.row) % 2 == 0)
+            image = "dark";
+        else
+            image = "light";
+        this.color.setImage(new Image(new File("/src/main/resources/main/chess69/pieces/" + image + ".png").toURI().toString()));
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
         setPieceImage();
+    }
+
+    public void onClick() {
+        Square selectedSquare = gameController.getInstance().getSelectedSquare();
+        if (selectedSquare == null) {
+            gameController.getInstance().setSelectedSquare(this);
+        }else if (!selectedSquare.equals(this)) {
+            selectedSquare.movePiece(this.getPosition());
+            gameController.getInstance().setSelectedSquare(this);
+        } else {
+            gameController.getInstance().setSelectedSquare(null);
+        }
+
+
+    }
+
+    private void movePiece(Position position) {
+        getSquareById(position.row, position.colomn).setPiece(this.getPiece());
+        deletePiece();
+    }
+
+    private void deletePiece() {
+        this.piece=null;
+        this.setPieceImage(null);
+    }
+
+    private Position getPosition() {
+        return new Position(this.row, this.col);
     }
 
     public static Square getSquareById(int x, int y) {
@@ -54,9 +98,13 @@ public class Square extends Group {
                 "x=" + row +
                 ", y=" + col +
                 ", occupied=" + occupied +
-                ", piece=" + piece +
-                ", pieceimage=" + pieceimage +
-                ", possibleMove=" + possibleMove +
+                ", piece=" + piece.toString() +
+                ", pieceimage=" + pieceimage.getImage() +
+                ", possibleMove=" + possibleMove.toString() +
                 '}';
+    }
+
+    public boolean equals(Square obj) {
+        return (this.row == obj.row && this.col == obj.col);
     }
 }

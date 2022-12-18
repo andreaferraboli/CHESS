@@ -1,20 +1,16 @@
 package main.chess69;
 
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -22,36 +18,47 @@ import java.util.ResourceBundle;
 public class gameController implements Initializable {
     @FXML
     private GridPane board = new GridPane();
+    private Square selectedSquare;
 
     private static gameController instance;
 
     private static Stage primaryStage;
-    private static Stage secondaryStage;
 
+    private static Stage secondaryStage;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
+        instance.setBoard(board);
         Game.currentPlayer = new Player(Color.white);
         ArrayList<Square> squares = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 ImageView color = new ImageView();
-                Square square = new Square(new Piece(), new ImageView(), new ImageView(), color, i, j);
+                color.setFitHeight(65);
+                color.setFitWidth(65);
+                ImageView pieceImage = new ImageView();
+                color.setFitHeight(65);
+                color.setFitWidth(65);
+                ImageView possibleMoves = new ImageView();
+                color.setFitHeight(65);
+                color.setFitWidth(65);
+                Square square = new Square(new Piece(), pieceImage, possibleMoves, color, i, j);
                 squares.add(square);
                 instance.getBoard().add(square, j, i);
             }
         }
         fillBoard();
-//        board.getChildren().forEach(
-//                (child)->{
-//                    child.setOnAction(event -> {
-//                                primaryStage.close();
-//                                System.exit(-1);
-//                            }
-//                    );
-//                }
-//        );
+
+        instance.getBoard().getChildren().forEach(node -> {
+            node.setOnMouseClicked(event -> {
+                ((Square) node).onClick();
+            });
+        });
+    }
+
+    private void setBoard(GridPane board) {
+        this.board=board;
     }
 
     public static gameController getInstance() {
@@ -59,9 +66,18 @@ public class gameController implements Initializable {
     }
 
 
+    public Square getSelectedSquare() {
+        return selectedSquare;
+    }
+
+    public void setSelectedSquare(Square selectedSquare) {
+        this.selectedSquare = selectedSquare;
+    }
+
     public void addPiece(Piece piece) {
         Square squareById = Square.getSquareById(piece.position.row, piece.position.colomn);
         squareById.setPiece(piece);
+        squareById.setColorOfSquare();
         squareById.occupied=true;
     }
 
@@ -83,6 +99,16 @@ public class gameController implements Initializable {
         return board;
     }
 
+    @FXML
+    private void newGame(ActionEvent event)
+    {
+        System.out.println("lollolol");
+    }
+    @FXML
+    private void cancelMove(ActionEvent event)
+    {
+
+    }
     public void fillBoard() {
 //        //create rooks
         addPiece(new Rook(new Position(0, 0), Color.white));
