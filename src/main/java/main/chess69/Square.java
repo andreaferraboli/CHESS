@@ -4,11 +4,12 @@ import javafx.scene.Group;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 import java.io.File;
 
 
-public class Square extends Group {
+public class Square extends StackPane {
 
     int row, col;
     public boolean occupied, selected;
@@ -18,9 +19,14 @@ public class Square extends Group {
 
     private ImageView color;
 
-    public Square(int row, int col) {
+    public Square(int row, int col,Piece piece) {
         this.row = row;
         this.col = col;
+        this.piece = piece;
+        this.pieceimage=new ImageView();
+        this.color=new ImageView();
+        setPieceImage();
+        setColorOfSquare();
         this.occupied = false;
     }
 
