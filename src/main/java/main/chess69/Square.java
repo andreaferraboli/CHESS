@@ -1,6 +1,7 @@
 package main.chess69;
 
 import javafx.scene.Group;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -35,7 +36,7 @@ public class Square extends Group {
     }
 
     public void setPieceImage() {
-        this.pieceimage.setImage(new Image(new File("/main/chess69/pieces/bb.png").toURI().toString()));
+       this.pieceimage.setImage(new Image(new File("/main/chess69/pieces/"+this.piece.toString()+".png").toURI().toString()));
     }
     public void setPieceImage(Image image){
         this.pieceimage.setImage(image);
@@ -98,9 +99,9 @@ public class Square extends Group {
                 "x=" + row +
                 ", y=" + col +
                 ", occupied=" + occupied +
-                ", piece=" + piece.toString() +
-                ", pieceimage=" + pieceimage.getImage() +
-                ", possibleMove=" + possibleMove.toString() +
+                ", piece=" + piece +
+                ", pieceimage=" + pieceimage +
+                ", possibleMove=" + possibleMove +
                 '}';
     }
 

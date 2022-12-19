@@ -27,7 +27,5 @@ public class Piece {
     protected Position lastMove() {
         return lastMove;
     }
-
-
 }
 

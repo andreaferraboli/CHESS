@@ -18,32 +18,39 @@ public class Pawn extends Piece {
         this.possibleMoves = new ArrayList<>();
 
         if (this.color.equals(Color.black))
-            y -= 1;
+            x -= 1;
         else
-            y += 1;
-        x -= 1;
-        //TODO: implement en passant
-        for (int i = 0; i < 3; i++, x++) {
-            Square squareById = Square.getSquareById(x, y);
-            if (x != position.row) {
-                if(squareById.occupied)
-                    if (!squareById.getPiece().getColor().equals(Game.currentPlayer.color))
-                        possibleMoves.add(new Position(x, y));
-                else {
-                        squareById = Square.getSquareById(x, this.color.equals(Color.black) ? y + 1 : y - 1);
-                        if (squareById.getPiece() instanceof Pawn && Position.posToIndex(squareById.getPiece().lastMove().getPos()).equals(new Position(x, squareById.col - 2)))
+            x += 1;
+        y -= 1;
+
+        for (int i = 0; i < 3; i++, y++) {
+            if (Utils.between(x, 0, 7) && Utils.between(y, 0, 7)) {
+                Square squareById = Square.getSquareById(x, y);
+                if (y != position.colomn) {
+                    if (squareById.occupied)
+                        if (!squareById.getPiece().getColor().equals(Game.currentPlayer.color))
                             possibleMoves.add(new Position(x, y));
+                    else {
+                        //check en passant
+                            squareById = Square.getSquareById(this.color.equals(Color.black) ? x + 1 : x - 1, y);
+                            if (squareById.getPiece() instanceof Pawn && Position.posToIndex(squareById.getPiece().lastMove().getPos()).equals(new Position(this.color.equals(Color.black) ? x + 2 : x - 2, squareById.col)))
+                                possibleMoves.add(new Position(x, y));
+                        }
+                } else {
+                    if (!squareById.occupied) {
+                        possibleMoves.add(new Position(x, y));
+                        Square nextSquare = Square.getSquareById(this.color.equals(Color.black) ? x - 1 : x + 1, y);
+                        if (!nextSquare.occupied)
+                            possibleMoves.add(new Position(this.color.equals(Color.black) ? x - 1 : x + 1, y));
                     }
-            } else {
-                if (!squareById.occupied) {
-                    possibleMoves.add(new Position(x, y));
-                    Square nextSquare = Square.getSquareById(x, this.color.equals(Color.black) ? y - 1 : y + 1);
-                    if (!nextSquare.occupied)
-                        possibleMoves.add(new Position(x,this.color.equals(Color.black) ? y - 1 : y + 1));
                 }
             }
         }
 
+    }
+    @Override
+    public String toString() {
+        return this.color.equals(Color.BLACK) ? "bp" : "wp";
     }
 
 

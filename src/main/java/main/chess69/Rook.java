@@ -65,4 +65,9 @@ public class Rook extends Piece {
             nextDiagonal = false;
         }
     }
+
+    @Override
+    public String toString() {
+        return this.color.equals(Color.BLACK) ? "br" : "wr";
+    }
 }

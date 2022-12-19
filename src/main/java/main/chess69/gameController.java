@@ -1,16 +1,21 @@
 package main.chess69;
 
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -23,8 +28,8 @@ public class gameController implements Initializable {
     private static gameController instance;
 
     private static Stage primaryStage;
-
     private static Stage secondaryStage;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;

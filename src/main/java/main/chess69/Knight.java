@@ -41,5 +41,9 @@ public class Knight extends Piece {
 
 
     }
+    @Override
+    public String toString() {
+        return this.color.equals(Color.BLACK) ? "bn" : "wn";
+    }
 
 }

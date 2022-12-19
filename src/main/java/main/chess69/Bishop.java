@@ -73,7 +73,10 @@ public class Bishop extends Piece {
             nextDiagonal = false;
         }
     }
-
+    @Override
+    public String toString() {
+        return this.color.equals(Color.BLACK) ? "bb" : "wb";
+    }
 
 }
 
