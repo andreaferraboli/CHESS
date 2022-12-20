@@ -54,7 +54,7 @@ public class Rook extends Piece {
                 if (!nextDiagonal) {
                     Square squareById = Square.getSquareById(x, y);
 
-                    if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.currentPlayer.color))
+                    if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color))
                         this.possibleMoves.add(new Position(x, y));
                     else
                         nextDiagonal = true;
@@ -69,5 +69,9 @@ public class Rook extends Piece {
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "br" : "wr";
+    }
+    public void setPosition(Position position) {
+        this.position = position;
+        getAllPossibleMoves();
     }
 }

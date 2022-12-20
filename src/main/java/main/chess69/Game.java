@@ -19,15 +19,16 @@ public class Game {
     public Player white;
     public Player black;
     private GridPane board;
-    public static Player currentPlayer;
+    private Player currentPlayer;
     private Square selectedSquare;
     private static Game instance;
 
 
     public Game(GridPane chessBoard) {
         instance=this;
-        instance.setBoard(chessBoard);
-        currentPlayer=new Player(Color.white);
+        instance.board=chessBoard;
+        instance.currentPlayer=new Player(Color.white);
+        instance.selectedSquare=null;
         ArrayList<Square> squares = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
@@ -46,10 +47,10 @@ public class Game {
                 ImageView possibleMoves = new ImageView();
                 possibleMoves.setFitHeight(65);
                 possibleMoves.setFitWidth(65);
-                Square square = new Square(i, j, new Piece());
+                Square square = new Square(i, j);
                 square.getChildren().add(color);
-                square.getChildren().add(pieceImage);
                 square.getChildren().add(possibleMoves);
+                square.getChildren().add(pieceImage);
                 square.setColorOfSquare();
                 squares.add(square);
                 instance.board.add(square, i, j);
@@ -58,35 +59,15 @@ public class Game {
         fillBoard();
 
         instance.board.getChildren().forEach(node -> {
-            node.setOnMouseClicked(event -> {
-                ((Square) node).onClick();
+            Square square=(Square)node;
+            square.setOnMouseClicked(event -> {
+                if (!(selectedSquare == null && square.getPiece() == null) || square.getPiece().getColor().equals(instance.currentPlayer.color))
+                    square.onClick();
             });
         });
     }
 
     public void fillBoard() {
-//        //create rooks
-        addPiece(new Rook(new Position(0, 7), java.awt.Color.white));
-        addPiece(new Rook(new Position(7, 7), java.awt.Color.white));
-        addPiece(new Rook(new Position(0, 0), java.awt.Color.black));
-        addPiece(new Rook(new Position(7, 0), java.awt.Color.black));
-        //create bishops
-        addPiece(new Bishop(new Position(5, 7), java.awt.Color.white));
-        addPiece(new Bishop(new Position(2, 7), java.awt.Color.white));
-        addPiece(new Bishop(new Position(5, 0), java.awt.Color.black));
-        addPiece(new Bishop(new Position(2, 0), java.awt.Color.black));
-        //crete knights
-        addPiece(new Knight(new Position(6, 7), java.awt.Color.white));
-        addPiece(new Knight(new Position(1, 7), java.awt.Color.white));
-        addPiece(new Knight(new Position(6, 0), java.awt.Color.black));
-        addPiece(new Knight(new Position(1, 0), java.awt.Color.black));
-        //create kings
-        addPiece(new King(new Position(4, 0), java.awt.Color.black));
-        addPiece(new King(new Position(4, 7), java.awt.Color.white));
-        //create queens
-        addPiece(new Queen(new Position(3, 0), java.awt.Color.black));
-        addPiece(new Queen(new Position(3, 7), java.awt.Color.white));
-        //create pawns
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 0)
@@ -97,6 +78,28 @@ public class Game {
             }
 
         }
+        //create bishops
+        addPiece(new Bishop(new Position(5, 7), java.awt.Color.white));
+        addPiece(new Bishop(new Position(2, 7), java.awt.Color.white));
+        addPiece(new Bishop(new Position(5, 0), java.awt.Color.black));
+        addPiece(new Bishop(new Position(2, 0), java.awt.Color.black));
+        //crete knights
+        addPiece(new Knight(new Position(6, 7), java.awt.Color.white));
+        addPiece(new Knight(new Position(1, 7), java.awt.Color.white));
+        addPiece(new Knight(new Position(6, 0), java.awt.Color.black));
+        addPiece(new Knight(new Position(1, 0), java.awt.Color.black));
+//        //create rooks
+        addPiece(new Rook(new Position(0, 7), java.awt.Color.white));
+        addPiece(new Rook(new Position(7, 7), java.awt.Color.white));
+        addPiece(new Rook(new Position(0, 0), java.awt.Color.black));
+        addPiece(new Rook(new Position(7, 0), java.awt.Color.black));
+        //create kings
+        addPiece(new King(new Position(4, 0), java.awt.Color.black));
+        addPiece(new King(new Position(4, 7), java.awt.Color.white));
+        //create queens
+        addPiece(new Queen(new Position(3, 0), java.awt.Color.black));
+        addPiece(new Queen(new Position(3, 7), java.awt.Color.white));
+        //create pawns
 
     }
 
@@ -130,6 +133,14 @@ public class Game {
     }
     private void setBoard(GridPane board) {
         this.board=board;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public static Game getInstance() {

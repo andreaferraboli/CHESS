@@ -30,7 +30,7 @@ public class King extends Piece {
 
         for (Position move : moves) {
             if (Square.getSquareById(move.row, move.colomn) != null) {
-                if (Square.getSquareById(move.row, move.colomn).occupied && Square.getSquareById(move.row, move.colomn).getPiece().getColor().equals(Game.currentPlayer.color))
+                if (Square.getSquareById(move.row, move.colomn).occupied && Square.getSquareById(move.row, move.colomn).getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color))
                     continue;
                 this.possibleMoves.add(move);
             }
@@ -41,5 +41,9 @@ public class King extends Piece {
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bk" : "wk";
+    }
+    public void setPosition(Position position) {
+        this.position = position;
+        getAllPossibleMoves();
     }
 }

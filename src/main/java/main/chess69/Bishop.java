@@ -62,9 +62,12 @@ public class Bishop extends Piece {
                 if (!nextDiagonal) {
                     Square squareById = Square.getSquareById(x, y);
 
-                    if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.currentPlayer.color))
+                    if(squareById.getPiece() == null)
                         this.possibleMoves.add(new Position(x, y));
-                    else
+                    else if ( !squareById.getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
+                        this.possibleMoves.add(new Position(x, y));
+                        nextDiagonal=true;
+                    } else
                         nextDiagonal = true;
                 }
             } while ((x != 7 && x >= 0 && y >= 0 && y != 7) && !nextDiagonal);
@@ -76,6 +79,10 @@ public class Bishop extends Piece {
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bb" : "wb";
+    }
+    public void setPosition(Position position) {
+        this.position = position;
+        getAllPossibleMoves();
     }
 
 }

@@ -3,10 +3,12 @@ package main.chess69;
 import javafx.scene.Group;
 
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+import java.awt.*;
 import java.io.File;
 
 
@@ -27,11 +29,17 @@ public class Square extends StackPane {
         this.piece = piece;
         this.occupied = false;
     }
+    public Square(int row, int col) {
+        this.row = row;
+        this.col = col;
+        this.piece = null;
+        this.occupied = false;
+    }
 
 
 
     public void setPieceImage() {
-        Node child = this.getChildren().get(1);
+        Node child = this.getChildren().get(2);
         if (child instanceof ImageView && this.piece.getClass() != Piece.class) {
             ImageView imageView = (ImageView) child;
             imageView.setImage(new Image(getClass().getResource("/main/chess69/pieces/" + this.piece.toString() + ".png").toExternalForm(), true));
@@ -39,7 +47,7 @@ public class Square extends StackPane {
     }
 
     public void setPieceImage(Image image) {
-        Node child = this.getChildren().get(1);
+        Node child = this.getChildren().get(2);
         if (child instanceof ImageView) {
             ImageView imageView = (ImageView) child;
             imageView.setImage(image);
@@ -48,39 +56,103 @@ public class Square extends StackPane {
 
     public void setColorOfSquare() {
 
-            String image;
-            if ((this.col + this.row) % 2 == 0)
-                image = "dark";
-            else
-                image = "light";
+        String image;
+        if ((this.col + this.row) % 2 == 0)
+            image = "dark";
+        else
+            image = "light";
         Node child = this.getChildren().get(0);
         if (child instanceof ImageView) {
             ImageView imageView = (ImageView) child;
             imageView.setImage(new Image(getClass().getResource("/main/chess69/board/" + image + ".jpg").toExternalForm(), true));
         }
     }
-        public void setPiece(Piece piece) {
-            this.piece = piece;
-            setPieceImage();
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+        this.occupied=true;
+        setPieceImage();
     }
 
     public void onClick() {
         Square selectedSquare = Game.getInstance().getSelectedSquare();
         if (selectedSquare == null) {
             Game.getInstance().setSelectedSquare(this);
+            this.isSelected();
         } else if (!selectedSquare.equals(this)) {
             selectedSquare.movePiece(this.getPosition());
-            Game.getInstance().setSelectedSquare(this);
+            Player currentPlayer = Game.getInstance().getCurrentPlayer();
+            if (currentPlayer.color.equals(Color.black))
+                currentPlayer.color = Color.white;
+            else currentPlayer.color = Color.black;
         } else {
             Game.getInstance().setSelectedSquare(null);
+            deleteEffects();
         }
 
 
     }
 
+    private void isSelected() {
+        Node child = this.getChildren().get(0);
+        if (child instanceof ImageView) {
+            ImageView imageView = (ImageView) child;
+            ColorAdjust color_adjust = new ColorAdjust();
+            // set hue, saturation, brightness, and contrast
+            color_adjust.setHue(0.4);
+            color_adjust.setBrightness(0.6);
+            color_adjust.setContrast(0.8);
+            color_adjust.setSaturation(0.1);
+            imageView.setEffect(color_adjust);
+            showPossibleMoves(true);
+        }
+    }
+
+    private void showPossibleMoves(boolean bool) {
+        for (Position move : this.piece.possibleMoves) {
+            getSquareById(move.row, move.colomn).showSquareAsPossibleMove(bool);
+        }
+    }
+
+    private void showSquareAsPossibleMove(boolean bool) {
+        Node child = this.getChildren().get(1);
+        if (child instanceof ImageView) {
+            ImageView imageView = (ImageView) child;
+            if (bool)
+                imageView.setImage(new Image(getClass().getResource("/main/chess69/board/selected.png").toExternalForm(), true));
+            else
+                imageView.setImage(null);
+        }
+    }
+
     private void movePiece(Position position) {
-        getSquareById(position.row, position.colomn).setPiece(this.getPiece());
-        deletePiece();
+        Game.getInstance().setSelectedSquare(null);
+        deleteEffects();
+        if(Utils.hasPosition(this.piece.possibleMoves,position)) {
+            Piece pezzo=this.getPiece();
+            pezzo.setPosition(position);
+            pezzo.lastMove=new Position(this.row,this.col);
+            if (Game.getInstance().getCurrentPlayer().color.equals(Color.black))
+                Game.getInstance().getCurrentPlayer().color = Color.white;
+            else Game.getInstance().getCurrentPlayer().color = Color.black;
+            getSquareById(position.row, position.colomn).setPiece(pezzo);
+            deletePiece();
+        }
+    }
+
+    private void deleteEffects() {
+        Node child = this.getChildren().get(0);
+        if (child instanceof ImageView) {
+            ImageView imageView = (ImageView) child;
+            ColorAdjust color_adjust = new ColorAdjust();
+            // set hue, saturation, brightness, and contrast
+            color_adjust.setHue(0);
+            color_adjust.setBrightness(0);
+            color_adjust.setContrast(0);
+            color_adjust.setSaturation(0);
+            imageView.setEffect(color_adjust);
+        }
+        showPossibleMoves(false);
     }
 
     private void deletePiece() {

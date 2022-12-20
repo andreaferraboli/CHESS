@@ -30,4 +30,8 @@ public class Queen extends Piece {
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bq" : "wq";
     }
+    public void setPosition(Position position) {
+        this.position = position;
+        getAllPossibleMoves();
+    }
 }

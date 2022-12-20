@@ -18,14 +18,14 @@ public class Knight extends Piece {
         ArrayList<Position> moves = new ArrayList<>();
 
 
-        moves.add(new Position(x+1,y));
-        moves.add(new Position(x-1,y));
-        moves.add(new Position(x,y+1));
-        moves.add(new Position(x-1,y+1));
-        moves.add(new Position(x+1,y+1));
-        moves.add(new Position(x-1,y-1));
-        moves.add(new Position(x,y-1));
-        moves.add(new Position(x+1,y-1));
+        moves.add(new Position(x+2,y+1));
+        moves.add(new Position(x-2,y+1));
+        moves.add(new Position(x+1,y+2));
+        moves.add(new Position(x-1,y+2));
+        moves.add(new Position(x+2,y-1));
+        moves.add(new Position(x-2,y-1));
+        moves.add(new Position(x+1,y-2));
+        moves.add(new Position(x-1,y-2));
 
 
         for(Position move : moves){
@@ -33,7 +33,7 @@ public class Knight extends Piece {
             if(squareById != null){
                 if (!squareById.occupied)
                     this.possibleMoves.add(move);
-                else if (!squareById.getPiece().getColor().equals(Game.currentPlayer.color)) {
+                else if (!squareById.getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
                     this.possibleMoves.add(move);
                 }
             }
@@ -46,4 +46,8 @@ public class Knight extends Piece {
         return this.color.equals(Color.BLACK) ? "bn" : "wn";
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+        getAllPossibleMoves();
+    }
 }

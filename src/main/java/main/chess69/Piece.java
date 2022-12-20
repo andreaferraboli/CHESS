@@ -24,6 +24,15 @@ public class Piece {
         return color;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+        getAllPossibleMoves();
+    }
+
     protected Position lastMove() {
         return lastMove;
     }
