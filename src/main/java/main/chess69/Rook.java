@@ -53,10 +53,12 @@ public class Rook extends Piece {
                 }
                 if (!nextDiagonal) {
                     Square squareById = Square.getSquareById(x, y);
-
-                    if (!squareById.occupied || !squareById.getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color))
+                    if(!squareById.hasPiece()) {
                         this.possibleMoves.add(new Position(x, y));
-                    else
+                    } else if (!squareById.getPiece().getColor().equals(this.color)) {
+                        this.possibleMoves.add(new Position(x, y));
+                        nextDiagonal=true;
+                    } else
                         nextDiagonal = true;
                 }
             } while ((x != 7 && x >= 0 && y >= 0 && y != 7) && !nextDiagonal);

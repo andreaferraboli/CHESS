@@ -31,7 +31,7 @@ public class Knight extends Piece {
         for(Position move : moves){
             Square squareById = Square.getSquareById(move.row, move.colomn);
             if(squareById != null){
-                if (!squareById.occupied)
+                if (!squareById.hasPiece())
                     this.possibleMoves.add(move);
                 else if (!squareById.getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
                     this.possibleMoves.add(move);

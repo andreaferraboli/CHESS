@@ -29,10 +29,13 @@ public class King extends Piece {
 
 
         for (Position move : moves) {
-            if (Square.getSquareById(move.row, move.colomn) != null) {
-                if (Square.getSquareById(move.row, move.colomn).occupied && Square.getSquareById(move.row, move.colomn).getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color))
-                    continue;
-                this.possibleMoves.add(move);
+            if (Utils.between(move.row, 0, 7) && Utils.between(move.colomn, 0, 7)) {
+                if (Square.getSquareById(move.row, move.colomn).hasPiece()) {
+                    if (!Square.getSquareById(move.row, move.colomn).getPiece().getColor().equals(this.color))
+                        this.possibleMoves.add(move);
+                }
+                else
+                    this.possibleMoves.add(move);
             }
         }
 

@@ -28,7 +28,6 @@ public class Game {
         instance=this;
         instance.board=chessBoard;
         instance.currentPlayer=new Player(Color.white);
-        instance.selectedSquare=null;
         ArrayList<Square> squares = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
@@ -115,7 +114,6 @@ public class Game {
         Square squareById = Square.getSquareById(piece.position.row, piece.position.colomn);
         squareById.setPiece(piece);
         squareById.setColorOfSquare();
-        squareById.occupied=true;
     }
 
     public static Square getNodeByCoordinate(int row, int col) {
