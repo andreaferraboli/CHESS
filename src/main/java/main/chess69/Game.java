@@ -44,8 +44,8 @@ public class Game {
                 pieceImage.setFitHeight(65);
                 pieceImage.setFitWidth(65);
                 ImageView possibleMoves = new ImageView();
-                possibleMoves.setFitHeight(65);
-                possibleMoves.setFitWidth(65);
+                possibleMoves.setFitHeight(40);
+                possibleMoves.setFitWidth(40);
                 Square square = new Square(i, j);
                 square.getChildren().add(color);
                 square.getChildren().add(possibleMoves);
