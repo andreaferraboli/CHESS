@@ -29,21 +29,18 @@ public class Pawn extends Piece {
                 //non sono nella stessa colonna del pezzo
                 if (i != 1) {
                     //controllo se posso mangiare
-                    if (squareById.occupied)
+                    if (squareById.hasPiece()) {
                         if (!squareById.getPiece().getColor().equals(this.color))
                             possibleMoves.add(new Position(x, y));
-                        else {
-                            //check en passant right
-                            squareById = Square.getSquareById(x - 1, y);
-                            if (squareById.getPiece() instanceof Pawn && squareById.getPiece().lastMove().equals(new Position(squareById.row, squareById.getPiece().getColor().equals(Color.black) ? squareById.col - 2 : squareById.col + 2)))
+                    } else {
+                        //check en passant
+                        squareById = Square.getSquareById(x, this.getColor().equals(Color.black) ? y - 1 : y + 1);
+                        if (squareById.hasPiece())
+                            if (squareById.getPiece() instanceof Pawn && !this.getColor().equals(squareById.getPiece().getColor()) && squareById.getPiece().lastMove().equals(new Position(squareById.row, squareById.getPiece().getColor().equals(Color.black) ? squareById.col - 2 : squareById.col + 2)))
                                 possibleMoves.add(new Position(y, x));
-                            //check en passant left
-                            squareById = Square.getSquareById(x + 1, y);
-                            if (squareById.getPiece() instanceof Pawn && squareById.getPiece().lastMove().equals(new Position(squareById.row, squareById.getPiece().getColor().equals(Color.black) ? squareById.col - 2 : squareById.col + 2)))
-                                possibleMoves.add(new Position(y, x));
-                        }
+                    }
                 } else {
-                    if (!squareById.occupied) {
+                    if (!squareById.hasPiece()) {
                         possibleMoves.add(new Position(x, y));
                         Square nextSquare = Square.getSquareById(x, this.color.equals(Color.black) ? y + 1 : y - 1);
                         if (this.lastMove == null && nextSquare.getPiece() == null)

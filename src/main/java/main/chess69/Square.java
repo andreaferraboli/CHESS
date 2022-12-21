@@ -15,7 +15,7 @@ import java.io.File;
 public class Square extends StackPane {
 
     int row, col;
-    public boolean occupied, selected;
+    public boolean  selected;
     private Piece piece;
 //    private ImageView pieceimage;
 //    private ImageView possibleMove;
@@ -27,13 +27,11 @@ public class Square extends StackPane {
         this.row = row;
         this.col = col;
         this.piece = piece;
-        this.occupied = false;
     }
     public Square(int row, int col) {
         this.row = row;
         this.col = col;
         this.piece = null;
-        this.occupied = false;
     }
 
 
@@ -70,7 +68,6 @@ public class Square extends StackPane {
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-        this.occupied=true;
         setPieceImage();
     }
 
@@ -81,6 +78,8 @@ public class Square extends StackPane {
             this.isSelected();
         } else if (!selectedSquare.equals(this)) {
             selectedSquare.movePiece(this.getPosition());
+            selectedSquare.deletePiece();
+            refreshAllPossibleMoves();
             Player currentPlayer = Game.getInstance().getCurrentPlayer();
             if (currentPlayer.color.equals(Color.black))
                 currentPlayer.color = Color.white;
@@ -93,6 +92,19 @@ public class Square extends StackPane {
 
     }
 
+    private void refreshAllPossibleMoves() {
+        Game.getInstance().getBoard().getChildren().forEach(
+                node -> {
+                    Square square=(Square) node;
+                    if(square.hasPiece())
+                        ((Square) node).getPiece().getAllPossibleMoves();
+                }
+        );
+    }
+
+    public boolean hasPiece(){
+        return this.piece != null;
+    }
     private void isSelected() {
         Node child = this.getChildren().get(0);
         if (child instanceof ImageView) {
@@ -178,7 +190,6 @@ public class Square extends StackPane {
         return "Square{" +
                 "x=" + row +
                 ", y=" + col +
-                ", occupied=" + occupied +
                 ", piece=" + piece +
                 '}';
     }

@@ -64,7 +64,7 @@ public class Bishop extends Piece {
 
                     if(squareById.getPiece() == null)
                         this.possibleMoves.add(new Position(x, y));
-                    else if ( !squareById.getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
+                    else if ( !squareById.getPiece().getColor().equals(this.color)) {
                         this.possibleMoves.add(new Position(x, y));
                         nextDiagonal=true;
                     } else

@@ -28,7 +28,6 @@ public class Game {
         instance=this;
         instance.board=chessBoard;
         instance.currentPlayer=new Player(Color.white);
-        instance.selectedSquare=null;
         ArrayList<Square> squares = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
@@ -45,8 +44,8 @@ public class Game {
                 pieceImage.setFitHeight(65);
                 pieceImage.setFitWidth(65);
                 ImageView possibleMoves = new ImageView();
-                possibleMoves.setFitHeight(65);
-                possibleMoves.setFitWidth(65);
+                possibleMoves.setFitHeight(40);
+                possibleMoves.setFitWidth(40);
                 Square square = new Square(i, j);
                 square.getChildren().add(color);
                 square.getChildren().add(possibleMoves);
@@ -115,7 +114,6 @@ public class Game {
         Square squareById = Square.getSquareById(piece.position.row, piece.position.colomn);
         squareById.setPiece(piece);
         squareById.setColorOfSquare();
-        squareById.occupied=true;
     }
 
     public static Square getNodeByCoordinate(int row, int col) {
