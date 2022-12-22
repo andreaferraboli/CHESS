@@ -3,14 +3,10 @@ package main.chess69;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-import javafx.geometry.Insets;
-
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
 
 public class Game {
@@ -27,7 +23,9 @@ public class Game {
     public Game(GridPane chessBoard) {
         instance = this;
         instance.board = chessBoard;
-        instance.setCurrentPlayer(new Player(Color.white));
+        instance.black=new Player(Color.BLACK);
+        instance.white=new Player(Color.WHITE);
+        instance.setCurrentPlayer(instance.white);
         ArrayList<Square> squares = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {

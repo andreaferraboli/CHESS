@@ -1,7 +1,5 @@
 package main.chess69;
 
-import javafx.scene.Group;
-
 import javafx.scene.Node;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -9,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 import java.awt.*;
-import java.io.File;
 
 
 public class Square extends StackPane {
@@ -82,12 +79,18 @@ public class Square extends StackPane {
             if(Game.getInstance().getCurrentPlayer().color.equals(this.hasPiece()?this.piece.color:Game.getInstance().getCurrentPlayer().color) || Utils.hasPosition(selectedSquare.getPiece().possibleMoves,this.getPosition())) {
                 if(selectedSquare.movePiece(this.getPosition()))
                 {
+//                    selectedSquare.deleteEffects();
+                    Player currentPlayer = Game.getInstance().getCurrentPlayer();
+                    if (currentPlayer.color.equals(Color.black)) {
+                        Game.getInstance().black.lastMove=new Mossa(this.row, this.col);
+                        Game.getInstance().setCurrentPlayer(Game.getInstance().white);
+                    } else {
+                        Game.getInstance().white.lastMove=new Mossa(this.row, this.col);
+                        Game.getInstance().setCurrentPlayer(Game.getInstance().black);
+                    }
                     selectedSquare.deletePiece();
                     refreshAllPossibleMoves();
-                    Player currentPlayer = Game.getInstance().getCurrentPlayer();
-                    if (currentPlayer.color.equals(Color.black))
-                        currentPlayer.setColor(Color.white);
-                    else currentPlayer.setColor(Color.black);
+//                    Game.getInstance().setSelectedSquare(null);
                 }
             }
         } else {
@@ -148,6 +151,11 @@ public class Square extends StackPane {
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
             if (Utils.hasPosition(this.piece.possibleMoves, position)) {
+                if(!getSquareById(position.row, position.colomn).hasPiece() && position.row!=this.row && this.getPiece() instanceof Pawn)
+                    //il pezzo ha fatto l'en passant,elimino il pedone
+                {
+                    getSquareById(position.row,this.getPiece().color.equals(Color.BLACK) ? 4: 3).deletePiece();
+                }
                 Piece pezzo = this.getPiece();
                 pezzo.setPosition(position);
                 System.out.println("posizione finale:"+pezzo.position);

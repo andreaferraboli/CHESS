@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class Player {
     public Color color;
+    public Mossa lastMove;
 
     public Player(Color color) {
         this.color = color;
@@ -16,5 +17,13 @@ public class Player {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public Mossa getLastMove() {
+        return lastMove;
+    }
+
+    public void setLastMove(Mossa lastMove) {
+        this.lastMove = lastMove;
     }
 }

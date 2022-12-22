@@ -34,10 +34,21 @@ public class Pawn extends Piece {
                             possibleMoves.add(new Position(x, y));
                     } else {
                         //check en passant
-                        squareById = Square.getSquareById(x, this.getColor().equals(Color.black) ? y - 1 : y + 1);
-                        if (squareById.hasPiece())
-                            if (squareById.getPiece() instanceof Pawn && !this.getColor().equals(squareById.getPiece().getColor()) && squareById.getPiece().lastMove().equals(new Position(squareById.row, squareById.getPiece().getColor().equals(Color.black) ? squareById.col - 2 : squareById.col + 2)))
-                                possibleMoves.add(new Position(y, x));
+                        if ((this.getColor().equals(Color.WHITE) && this.position.colomn == 3)) {
+                            squareById = Square.getSquareById(x, 2);
+                            if (!squareById.hasPiece()) {
+                                squareById = Square.getSquareById(x, 3);
+                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.BLACK) && squareById.getPiece().lastMove.equals(new Position(x, 1))&&Game.getInstance().black.lastMove.equals(new Mossa(squareById.getPiece().position.row,squareById.getPiece().position.colomn)))
+                                    possibleMoves.add(new Position(x, 2));
+                            }
+                        } else if (this.getColor().equals(Color.BLACK) && this.position.colomn == 4) {
+                            squareById = Square.getSquareById(x, 5);
+                            if (!squareById.hasPiece()) {
+                                squareById = Square.getSquareById(x, 4);
+                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.WHITE) && squareById.getPiece().lastMove.equals(new Position(x, 6))&&Game.getInstance().white.lastMove.equals(new Mossa(squareById.getPiece().position.row,squareById.getPiece().position.colomn)))
+                                    possibleMoves.add(new Position(x, 5));
+                            }
+                        }
                     }
                 } else {
                     if (!squareById.hasPiece()) {
