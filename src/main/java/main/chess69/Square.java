@@ -153,9 +153,6 @@ public class Square extends StackPane {
                 System.out.println("posizione finale:"+pezzo.position);
                 pezzo.lastMove = new Position(this.row, this.col);
                 System.out.println("posizione prima:"+pezzo.lastMove);
-                if (Game.getInstance().getCurrentPlayer().color.equals(Color.black))
-                    Game.getInstance().getCurrentPlayer().color = Color.white;
-                else Game.getInstance().getCurrentPlayer().color = Color.black;
                 getSquareById(position.row, position.colomn).setPiece(pezzo);
                 deletePiece();
                 return true;

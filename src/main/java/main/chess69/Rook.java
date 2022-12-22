@@ -61,7 +61,7 @@ public class Rook extends Piece {
                     } else
                         nextDiagonal = true;
                 }
-            } while ((x != 7 && x >= 0 && y >= 0 && y != 7) && !nextDiagonal);
+            } while ((x <= 7 && x >= 0 && y >= 0 && y <= 7) && !nextDiagonal);
             x = position.row;
             y = position.colomn;
             nextDiagonal = false;
