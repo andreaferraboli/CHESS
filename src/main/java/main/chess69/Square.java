@@ -148,6 +148,10 @@ public class Square extends StackPane {
     }
 
     private boolean movePiece(Position position) {
+        //TODO: implementare arrocco lungo e corto
+        //TODO: implementare scacco
+        //TODO: implementare promozione pezzo
+        //TODO: implementare vittoria
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
             if (Utils.hasPosition(this.piece.possibleMoves, position)) {
