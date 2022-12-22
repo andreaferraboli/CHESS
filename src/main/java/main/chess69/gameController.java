@@ -24,7 +24,7 @@ public class gameController  {
     @FXML
     GridPane board;
 
-    public void initialize(){
+    public void initialize() throws IOException {
 
         // Themes are Coral, Dusk, Wheat, Marine, Emerald, Sandcastle
 

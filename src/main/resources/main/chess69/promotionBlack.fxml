@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="65.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.chess69.promotionController">
+   <children>
+      <VBox alignment="CENTER" layoutX="-2.0" layoutY="-3.0" prefHeight="260.0" prefWidth="65.0">
+         <children>
+            <ImageView fx:id="queen" fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pieces/bq.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rook" fitHeight="65.0" fitWidth="65.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pieces/br.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="knight" fitHeight="65.0" fitWidth="65.0" layoutX="10.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pieces/bn.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="bishop" fitHeight="65.0" fitWidth="65.0" layoutX="10.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pieces/bb.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </children>
+</Pane>

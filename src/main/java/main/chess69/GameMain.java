@@ -17,6 +17,7 @@ public class GameMain extends Application {
         stage.setScene(scene);
         stage.show();
         primaryStage=stage;
+        secondaryStage=new Stage();
 
     }
 

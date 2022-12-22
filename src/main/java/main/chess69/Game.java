@@ -7,11 +7,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
 
     public ArrayList<Round> mossePartita = new ArrayList<>();
+    public String selectedPieceForPromotion;
+    public final Object lock = new Object();
+    public boolean promotion;
     public Player white;
     public Player black;
     private GridPane board;
@@ -20,9 +24,10 @@ public class Game {
     private static Game instance;
 
 
-    public Game(GridPane chessBoard) {
+    public Game(GridPane chessBoard) throws IOException {
         instance = this;
         instance.board = chessBoard;
+        instance.promotion=false;
         instance.black=new Player(Color.BLACK);
         instance.white=new Player(Color.WHITE);
         instance.setCurrentPlayer(instance.white);
@@ -44,9 +49,13 @@ public class Game {
                 ImageView possibleMoves = new ImageView();
                 possibleMoves.setFitHeight(40);
                 possibleMoves.setFitWidth(40);
+                ImageView check = new ImageView();
+                check.setFitHeight(65);
+                check.setFitWidth(65);
                 Square square = new Square(i, j);
                 square.getChildren().add(color);
                 square.getChildren().add(possibleMoves);
+                square.getChildren().add(check);
                 square.getChildren().add(pieceImage);
                 square.setColorOfSquare();
                 squares.add(square);
@@ -59,14 +68,18 @@ public class Game {
             Square square = (Square) node;
             square.setOnMouseClicked(event -> {
                 if (square.hasPiece() || selectedSquare != null) {
-                    square.onClick();
+                    try {
+                        square.onClick();
+                    } catch (IOException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else
                     System.out.println("cella selezionata vuota" + square.row + " " + square.col);
             });
         });
     }
 
-    public void fillBoard() {
+    public void fillBoard() throws IOException {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 0)
@@ -110,7 +123,7 @@ public class Game {
         this.selectedSquare = selectedSquare;
     }
 
-    public void addPiece(Piece piece) {
+    public void addPiece(Piece piece) throws IOException {
         Square squareById = Square.getSquareById(piece.position.row, piece.position.colomn);
         squareById.setPiece(piece);
         squareById.setColorOfSquare();
@@ -151,4 +164,11 @@ public class Game {
         return board;
     }
 
+    public String getSelectedPieceForPromotion() {
+        return this.selectedPieceForPromotion;
+    }
+
+    public void setSelectedPieceForPromotion(String selectedPieceForPromotion) {
+        this.selectedPieceForPromotion = selectedPieceForPromotion;
+    }
 }
