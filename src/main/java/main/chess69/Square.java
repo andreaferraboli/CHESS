@@ -15,7 +15,7 @@ import java.io.File;
 public class Square extends StackPane {
 
     int row, col;
-    public boolean  selected;
+    public boolean selected;
     private Piece piece;
 //    private ImageView pieceimage;
 //    private ImageView possibleMove;
@@ -28,12 +28,12 @@ public class Square extends StackPane {
         this.col = col;
         this.piece = piece;
     }
+
     public Square(int row, int col) {
         this.row = row;
         this.col = col;
         this.piece = null;
     }
-
 
 
     public void setPieceImage() {
@@ -74,16 +74,22 @@ public class Square extends StackPane {
     public void onClick() {
         Square selectedSquare = Game.getInstance().getSelectedSquare();
         if (selectedSquare == null) {
-            Game.getInstance().setSelectedSquare(this);
-            this.isSelected();
+            if (this.piece.getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
+                Game.getInstance().setSelectedSquare(this);
+                this.isSelected();
+            }
         } else if (!selectedSquare.equals(this)) {
-            selectedSquare.movePiece(this.getPosition());
-            selectedSquare.deletePiece();
-            refreshAllPossibleMoves();
-            Player currentPlayer = Game.getInstance().getCurrentPlayer();
-            if (currentPlayer.color.equals(Color.black))
-                currentPlayer.color = Color.white;
-            else currentPlayer.color = Color.black;
+            if(Game.getInstance().getCurrentPlayer().color.equals(this.hasPiece()?this.piece.color:Game.getInstance().getCurrentPlayer().color) || Utils.hasPosition(selectedSquare.getPiece().possibleMoves,this.getPosition())) {
+                if(selectedSquare.movePiece(this.getPosition()))
+                {
+                    selectedSquare.deletePiece();
+                    refreshAllPossibleMoves();
+                    Player currentPlayer = Game.getInstance().getCurrentPlayer();
+                    if (currentPlayer.color.equals(Color.black))
+                        currentPlayer.setColor(Color.white);
+                    else currentPlayer.setColor(Color.black);
+                }
+            }
         } else {
             Game.getInstance().setSelectedSquare(null);
             deleteEffects();
@@ -95,16 +101,17 @@ public class Square extends StackPane {
     private void refreshAllPossibleMoves() {
         Game.getInstance().getBoard().getChildren().forEach(
                 node -> {
-                    Square square=(Square) node;
-                    if(square.hasPiece())
+                    Square square = (Square) node;
+                    if (square.hasPiece())
                         ((Square) node).getPiece().getAllPossibleMoves();
                 }
         );
     }
 
-    public boolean hasPiece(){
+    public boolean hasPiece() {
         return this.piece != null;
     }
+
     private void isSelected() {
         Node child = this.getChildren().get(0);
         if (child instanceof ImageView) {
@@ -137,19 +144,24 @@ public class Square extends StackPane {
         }
     }
 
-    private void movePiece(Position position) {
+    private boolean movePiece(Position position) {
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
-        if(Utils.hasPosition(this.piece.possibleMoves,position)) {
-            Piece pezzo=this.getPiece();
-            pezzo.setPosition(position);
-            pezzo.lastMove=new Position(this.row,this.col);
-            if (Game.getInstance().getCurrentPlayer().color.equals(Color.black))
-                Game.getInstance().getCurrentPlayer().color = Color.white;
-            else Game.getInstance().getCurrentPlayer().color = Color.black;
-            getSquareById(position.row, position.colomn).setPiece(pezzo);
-            deletePiece();
-        }
+            if (Utils.hasPosition(this.piece.possibleMoves, position)) {
+                Piece pezzo = this.getPiece();
+                pezzo.setPosition(position);
+                System.out.println("posizione finale:"+pezzo.position);
+                pezzo.lastMove = new Position(this.row, this.col);
+                System.out.println("posizione prima:"+pezzo.lastMove);
+                if (Game.getInstance().getCurrentPlayer().color.equals(Color.black))
+                    Game.getInstance().getCurrentPlayer().color = Color.white;
+                else Game.getInstance().getCurrentPlayer().color = Color.black;
+                getSquareById(position.row, position.colomn).setPiece(pezzo);
+                deletePiece();
+                return true;
+            }
+            else
+                return false;
     }
 
     private void deleteEffects() {

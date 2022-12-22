@@ -33,7 +33,7 @@ public class Knight extends Piece {
             if(squareById != null){
                 if (!squareById.hasPiece())
                     this.possibleMoves.add(move);
-                else if (!squareById.getPiece().getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
+                else if (!squareById.getPiece().getColor().equals(this.color)) {
                     this.possibleMoves.add(move);
                 }
             }

@@ -41,5 +41,20 @@ public class Position {
         return position;
     }
 
+    @Override
+    public String toString() {
+        return "Position{" +
+                "row=" + row +
+                ", colomn=" + colomn +
+                '}';
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Position) {
+            Position pos=(Position) obj;
+            return this.colomn== pos.colomn && this.row== pos.row;
+        }
+        return false;
+    }
 }

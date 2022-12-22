@@ -25,9 +25,9 @@ public class Game {
 
 
     public Game(GridPane chessBoard) {
-        instance=this;
-        instance.board=chessBoard;
-        instance.currentPlayer=new Player(Color.white);
+        instance = this;
+        instance.board = chessBoard;
+        instance.setCurrentPlayer(new Player(Color.white));
         ArrayList<Square> squares = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
@@ -58,10 +58,12 @@ public class Game {
         fillBoard();
 
         instance.board.getChildren().forEach(node -> {
-            Square square=(Square)node;
+            Square square = (Square) node;
             square.setOnMouseClicked(event -> {
-                if (!(selectedSquare == null && square.getPiece() == null) || square.getPiece().getColor().equals(instance.currentPlayer.color))
+                if (square.hasPiece() || selectedSquare != null) {
                     square.onClick();
+                } else
+                    System.out.println("cella selezionata vuota" + square.row + " " + square.col);
             });
         });
     }
@@ -129,8 +131,9 @@ public class Game {
         }
         return null;
     }
+
     private void setBoard(GridPane board) {
-        this.board=board;
+        this.board = board;
     }
 
     public Player getCurrentPlayer() {

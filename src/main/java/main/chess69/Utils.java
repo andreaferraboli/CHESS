@@ -8,7 +8,7 @@ public class Utils {
     }
     public static boolean hasPosition(ArrayList<Position> array,Position object){
         for(Position position: array)
-            if(equalsPosition(position,object))
+            if(position.equals(object))
                 return true;
         return false;
     }
