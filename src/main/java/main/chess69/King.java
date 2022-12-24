@@ -38,7 +38,7 @@ public class King extends Piece {
                 }
                 else {
                     //check arrocco
-                    if(move.row==x-2 || move.row==x+2){
+                    if((move.row==x-2 || move.row==x+2)&& (this.color.equals(Color.black)?move.colomn==0:move.colomn==7)){
                         Rook rookShort=(Rook) Square.getSquareById(7,y).getPiece();
                         Rook rookLong=(Rook) Square.getSquareById(0,y).getPiece();
                         if(this.lastMove==null)

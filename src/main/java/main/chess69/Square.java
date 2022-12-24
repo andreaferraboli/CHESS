@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import static main.chess69.GameMain.primaryStage;
-import static main.chess69.GameMain.secondaryStage;
 
 
 public class Square extends StackPane {
@@ -23,10 +22,6 @@ public class Square extends StackPane {
     int row, col;
 
     private Piece piece;
-//    private ImageView pieceimage;
-//    private ImageView possibleMove;
-//
-//    private ImageView color;
 
 
     public Square(int row, int col, Piece piece) {
@@ -41,6 +36,9 @@ public class Square extends StackPane {
         this.piece = null;
     }
 
+    public static Square getSquareById(int x, int y) {
+        return Game.getNodeByCoordinate(x, y);
+    }
 
     public void setPieceImage() {
         Node child = this.getChildren().get(3);
@@ -69,12 +67,6 @@ public class Square extends StackPane {
         }
     }
 
-    public void setPiece(Piece piece) throws IOException {
-        winGame();
-        this.piece = piece;
-        setPieceImage();
-    }
-
     public void winGame() throws IOException {
         if (this.piece instanceof King && !this.piece.color.equals(Game.getInstance().getCurrentPlayer().color)) {
             URL url = new File("src/main/resources/main/chess69/end.fxml").toURI().toURL();
@@ -97,6 +89,11 @@ public class Square extends StackPane {
             if (Game.getInstance().getCurrentPlayer().color.equals(this.hasPiece() ? this.piece.color : Game.getInstance().getCurrentPlayer().color) || Utils.hasPosition(selectedSquare.getPiece().possibleMoves, this.getPosition())) {
                 if (selectedSquare.movePiece(this.getPosition())) {
 //                    selectedSquare.deleteEffects();
+                    removeCheckEffect();
+
+
+                    // Aggiorna la casella del Re con l'effetto di scacco, se necessario
+
                     Player currentPlayer = Game.getInstance().getCurrentPlayer();
                     if (currentPlayer.color.equals(Color.black)) {
                         Game.getInstance().black.lastMove = new Mossa(this.row, this.col);
@@ -168,13 +165,13 @@ public class Square extends StackPane {
             ImageView imageView = (ImageView) child;
             if (bool) {
                 imageView.setImage(new Image(getClass().getResource("/main/chess69/board/selected.png").toExternalForm(), true));
-                //TODO show arrocco as image green
             } else
                 imageView.setImage(null);
         }
     }
 
-    private boolean movePiece(Position position) throws IOException, InterruptedException {
+    private boolean movePiece(Position position) throws IOException {
+
         //TODO: implementare scacco con pezzo mangiante
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
@@ -230,6 +227,21 @@ public class Square extends StackPane {
         showPossibleMoves(false);
     }
 
+    public static void removeCheckEffect() {
+        // Verifica se la casella contiene un Re
+        Game.getInstance().getBoard().getChildren().forEach(node->{
+
+            Square square=(Square)node;
+            if (square.getPiece() instanceof King) {
+                // Verifica se la casella ha l'effetto di scacco
+                ImageView imageView = (ImageView) square.getChildren().get(2);
+                if (imageView.getImage() != null && imageView.getImage().getUrl().contains("check.png")) {
+                    // Rimuovi l'effetto di scacco dalla casella
+                    imageView.setImage(null);
+                }
+            }
+        });
+    }
     private void deletePiece() throws IOException {
         winGame();
         this.piece = null;
@@ -240,13 +252,14 @@ public class Square extends StackPane {
         return new Position(this.row, this.col);
     }
 
-    public static Square getSquareById(int x, int y) {
-        return Game.getNodeByCoordinate(x, y);
-    }
-
-
     public Piece getPiece() {
         return this.piece;
+    }
+
+    public void setPiece(Piece piece) throws IOException {
+        winGame();
+        this.piece = piece;
+        setPieceImage();
     }
 
     @Override

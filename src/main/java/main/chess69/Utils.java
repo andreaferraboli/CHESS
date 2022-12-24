@@ -13,8 +13,5 @@ public class Utils {
         return false;
     }
 
-    public static boolean equalsPosition(Position pos1,Position pos2){
-        return pos1.row==pos2.row && pos1.colomn== pos2.colomn;
-    }
 
 }

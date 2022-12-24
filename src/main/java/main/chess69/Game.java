@@ -27,7 +27,6 @@ public class Game {
     public Game(GridPane chessBoard) throws IOException {
         instance = this;
         instance.board = chessBoard;
-        instance.promotion=false;
         instance.black=new Player(Color.BLACK);
         instance.white=new Player(Color.WHITE);
         instance.setCurrentPlayer(instance.white);
