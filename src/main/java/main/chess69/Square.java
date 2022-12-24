@@ -76,7 +76,7 @@ public class Square extends StackPane {
     }
 
     public void winGame() throws IOException {
-        if (this.piece instanceof King) {
+        if (this.piece instanceof King && !this.piece.color.equals(Game.getInstance().getCurrentPlayer().color)) {
             URL url = new File("src/main/resources/main/chess69/end.fxml").toURI().toURL();
             Parent root = FXMLLoader.load(url);
 //
@@ -166,47 +166,44 @@ public class Square extends StackPane {
         Node child = this.getChildren().get(1);
         if (child instanceof ImageView) {
             ImageView imageView = (ImageView) child;
-            if (bool)
+            if (bool) {
                 imageView.setImage(new Image(getClass().getResource("/main/chess69/board/selected.png").toExternalForm(), true));
-            else
+                //TODO show arrocco as image green
+            } else
                 imageView.setImage(null);
         }
     }
 
     private boolean movePiece(Position position) throws IOException, InterruptedException {
-        //TODO: implementare arrocco lungo e corto
         //TODO: implementare scacco con pezzo mangiante
-        //TODO: implementare promozione pezzo
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
         Piece pezzo = this.getPiece();
         if (Utils.hasPosition(this.piece.possibleMoves, position)) {
+            //controllo arrocco
+            if ((position.row == 6 || position.row == 2) && this.getPiece() instanceof King && this.getPiece().lastMove == null) {
+                int y;
+                if (this.getPiece().color.equals(Color.black)) {
+                    y = 0;
+                } else {
+                    y = 7;
+                }
+                if (position.row == 2) {
+                    Square.getSquareById(0, y).deletePiece();
+                    Square.getSquareById(3, y).setPiece(new Rook(new Position(3, y), this.getPiece().color));
+                } else {
+                    Square.getSquareById(7, y).deletePiece();
+                    Square.getSquareById(5, y).setPiece(new Rook(new Position(5, y), this.getPiece().color));
+                }
+            }
+            //controllo l'en passant
             if (!getSquareById(position.row, position.colomn).hasPiece() && this.getPiece() instanceof Pawn)
-            //il pezzo ha fatto l'en passant,elimino il pedone
             {
                 if (position.row != this.row)
                     getSquareById(position.row, this.getPiece().color.equals(Color.BLACK) ? 4 : 3).deletePiece();
                 else if (position.colomn == 7 || position.colomn == 0) {
                     //promozione
-                    URL url = new File("src/main/resources/main/chess69/promotion" + (this.getPiece().color.equals(Color.BLACK) ? "Black" : "White") + ".fxml").toURI().toURL();
-                    Parent root = FXMLLoader.load(url);
-//
-                    Scene scene = new Scene(root);
-                    secondaryStage.setScene(scene);
-                    secondaryStage.show();
-
-                    synchronized (Game.getInstance().lock) {
-                        while (!Game.getInstance().promotion) {
-                            Game.getInstance().lock.wait();
-                        }
-                    }
-                    pezzo = switch (Game.getInstance().getSelectedPieceForPromotion()) {
-                        case "queen" -> new Queen(position, this.getPiece().color);
-                        case "rook" -> new Rook(position, this.getPiece().color);
-                        case "knight" -> new Knight(position, this.getPiece().color);
-                        case "bishop" -> new Bishop(position, this.getPiece().color);
-                        default -> new Piece();
-                    };
+                    pezzo = new Queen(position, this.getPiece().color);
                 }
             }
             pezzo.setPosition(position);
