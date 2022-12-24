@@ -3,6 +3,7 @@ package main.chess69;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class Game {
 
     public ArrayList<Round> mossePartita = new ArrayList<>();
+    public ListView<String> movesListView;
     public String selectedPieceForPromotion;
     public final Object lock = new Object();
     public boolean promotion;
@@ -24,8 +26,10 @@ public class Game {
     private static Game instance;
 
 
-    public Game(GridPane chessBoard) throws IOException {
+    public Game(GridPane chessBoard, ListView<String> movesListView) throws IOException {
         instance = this;
+        instance.movesListView=movesListView;
+        instance.mossePartita=new ArrayList<>();
         instance.board = chessBoard;
         instance.black=new Player(Color.BLACK);
         instance.white=new Player(Color.WHITE);

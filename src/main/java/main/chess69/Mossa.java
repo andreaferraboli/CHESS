@@ -4,21 +4,43 @@ public class Mossa {
 
     int colomn;
     int row;
+    public Piece pezzo;
 
-    public Mossa(int row,int colomn) {
+    public Mossa(int row, int colomn, Piece pezzo) {
+        this.colomn = colomn;
+        this.row = row;
+        this.pezzo = pezzo;
+    }
+    public Mossa(int row, int colomn) {
         this.colomn = colomn;
         this.row = row;
     }
+    public static String rowToChar(int row) {
+        return String.valueOf(Position.convention.get(row));
+    }
 
-    public void charToCol(char a){
-
+    @Override
+    public String toString() {
+        String mossa = "";
+        if (this.pezzo instanceof Rook)
+            mossa += "R";
+        else if (this.pezzo instanceof Bishop) {
+            mossa += "B";
+        } else if (this.pezzo instanceof Knight) {
+            mossa += "N";
+        } else if (this.pezzo instanceof King) {
+            mossa += "K";
+        } else if (this.pezzo instanceof Queen) {
+            mossa += "Q";
+        }
+        return mossa + rowToChar(this.row) + this.colomn;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Mossa) {
-            Mossa move=(Mossa) obj;
-            return this.colomn== move.colomn && this.row== move.row;
+        if (obj instanceof Mossa) {
+            Mossa move = (Mossa) obj;
+            return this.colomn == move.colomn && this.row == move.row;
         }
         return false;
     }

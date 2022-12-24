@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import javafx.scene.control.ListView;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +26,13 @@ public class gameController  {
     @FXML
     GridPane board;
 
+    @FXML
+    ListView<String> movesListView;
     public void initialize() throws IOException {
 
         // Themes are Coral, Dusk, Wheat, Marine, Emerald, Sandcastle
 
-        Game game = new Game(board);
+        Game game = new Game(board,movesListView);
 
     }
 

@@ -10,4 +10,28 @@ public class Round {
         this.mossa1 = mossa1;
         this.mossa2 = mossa2;
     }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public Mossa getMossa1() {
+        return mossa1;
+    }
+
+    public void setMossa1(Mossa mossa1) {
+        this.mossa1 = mossa1;
+    }
+
+    public Mossa getMossa2() {
+        return mossa2;
+    }
+
+    public void setMossa2(Mossa mossa2) {
+        this.mossa2 = mossa2;
+    }
 }

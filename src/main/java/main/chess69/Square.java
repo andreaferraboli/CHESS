@@ -88,23 +88,18 @@ public class Square extends StackPane {
         } else if (!selectedSquare.equals(this)) {
             if (Game.getInstance().getCurrentPlayer().color.equals(this.hasPiece() ? this.piece.color : Game.getInstance().getCurrentPlayer().color) || Utils.hasPosition(selectedSquare.getPiece().possibleMoves, this.getPosition())) {
                 if (selectedSquare.movePiece(this.getPosition())) {
-//                    selectedSquare.deleteEffects();
                     removeCheckEffect();
-
-
-                    // Aggiorna la casella del Re con l'effetto di scacco, se necessario
-
                     Player currentPlayer = Game.getInstance().getCurrentPlayer();
                     if (currentPlayer.color.equals(Color.black)) {
-                        Game.getInstance().black.lastMove = new Mossa(this.row, this.col);
+                        Game.getInstance().black.lastMove = new Mossa(this.row, this.col,this.piece);
                         Game.getInstance().setCurrentPlayer(Game.getInstance().white);
                     } else {
-                        Game.getInstance().white.lastMove = new Mossa(this.row, this.col);
+                        Game.getInstance().white.lastMove = new Mossa(this.row, this.col,this.piece);
+                        Game.getInstance().movesListView.getItems().add(Game.getInstance().mossePartita.get(0).getIndex(),"ciao");
                         Game.getInstance().setCurrentPlayer(Game.getInstance().black);
                     }
                     selectedSquare.deletePiece();
                     refreshAllPossibleMoves();
-//                    Game.getInstance().setSelectedSquare(null);
                 }
             }
         } else {
