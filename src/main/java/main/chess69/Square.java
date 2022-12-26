@@ -120,6 +120,7 @@ public class Square extends StackPane {
                         Game.getInstance().movesListView.getItems().add(mossePartita.size() - 1, mossePartita.get(mossePartita.size() - 1).toString());
                         Game.getInstance().setCurrentPlayer(Game.getInstance().black);
                     }
+                    //todo:implementa presa del pezzo come mossa e fix reverso con pezzo mangiante
                     selectedSquare.deletePiece();
                     refreshAllPossibleMoves();
                     if (isDraw()) {
@@ -158,7 +159,7 @@ public class Square extends StackPane {
         //pareggio se solo c'è un cavallo con i due re
         if ((numberBishopBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberBishopWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1))
             return true;
-
+        //todo:implementare ulteriori situazioni di stallo
         return false;
     }
 
