@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static main.chess69.GameMain.primaryStage;
 
@@ -121,6 +122,14 @@ public class Square extends StackPane {
                     }
                     selectedSquare.deletePiece();
                     refreshAllPossibleMoves();
+                    if (isDraw()) {
+                        URL url = new File("src/main/resources/main/chess69/draw.fxml").toURI().toURL();
+                        Parent root = FXMLLoader.load(url);
+//
+                        Scene scene = new Scene(root);
+                        primaryStage.setScene(scene);
+                        primaryStage.show();
+                    }
                 }
             }
         } else {
@@ -131,7 +140,54 @@ public class Square extends StackPane {
 
     }
 
-    private void refreshAllPossibleMoves() {
+    private boolean isDraw() {
+
+        int numberPiecesWhite = piecesOfColor(Color.white)[0];
+        int numberPiecesBlack = piecesOfColor(Color.black)[0];
+        int numberKnightWhite = piecesOfColor(Color.white)[1];
+        int numberKnightBlack = piecesOfColor(Color.black)[1];
+        int numberBishopWhite = piecesOfColor(Color.white)[2];
+        int numberBishopBlack = piecesOfColor(Color.black)[2];
+
+        //pareggio se sono solo due re
+        if (numberPiecesWhite == 1 && numberPiecesBlack == 1)
+            return true;
+        //pareggio se solo c'è un cavallo con i due re
+        if ((numberKnightBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberKnightWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1))
+            return true;
+        //pareggio se solo c'è un cavallo con i due re
+        if ((numberBishopBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberBishopWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1))
+            return true;
+
+        return false;
+    }
+
+    private int[] piecesOfColor(Color color) {
+        // AtomicInteger è una classe che contiene un valore intero e permette
+        // che le operazioni di lettura e scrittura del valore intero sono thread-safe,
+        // il che significa che più thread possono accedere allo stesso oggetto AtomicInteger
+        // in modo sicuro senza dover sincronizzare manualmente l'accesso
+        AtomicInteger[] counters = new AtomicInteger[]{new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0)};
+        Game.getInstance().getBoard().getChildren().forEach(node -> {
+            Square square = (Square) node;
+            if (square.getPiece() != null) {
+                if (square.getPiece().color.equals(color))
+                    counters[0].getAndIncrement();
+                if (square.getPiece() instanceof Knight)
+                    counters[1].getAndIncrement();
+                if (square.getPiece() instanceof Bishop)
+                    counters[2].getAndIncrement();
+            }
+        });
+        int[] array = new int[counters.length];
+        for (int i = 0; i < counters.length; i++) {
+            array[i] = counters[i].get();
+        }
+        return array;
+    }
+
+
+    public void refreshAllPossibleMoves() {
         Game.getInstance().getBoard().getChildren().forEach(
                 node -> {
                     Square square = (Square) node;
@@ -170,9 +226,10 @@ public class Square extends StackPane {
     }
 
     private void showPossibleMoves(boolean bool) {
-        for (Position move : this.piece.possibleMoves) {
-            getSquareById(move.row, move.colomn).showSquareAsPossibleMove(bool);
-        }
+        if (this.piece != null)
+            for (Position move : this.piece.possibleMoves) {
+                getSquareById(move.row, move.colomn).showSquareAsPossibleMove(bool);
+            }
     }
 
     private void showSquareAsPossibleMove(boolean bool) {
@@ -185,7 +242,7 @@ public class Square extends StackPane {
         }
     }
 
-    private boolean movePiece(Position position) throws IOException {
+    public boolean movePiece(Position position) throws IOException {
 
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
@@ -225,6 +282,21 @@ public class Square extends StackPane {
             return false;
     }
 
+    public void moveUndo(Position position, int checkPawn) throws IOException {
+        Game.getInstance().setSelectedSquare(null);
+        deleteEffects();
+        if (this.getPiece() != null) {
+            Piece pezzo = this.getPiece();
+            pezzo.setPosition(position);
+            if (pezzo instanceof Pawn && pezzo.lastMove.colomn == checkPawn)
+                pezzo.lastMove = null;
+            else
+                pezzo.lastMove = new Position(this.row, this.col);
+            getSquareById(position.row, position.colomn).setPiece(pezzo);
+            deletePiece();
+        }
+    }
+
     private void deleteEffects() {
         Node child = this.getChildren().get(0);
         if (child instanceof ImageView imageView) {
@@ -239,7 +311,7 @@ public class Square extends StackPane {
         showPossibleMoves(false);
     }
 
-    private void deletePiece() throws IOException {
+    public void deletePiece() throws IOException {
         winGame();
         this.piece = null;
         this.setPieceImage(null);
