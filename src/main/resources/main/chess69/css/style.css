@@ -26,3 +26,26 @@
     -fx-text-fill: #B6B5B4;
     -fx-background-radius: 40px;
 }
+
+.list-view {
+    /* Imposta il colore di sfondo della ListView */
+    -fx-background-color: #312e2b;
+
+    /* Imposta il colore del testo della ListView */
+    -fx-text-fill: white;
+
+    /* Imposta il colore della selezione della ListView */
+    -fx-selection-bar: #444;
+
+    /* Imposta il colore del testo selezionato della ListView */
+    -fx-selection-bar-text: white;
+
+    /* Imposta il colore del bordo della ListView */
+    -fx-border-color: #555;
+}
+.list-view .list-cell {
+    /* Imposta lo sfondo dei figli della ListView */
+    -fx-background-color: #312e2b;
+    -fx-text-fill: #B6B5B4;
+    -fx-border-color: #555;
+}

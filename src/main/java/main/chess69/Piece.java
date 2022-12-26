@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class Piece {
     public Position position;
-    protected Position lastMove;
     public ArrayList<Position> possibleMoves;
     public Color color;
+    protected Position lastMove;
 
     public Piece() {
     }

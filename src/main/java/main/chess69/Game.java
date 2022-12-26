@@ -5,7 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 import java.awt.*;
 import java.io.IOException;
@@ -13,26 +15,26 @@ import java.util.ArrayList;
 
 public class Game {
 
+    private static Game instance;
+    public final Object lock = new Object();
     public ArrayList<Round> mossePartita = new ArrayList<>();
     public ListView<String> movesListView;
     public String selectedPieceForPromotion;
-    public final Object lock = new Object();
     public boolean promotion;
     public Player white;
     public Player black;
     private GridPane board;
     private Player currentPlayer;
     private Square selectedSquare;
-    private static Game instance;
 
 
     public Game(GridPane chessBoard, ListView<String> movesListView) throws IOException {
         instance = this;
-        instance.movesListView=movesListView;
-        instance.mossePartita=new ArrayList<>();
+        instance.movesListView = movesListView;
+        instance.mossePartita = new ArrayList<>();
         instance.board = chessBoard;
-        instance.black=new Player(Color.BLACK);
-        instance.white=new Player(Color.WHITE);
+        instance.black = new Player(Color.BLACK);
+        instance.white = new Player(Color.WHITE);
         instance.setCurrentPlayer(instance.white);
         ArrayList<Square> squares = new ArrayList<>();
 
@@ -80,6 +82,24 @@ public class Game {
                     System.out.println("cella selezionata vuota" + square.row + " " + square.col);
             });
         });
+    }
+
+    public static Square getNodeByCoordinate(int row, int col) {
+        int colNode, rowNode;
+        ObservableList<Node> children = instance.getBoard().getChildren();
+
+        for (Node node : children) {
+            if (node instanceof Square square) {
+                if (square.col == col && square.row == row) {
+                    return square;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Game getInstance() {
+        return instance;
     }
 
     public void fillBoard() throws IOException {
@@ -132,24 +152,6 @@ public class Game {
         squareById.setColorOfSquare();
     }
 
-    public static Square getNodeByCoordinate(int row, int col) {
-        int colNode, rowNode;
-        ObservableList<Node> children = instance.getBoard().getChildren();
-
-        for (Node node : children) {
-            if (node instanceof Square square) {
-                if (square.col == col && square.row == row) {
-                    return square;
-                }
-            }
-        }
-        return null;
-    }
-
-    private void setBoard(GridPane board) {
-        this.board = board;
-    }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -158,13 +160,12 @@ public class Game {
         this.currentPlayer = currentPlayer;
     }
 
-    public static Game getInstance() {
-        return instance;
-    }
-
-
     public GridPane getBoard() {
         return board;
+    }
+
+    private void setBoard(GridPane board) {
+        this.board = board;
     }
 
     public String getSelectedPieceForPromotion() {

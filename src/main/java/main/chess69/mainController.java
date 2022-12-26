@@ -5,11 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,12 +17,15 @@ import java.util.ResourceBundle;
 import static main.chess69.GameMain.primaryStage;
 
 public class mainController implements Initializable {
+    private static mainController instance;
     @FXML
     private Button exitButton = new Button();
     @FXML
     private Button playButton = new Button();
-    private static mainController instance;
 
+    public static mainController getInstance() {
+        return instance;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,11 +47,6 @@ public class mainController implements Initializable {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-    }
-
-
-    public static mainController getInstance() {
-        return instance;
     }
 
 

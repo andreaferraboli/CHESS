@@ -62,11 +62,11 @@ public class Bishop extends Piece {
                 if (!nextDiagonal) {
                     Square squareById = Square.getSquareById(x, y);
 
-                    if(squareById.getPiece() == null)
+                    if (squareById.getPiece() == null)
                         this.possibleMoves.add(new Position(x, y));
-                    else if ( !squareById.getPiece().getColor().equals(this.color)) {
+                    else if (!squareById.getPiece().getColor().equals(this.color)) {
                         this.possibleMoves.add(new Position(x, y));
-                        nextDiagonal=true;
+                        nextDiagonal = true;
                     } else
                         nextDiagonal = true;
                 }
@@ -76,10 +76,12 @@ public class Bishop extends Piece {
             nextDiagonal = false;
         }
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bb" : "wb";
     }
+
     public void setPosition(Position position) {
         this.position = position;
         getAllPossibleMoves();

@@ -3,7 +3,7 @@ package main.chess69;
 import java.util.HashMap;
 
 public class Position {
-    public static HashMap<Integer, Character> convention=new HashMap<>(){{
+    public static HashMap<Integer, Character> convention = new HashMap<>() {{
         put(0, 'a');
         put(1, 'b');
         put(2, 'c');
@@ -17,28 +17,28 @@ public class Position {
     public int row;
     public int colomn;
 
-    public Position(int row,int column) {
+    public Position(int row, int column) {
         this.colomn = column;
         this.row = row;
     }
-    public Position(String move){
-        this.colomn=move.indexOf(0);
-        this.row=move.indexOf(1);
+
+    public Position(String move) {
+        this.colomn = move.indexOf(0);
+        this.row = move.indexOf(1);
     }
 
     public Position() {
     }
 
-
-    public String getPos(){
-        return convention.get(this.colomn) + Integer.toString(colomn);
+    public static Position posToIndex(String move) {
+        Position position = new Position();
+        position.colomn = move.indexOf(0);
+        position.row = move.indexOf(1);
+        return position;
     }
 
-    public static Position posToIndex(String move){
-        Position position=new Position();
-        position.colomn=move.indexOf(0);
-        position.row=move.indexOf(1);
-        return position;
+    public String getPos() {
+        return convention.get(this.colomn) + Integer.toString(colomn);
     }
 
     @Override
@@ -51,8 +51,8 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Position pos) {
-            return this.colomn== pos.colomn && this.row== pos.row;
+        if (obj instanceof Position pos) {
+            return this.colomn == pos.colomn && this.row == pos.row;
         }
         return false;
     }

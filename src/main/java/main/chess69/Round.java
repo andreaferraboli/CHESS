@@ -34,4 +34,16 @@ public class Round {
     public void setMossa2(Mossa mossa2) {
         this.mossa2 = mossa2;
     }
+
+    @Override
+    public String toString() {
+        String string = String.valueOf(this.index);
+        if (mossa1 != null)
+            string += " " + mossa1;
+        if (mossa2 != null)
+            string += " " + mossa2;
+
+        return string;
+
+    }
 }

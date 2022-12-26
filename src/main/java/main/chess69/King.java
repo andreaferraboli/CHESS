@@ -35,23 +35,22 @@ public class King extends Piece {
                 if (Square.getSquareById(move.row, move.colomn).hasPiece()) {
                     if (!Square.getSquareById(move.row, move.colomn).getPiece().getColor().equals(this.color))
                         this.possibleMoves.add(move);
-                }
-                else {
+                } else {
                     //check arrocco
-                    if((move.row==x-2 || move.row==x+2)&& (this.color.equals(Color.black)?move.colomn==0:move.colomn==7)){
-                        Rook rookShort=(Rook) Square.getSquareById(7,y).getPiece();
-                        Rook rookLong=(Rook) Square.getSquareById(0,y).getPiece();
-                        if(this.lastMove==null)
-                            if(rookShort.lastMove==null)
-                            //arrocco corto
+                    if ((move.row == x - 2 || move.row == x + 2) && (this.color.equals(Color.black) ? move.colomn == 0 : move.colomn == 7)) {
+                        Rook rookShort = (Rook) Square.getSquareById(7, y).getPiece();
+                        Rook rookLong = (Rook) Square.getSquareById(0, y).getPiece();
+                        if (this.lastMove == null)
+                            if (rookShort.lastMove == null)
+                                //arrocco corto
                                 this.possibleMoves.add(move);
-                            else if (rookLong.lastMove==null && !Square.getSquareById(move.row-3, move.colomn).hasPiece()) {
+                            else if (rookLong.lastMove == null && !Square.getSquareById(move.row - 3, move.colomn).hasPiece()) {
                                 //arrocco lungo
                                 this.possibleMoves.add(move);
                             }
 
 
-                    } else{
+                    } else {
                         this.possibleMoves.add(move);
                     }
                 }
@@ -60,10 +59,12 @@ public class King extends Piece {
 
 
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bk" : "wk";
     }
+
     public void setPosition(Position position) {
         this.position = position;
         getAllPossibleMoves();

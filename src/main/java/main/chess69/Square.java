@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import static main.chess69.GameMain.primaryStage;
 
@@ -38,6 +39,22 @@ public class Square extends StackPane {
 
     public static Square getSquareById(int x, int y) {
         return Game.getNodeByCoordinate(x, y);
+    }
+
+    public static void removeCheckEffect() {
+        // Verifica se la casella contiene un Re
+        Game.getInstance().getBoard().getChildren().forEach(node -> {
+
+            Square square = (Square) node;
+            if (square.getPiece() instanceof King) {
+                // Verifica se la casella ha l'effetto di scacco
+                ImageView imageView = (ImageView) square.getChildren().get(2);
+                if (imageView.getImage() != null && imageView.getImage().getUrl().contains("check.png")) {
+                    // Rimuovi l'effetto di scacco dalla casella
+                    imageView.setImage(null);
+                }
+            }
+        });
     }
 
     public void setPieceImage() {
@@ -90,12 +107,16 @@ public class Square extends StackPane {
                 if (selectedSquare.movePiece(this.getPosition())) {
                     removeCheckEffect();
                     Player currentPlayer = Game.getInstance().getCurrentPlayer();
+                    ArrayList<Round> mossePartita = Game.getInstance().mossePartita;
                     if (currentPlayer.color.equals(Color.black)) {
-                        Game.getInstance().black.lastMove = new Mossa(this.row, this.col,this.piece);
+                        Game.getInstance().black.lastMove = new Mossa(this.row, this.col, this.piece);
+                        mossePartita.get(mossePartita.size() - 1).setMossa2(Game.getInstance().black.lastMove);
+                        Game.getInstance().movesListView.getItems().set(mossePartita.size() - 1, mossePartita.get(mossePartita.size() - 1).toString());
                         Game.getInstance().setCurrentPlayer(Game.getInstance().white);
                     } else {
-                        Game.getInstance().white.lastMove = new Mossa(this.row, this.col,this.piece);
-                        Game.getInstance().movesListView.getItems().add(Game.getInstance().mossePartita.get(0).getIndex(),"ciao");
+                        Game.getInstance().white.lastMove = new Mossa(this.row, this.col, this.piece);
+                        mossePartita.add(new Round(mossePartita.size() + 1, Game.getInstance().white.lastMove, null));
+                        Game.getInstance().movesListView.getItems().add(mossePartita.size() - 1, mossePartita.get(mossePartita.size() - 1).toString());
                         Game.getInstance().setCurrentPlayer(Game.getInstance().black);
                     }
                     selectedSquare.deletePiece();
@@ -156,8 +177,7 @@ public class Square extends StackPane {
 
     private void showSquareAsPossibleMove(boolean bool) {
         Node child = this.getChildren().get(1);
-        if (child instanceof ImageView) {
-            ImageView imageView = (ImageView) child;
+        if (child instanceof ImageView imageView) {
             if (bool) {
                 imageView.setImage(new Image(getClass().getResource("/main/chess69/board/selected.png").toExternalForm(), true));
             } else
@@ -167,7 +187,6 @@ public class Square extends StackPane {
 
     private boolean movePiece(Position position) throws IOException {
 
-        //TODO: implementare scacco con pezzo mangiante
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
         Piece pezzo = this.getPiece();
@@ -189,8 +208,7 @@ public class Square extends StackPane {
                 }
             }
             //controllo l'en passant
-            if (!getSquareById(position.row, position.colomn).hasPiece() && this.getPiece() instanceof Pawn)
-            {
+            if (!getSquareById(position.row, position.colomn).hasPiece() && this.getPiece() instanceof Pawn) {
                 if (position.row != this.row)
                     getSquareById(position.row, this.getPiece().color.equals(Color.BLACK) ? 4 : 3).deletePiece();
                 else if (position.colomn == 7 || position.colomn == 0) {
@@ -209,8 +227,7 @@ public class Square extends StackPane {
 
     private void deleteEffects() {
         Node child = this.getChildren().get(0);
-        if (child instanceof ImageView) {
-            ImageView imageView = (ImageView) child;
+        if (child instanceof ImageView imageView) {
             ColorAdjust color_adjust = new ColorAdjust();
             // set hue, saturation, brightness, and contrast
             color_adjust.setHue(0);
@@ -222,21 +239,6 @@ public class Square extends StackPane {
         showPossibleMoves(false);
     }
 
-    public static void removeCheckEffect() {
-        // Verifica se la casella contiene un Re
-        Game.getInstance().getBoard().getChildren().forEach(node->{
-
-            Square square=(Square)node;
-            if (square.getPiece() instanceof King) {
-                // Verifica se la casella ha l'effetto di scacco
-                ImageView imageView = (ImageView) square.getChildren().get(2);
-                if (imageView.getImage() != null && imageView.getImage().getUrl().contains("check.png")) {
-                    // Rimuovi l'effetto di scacco dalla casella
-                    imageView.setImage(null);
-                }
-            }
-        });
-    }
     private void deletePiece() throws IOException {
         winGame();
         this.piece = null;

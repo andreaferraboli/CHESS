@@ -53,11 +53,11 @@ public class Rook extends Piece {
                 }
                 if (!nextDiagonal) {
                     Square squareById = Square.getSquareById(x, y);
-                    if(!squareById.hasPiece()) {
+                    if (!squareById.hasPiece()) {
                         this.possibleMoves.add(new Position(x, y));
                     } else if (!squareById.getPiece().getColor().equals(this.color)) {
                         this.possibleMoves.add(new Position(x, y));
-                        nextDiagonal=true;
+                        nextDiagonal = true;
                     } else
                         nextDiagonal = true;
                 }
@@ -72,6 +72,7 @@ public class Rook extends Piece {
     public String toString() {
         return this.color.equals(Color.BLACK) ? "br" : "wr";
     }
+
     public void setPosition(Position position) {
         this.position = position;
         getAllPossibleMoves();

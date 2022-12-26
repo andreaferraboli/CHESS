@@ -2,19 +2,21 @@ package main.chess69;
 
 public class Mossa {
 
+    public Piece pezzo;
     int colomn;
     int row;
-    public Piece pezzo;
 
     public Mossa(int row, int colomn, Piece pezzo) {
         this.colomn = colomn;
         this.row = row;
         this.pezzo = pezzo;
     }
+
     public Mossa(int row, int colomn) {
         this.colomn = colomn;
         this.row = row;
     }
+
     public static String rowToChar(int row) {
         return String.valueOf(Position.convention.get(row));
     }
@@ -38,8 +40,7 @@ public class Mossa {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Mossa) {
-            Mossa move = (Mossa) obj;
+        if (obj instanceof Mossa move) {
             return this.colomn == move.colomn && this.row == move.row;
         }
         return false;

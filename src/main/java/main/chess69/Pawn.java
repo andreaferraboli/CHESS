@@ -38,14 +38,14 @@ public class Pawn extends Piece {
                             squareById = Square.getSquareById(x, 2);
                             if (!squareById.hasPiece()) {
                                 squareById = Square.getSquareById(x, 3);
-                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.BLACK) && squareById.getPiece().lastMove.equals(new Position(x, 1))&&Game.getInstance().black.lastMove.equals(new Mossa(squareById.getPiece().position.row,squareById.getPiece().position.colomn)))
+                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.BLACK) && squareById.getPiece().lastMove.equals(new Position(x, 1)) && Game.getInstance().black.lastMove.equals(new Mossa(squareById.getPiece().position.row, squareById.getPiece().position.colomn)))
                                     possibleMoves.add(new Position(x, 2));
                             }
                         } else if (this.getColor().equals(Color.BLACK) && this.position.colomn == 4) {
                             squareById = Square.getSquareById(x, 5);
                             if (!squareById.hasPiece()) {
                                 squareById = Square.getSquareById(x, 4);
-                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.WHITE) && squareById.getPiece().lastMove.equals(new Position(x, 6))&&Game.getInstance().white.lastMove.equals(new Mossa(squareById.getPiece().position.row,squareById.getPiece().position.colomn)))
+                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.WHITE) && squareById.getPiece().lastMove.equals(new Position(x, 6)) && Game.getInstance().white.lastMove.equals(new Mossa(squareById.getPiece().position.row, squareById.getPiece().position.colomn)))
                                     possibleMoves.add(new Position(x, 5));
                             }
                         }

@@ -1,7 +1,6 @@
 package main.chess69;
 
 
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -10,6 +9,7 @@ public class Knight extends Piece {
         super(position, color);
         getAllPossibleMoves();
     }
+
     @Override
     public void getAllPossibleMoves() {
         int x = position.row;
@@ -18,19 +18,19 @@ public class Knight extends Piece {
         ArrayList<Position> moves = new ArrayList<>();
 
 
-        moves.add(new Position(x+2,y+1));
-        moves.add(new Position(x-2,y+1));
-        moves.add(new Position(x+1,y+2));
-        moves.add(new Position(x-1,y+2));
-        moves.add(new Position(x+2,y-1));
-        moves.add(new Position(x-2,y-1));
-        moves.add(new Position(x+1,y-2));
-        moves.add(new Position(x-1,y-2));
+        moves.add(new Position(x + 2, y + 1));
+        moves.add(new Position(x - 2, y + 1));
+        moves.add(new Position(x + 1, y + 2));
+        moves.add(new Position(x - 1, y + 2));
+        moves.add(new Position(x + 2, y - 1));
+        moves.add(new Position(x - 2, y - 1));
+        moves.add(new Position(x + 1, y - 2));
+        moves.add(new Position(x - 1, y - 2));
 
 
-        for(Position move : moves){
+        for (Position move : moves) {
             Square squareById = Square.getSquareById(move.row, move.colomn);
-            if(squareById != null){
+            if (squareById != null) {
                 if (!squareById.hasPiece())
                     this.possibleMoves.add(move);
                 else if (!squareById.getPiece().getColor().equals(this.color)) {
@@ -41,6 +41,7 @@ public class Knight extends Piece {
 
 
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bn" : "wn";
