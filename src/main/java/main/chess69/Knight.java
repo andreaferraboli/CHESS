@@ -38,6 +38,7 @@ public class Knight extends Piece {
                 }
             }
         }
+        if(check)
             removeMovesCreateCheck();
 
 

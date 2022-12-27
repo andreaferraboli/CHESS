@@ -66,8 +66,8 @@ public class Rook extends Piece {
             y = position.colomn;
             nextDiagonal = false;
         }
+        if(check)
             removeMovesCreateCheck();
-
     }
 
     @Override

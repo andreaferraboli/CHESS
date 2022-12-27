@@ -27,6 +27,7 @@ public class Queen extends Piece {
         rook.getAllPossibleMoves(true);
         possibleMoves.addAll(rook.possibleMoves);
 
+        if(check)
             removeMovesCreateCheck();
 
     }

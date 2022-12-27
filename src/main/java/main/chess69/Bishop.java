@@ -75,7 +75,9 @@ public class Bishop extends Piece {
             y = position.colomn;
             nextDiagonal = false;
         }
+        if(check)
             removeMovesCreateCheck();
+
     }
 
     @Override

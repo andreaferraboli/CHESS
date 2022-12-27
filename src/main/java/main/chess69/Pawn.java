@@ -61,6 +61,7 @@ public class Pawn extends Piece {
                 }
             }
         }
+        if(check)
             removeMovesCreateCheck();
 
 

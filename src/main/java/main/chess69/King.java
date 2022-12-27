@@ -8,9 +8,10 @@ import java.util.ArrayList;
 public class King extends Piece {
 
     public boolean checked;
+
     public King(Position position, Color color) {
         super(position, color);
-        checked=false;
+        checked = false;
     }
 
     @Override
@@ -58,6 +59,7 @@ public class King extends Piece {
                 }
             }
         }
+        if(check)
             removeMovesCreateCheck();
 
 
@@ -68,7 +70,7 @@ public class King extends Piece {
         return this.color.equals(Color.BLACK) ? "bk" : "wk";
     }
 
-    public boolean isCheck(){
+    public boolean isCheck() {
         return checked;
     }
 

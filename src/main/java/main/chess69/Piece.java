@@ -1,6 +1,7 @@
 package main.chess69;
 
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 
 import java.awt.*;
 import java.io.IOException;
@@ -35,29 +36,37 @@ public class Piece {
         this.position = position;
         getAllPossibleMoves(true);
     }
-    public boolean tryPosition(Position position) throws IOException {
-        Position startPosition = this.position;
-        Piece piece=this;
-        Square.getSquareById(startPosition.row, startPosition.colomn).movePiece(position);
-        boolean bool=Square.getSquareById(startPosition.row, startPosition.colomn).pieceMakeCheck();
-        Square.getSquareById(position.row, position.colomn).moveUndo(startPosition,-1);
-        return bool;
-    }
+
     public void removeMovesCreateCheck() throws IOException {
-        for (Position position:this.possibleMoves)
-            if(createsDiscoveredCheck(position))
+        for (Position position : this.possibleMoves)
+            if (createsDiscoveredCheck(position))
                 this.possibleMoves.remove(position);
     }
+
+    private boolean createsDiscoveredCheck(Position position) throws IOException {
+        GridPane gridPane = Game.getInstance().getBoard();
+        Game.getNodeByCoordinate(this.position.row, this.position.colomn, gridPane).tryMovePiece(position, gridPane);
+        for (Node node : gridPane.getChildren()) {
+            Square square = (Square) node;
+            if (square.hasPiece()) {
+                square.getPiece().getAllPossibleMoves(false);
+                for (Position move : square.getPiece().possibleMoves) {
+                    Square squareById = Game.getNodeByCoordinate(move.row, move.colomn, gridPane);
+                    if (squareById.getPiece() instanceof King && !squareById.getPiece().color.equals(square.getPiece().color)) {
+                        return true;
+                    }
+                }
+
+            }
+
+        }
+        return false;
+    }
+
     protected Position lastMove() {
         return lastMove;
     }
 
-    public boolean createsDiscoveredCheck(Position newPosition) throws IOException {
-        // Salva la posizione attuale del pezzo
-        // Sposta il pezzo alla nuova posizione
-        return this.tryPosition(newPosition);
-
-    }
 
     private Square findKing() {
         // Cerca la casella con il re dello stesso colore
