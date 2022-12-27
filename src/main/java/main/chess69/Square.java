@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 import java.awt.*;
@@ -161,10 +162,8 @@ public class Square extends StackPane {
         if ((numberKnightBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberKnightWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1))
             return true;
         //pareggio se solo c'è un cavallo con i due re
-        if ((numberBishopBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberBishopWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1))
-            return true;
+        return (numberBishopBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberBishopWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1);
         //todo:implementare ulteriori situazioni di stallo
-        return false;
     }
 
     private int[] piecesOfColor(Color color) {
@@ -197,16 +196,16 @@ public class Square extends StackPane {
                 node -> {
                     Square square = (Square) node;
                     if (square.hasPiece()) {
-                        square.getPiece().getAllPossibleMoves(true);
+                        try {
+                            square.getPiece().getAllPossibleMoves(true);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         for (Position move : square.getPiece().possibleMoves) {
                             Square squareById = Square.getSquareById(move.row, move.colomn);
                             ImageView imageView = (ImageView) squareById.getChildren().get(2);
-                            if (squareById.getPiece() instanceof King) {
-                                King king=(King)squareById.getPiece();
-                                if(!squareById.getPiece().color.equals(square.getPiece().color))
-                                    king.setChecked(true);
-                                else
-                                    king.setChecked(false);
+                            if (squareById.getPiece() instanceof King king) {
+                                king.setChecked(!squareById.getPiece().color.equals(square.getPiece().color));
                                 imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
                             } else
                                 imageView.setImage(null);
@@ -291,6 +290,19 @@ public class Square extends StackPane {
             return true;
         } else
             return false;
+    }
+
+    public void tryMovePiece(Position position, GridPane gridPane) throws IOException {
+
+        Piece pezzo = this.getPiece();
+        if (pezzo != null) {
+            if (Utils.hasPosition(pezzo.possibleMoves, position)) {
+                pezzo.setPosition(position);
+                pezzo.lastMove = new Position(this.row, this.col);
+                Game.getNodeByCoordinate(position.row, position.colomn, gridPane).setPiece(pezzo);
+                deletePiece();
+            }
+        }
     }
 
     public void moveUndo(Position position, int checkPawn) throws IOException {

@@ -98,6 +98,19 @@ public class Game {
         return null;
     }
 
+    public static Square getNodeByCoordinate(int row, int col, GridPane grid) {
+        ObservableList<Node> children = grid.getChildren();
+
+        for (Node node : children) {
+            if (node instanceof Square square) {
+                if (square.col == col && square.row == row) {
+                    return square;
+                }
+            }
+        }
+        return null;
+    }
+
     public static Game getInstance() {
         return instance;
     }
@@ -135,7 +148,7 @@ public class Game {
         addPiece(new Queen(new Position(3, 0), java.awt.Color.black));
         addPiece(new Queen(new Position(3, 7), java.awt.Color.white));
 
-        Square square=new Square();
+        Square square = new Square();
         square.refreshAllPossibleMoves();
 
     }

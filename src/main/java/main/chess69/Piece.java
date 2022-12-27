@@ -1,8 +1,10 @@
 package main.chess69;
 
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Piece {
@@ -19,7 +21,7 @@ public class Piece {
         this.color = color;
     }
 
-    public void getAllPossibleMoves(boolean check) {
+    public void getAllPossibleMoves(boolean check) throws IOException {
     }
 
     public Color getColor() {
@@ -30,42 +32,41 @@ public class Piece {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Position position) throws IOException {
         this.position = position;
         getAllPossibleMoves(true);
     }
-    public void tryPosition(Position position) {
-        this.position = position;
-        getAllPossibleMoves(false);
-    }
-    public void removeMovesCreateCheck(){
-        for (Position position:this.possibleMoves)
-            if(createsDiscoveredCheck(position))
+
+    public void removeMovesCreateCheck() throws IOException {
+        for (Position position : this.possibleMoves)
+            if (createsDiscoveredCheck(position))
                 this.possibleMoves.remove(position);
     }
+
+    private boolean createsDiscoveredCheck(Position position) throws IOException {
+        GridPane gridPane = Game.getInstance().getBoard();
+        Game.getNodeByCoordinate(this.position.row, this.position.colomn, gridPane).tryMovePiece(position, gridPane);
+        for (Node node : gridPane.getChildren()) {
+            Square square = (Square) node;
+            if (square.hasPiece()) {
+                square.getPiece().getAllPossibleMoves(false);
+                for (Position move : square.getPiece().possibleMoves) {
+                    Square squareById = Game.getNodeByCoordinate(move.row, move.colomn, gridPane);
+                    if (squareById.getPiece() instanceof King && !squareById.getPiece().color.equals(square.getPiece().color)) {
+                        return true;
+                    }
+                }
+
+            }
+
+        }
+        return false;
+    }
+
     protected Position lastMove() {
         return lastMove;
     }
 
-    public boolean createsDiscoveredCheck(Position newPosition) {
-        // Salva la posizione attuale del pezzo
-        Position currentPosition = this.getPosition();
-        // Sposta il pezzo alla nuova posizione
-        this.tryPosition(newPosition);
-        // Trova il re avversario
-        Square kingSquare = findKing();
-        King king = null;
-        if (kingSquare != null) {
-            king = (King) kingSquare.getPiece();
-            // Verifica se il re avversario è sotto scacco
-            boolean check = king.isCheck();
-            // Riporta il pezzo alla sua posizione originale
-            this.tryPosition(currentPosition);
-            // Restituisci il risultato della verifica
-            return check;
-        }
-        return true;
-    }
 
     private Square findKing() {
         // Cerca la casella con il re dello stesso colore

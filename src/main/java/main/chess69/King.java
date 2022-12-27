@@ -2,18 +2,20 @@ package main.chess69;
 
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class King extends Piece {
 
     public boolean checked;
+
     public King(Position position, Color color) {
         super(position, color);
-        checked=false;
+        checked = false;
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) {
+    public void getAllPossibleMoves(boolean check) throws IOException {
         int x = position.row;
         int y = position.colomn;
         ArrayList<Position> moves = new ArrayList<>();
@@ -57,7 +59,7 @@ public class King extends Piece {
                 }
             }
         }
-        if (check)
+        if(check)
             removeMovesCreateCheck();
 
 
@@ -68,7 +70,7 @@ public class King extends Piece {
         return this.color.equals(Color.BLACK) ? "bk" : "wk";
     }
 
-    public boolean isCheck(){
+    public boolean isCheck() {
         return checked;
     }
 
@@ -77,7 +79,7 @@ public class King extends Piece {
         this.checked = checked;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Position position) throws IOException {
         this.position = position;
         getAllPossibleMoves(true);
     }

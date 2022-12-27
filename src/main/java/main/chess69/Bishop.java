@@ -2,6 +2,7 @@ package main.chess69;
 
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Bishop extends Piece {
@@ -15,7 +16,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) {
+    public void getAllPossibleMoves(boolean check) throws IOException {
         int x = position.row;
         int y = position.colomn;
 
@@ -74,8 +75,9 @@ public class Bishop extends Piece {
             y = position.colomn;
             nextDiagonal = false;
         }
-        if (check)
+        if(check)
             removeMovesCreateCheck();
+
     }
 
     @Override
@@ -83,7 +85,7 @@ public class Bishop extends Piece {
         return this.color.equals(Color.BLACK) ? "bb" : "wb";
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Position position) throws IOException {
         this.position = position;
         getAllPossibleMoves(true);
     }
