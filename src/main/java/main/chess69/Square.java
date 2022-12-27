@@ -38,6 +38,10 @@ public class Square extends StackPane {
         this.piece = null;
     }
 
+    public Square() {
+
+    }
+
     public static Square getSquareById(int x, int y) {
         return Game.getNodeByCoordinate(x, y);
     }
@@ -193,11 +197,16 @@ public class Square extends StackPane {
                 node -> {
                     Square square = (Square) node;
                     if (square.hasPiece()) {
-                        square.getPiece().getAllPossibleMoves();
+                        square.getPiece().getAllPossibleMoves(true);
                         for (Position move : square.getPiece().possibleMoves) {
                             Square squareById = Square.getSquareById(move.row, move.colomn);
                             ImageView imageView = (ImageView) squareById.getChildren().get(2);
-                            if (squareById.getPiece() instanceof King && !squareById.getPiece().color.equals(square.getPiece().color)) {
+                            if (squareById.getPiece() instanceof King) {
+                                King king=(King)squareById.getPiece();
+                                if(!squareById.getPiece().color.equals(square.getPiece().color))
+                                    king.setChecked(true);
+                                else
+                                    king.setChecked(false);
                                 imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
                             } else
                                 imageView.setImage(null);
@@ -225,6 +234,7 @@ public class Square extends StackPane {
             showPossibleMoves(true);
         }
     }
+
 
     private void showPossibleMoves(boolean bool) {
         if (this.piece != null)

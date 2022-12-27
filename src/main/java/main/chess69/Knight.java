@@ -7,11 +7,10 @@ import java.util.ArrayList;
 public class Knight extends Piece {
     public Knight(Position position, Color color) {
         super(position, color);
-        getAllPossibleMoves();
     }
 
     @Override
-    public void getAllPossibleMoves() {
+    public void getAllPossibleMoves(boolean check) {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();
@@ -38,6 +37,8 @@ public class Knight extends Piece {
                 }
             }
         }
+        if (check)
+            removeMovesCreateCheck();
 
 
     }
@@ -49,6 +50,6 @@ public class Knight extends Piece {
 
     public void setPosition(Position position) {
         this.position = position;
-        getAllPossibleMoves();
+        getAllPossibleMoves(true);
     }
 }

@@ -8,7 +8,6 @@ public class Bishop extends Piece {
 
     public Bishop(Position position, Color color) {
         super(position, color);
-        getAllPossibleMoves();
     }
 
     public Bishop() {
@@ -16,7 +15,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves() {
+    public void getAllPossibleMoves(boolean check) {
         int x = position.row;
         int y = position.colomn;
 
@@ -75,6 +74,8 @@ public class Bishop extends Piece {
             y = position.colomn;
             nextDiagonal = false;
         }
+        if (check)
+            removeMovesCreateCheck();
     }
 
     @Override
@@ -84,7 +85,7 @@ public class Bishop extends Piece {
 
     public void setPosition(Position position) {
         this.position = position;
-        getAllPossibleMoves();
+        getAllPossibleMoves(true);
     }
 
 }

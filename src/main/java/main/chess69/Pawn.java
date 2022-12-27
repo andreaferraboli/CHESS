@@ -8,11 +8,10 @@ public class Pawn extends Piece {
 
     public Pawn(Position position, Color color) {
         super(position, color);
-        getAllPossibleMoves();
     }
 
     @Override
-    public void getAllPossibleMoves() {
+    public void getAllPossibleMoves(boolean check) {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();
@@ -61,6 +60,9 @@ public class Pawn extends Piece {
                 }
             }
         }
+        if (check)
+            removeMovesCreateCheck();
+
 
     }
 
@@ -71,7 +73,7 @@ public class Pawn extends Piece {
 
     public void setPosition(Position position) {
         this.position = position;
-        getAllPossibleMoves();
+        getAllPossibleMoves(true);
     }
 }
 

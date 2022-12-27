@@ -6,13 +6,14 @@ import java.util.ArrayList;
 
 public class King extends Piece {
 
+    public boolean checked;
     public King(Position position, Color color) {
         super(position, color);
-        getAllPossibleMoves();
+        checked=false;
     }
 
     @Override
-    public void getAllPossibleMoves() {
+    public void getAllPossibleMoves(boolean check) {
         int x = position.row;
         int y = position.colomn;
         ArrayList<Position> moves = new ArrayList<>();
@@ -56,6 +57,8 @@ public class King extends Piece {
                 }
             }
         }
+        if (check)
+            removeMovesCreateCheck();
 
 
     }
@@ -65,8 +68,17 @@ public class King extends Piece {
         return this.color.equals(Color.BLACK) ? "bk" : "wk";
     }
 
+    public boolean isCheck(){
+        return checked;
+    }
+
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     public void setPosition(Position position) {
         this.position = position;
-        getAllPossibleMoves();
+        getAllPossibleMoves(true);
     }
 }

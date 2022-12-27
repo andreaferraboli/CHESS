@@ -134,7 +134,9 @@ public class Game {
         //create queens
         addPiece(new Queen(new Position(3, 0), java.awt.Color.black));
         addPiece(new Queen(new Position(3, 7), java.awt.Color.white));
-        //create pawns
+
+        Square square=new Square();
+        square.refreshAllPossibleMoves();
 
     }
 

@@ -9,11 +9,10 @@ public class Rook extends Piece {
 
     public Rook(Position position, Color color) {
         super(position, color);
-        getAllPossibleMoves();
     }
 
     @Override
-    public void getAllPossibleMoves() {
+    public void getAllPossibleMoves(boolean check) {
         int x = this.position.row;
         int y = this.position.colomn;
         this.possibleMoves = new ArrayList<>();
@@ -66,6 +65,9 @@ public class Rook extends Piece {
             y = position.colomn;
             nextDiagonal = false;
         }
+        if (check)
+            removeMovesCreateCheck();
+
     }
 
     @Override
@@ -75,6 +77,6 @@ public class Rook extends Piece {
 
     public void setPosition(Position position) {
         this.position = position;
-        getAllPossibleMoves();
+        getAllPossibleMoves(true);
     }
 }

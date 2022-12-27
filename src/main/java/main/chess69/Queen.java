@@ -10,20 +10,24 @@ public class Queen extends Piece {
 
     public Queen(Position position, Color color) {
         super(position, color);
-        getAllPossibleMoves();
+
     }
 
     @Override
-    public void getAllPossibleMoves() {
+    public void getAllPossibleMoves(boolean check) {
 
         this.possibleMoves = new ArrayList<>();
 
         //queen is like having a bishop and a rook
         Bishop bishop = new Bishop(this.position, this.getColor());
+        bishop.getAllPossibleMoves(true);
         possibleMoves.addAll(bishop.possibleMoves);
         Rook rook = new Rook(this.position, this.getColor());
+        rook.getAllPossibleMoves(true);
         possibleMoves.addAll(rook.possibleMoves);
 
+        if (check)
+            removeMovesCreateCheck();
 
     }
 
@@ -34,6 +38,6 @@ public class Queen extends Piece {
 
     public void setPosition(Position position) {
         this.position = position;
-        getAllPossibleMoves();
+        getAllPossibleMoves(true);
     }
 }
