@@ -45,14 +45,15 @@ public class Piece {
 
     private boolean createsDiscoveredCheck(Position position) throws IOException {
         GridPane gridPane = Game.getInstance().getBoard();
-        Game.getNodeByCoordinate(this.position.row, this.position.colomn, gridPane).tryMovePiece(position, gridPane);
-        for (Node node : gridPane.getChildren()) {
+        Square.getSquareById(this.position.row, this.position.colomn).movePiece(position);
+        for (Node node : Game.getInstance().getBoard().getChildren()) {
             Square square = (Square) node;
             if (square.hasPiece()) {
                 square.getPiece().getAllPossibleMoves(false);
                 for (Position move : square.getPiece().possibleMoves) {
-                    Square squareById = Game.getNodeByCoordinate(move.row, move.colomn, gridPane);
+                    Square squareById = Square.getSquareById(move.row, move.colomn);
                     if (squareById.getPiece() instanceof King && !squareById.getPiece().color.equals(square.getPiece().color)) {
+                        Game.getInstance().setBoard(gridPane);
                         return true;
                     }
                 }
@@ -60,6 +61,7 @@ public class Piece {
             }
 
         }
+        Game.getInstance().setBoard(gridPane);
         return false;
     }
 

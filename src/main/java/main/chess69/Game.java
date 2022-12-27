@@ -179,7 +179,7 @@ public class Game {
         return board;
     }
 
-    private void setBoard(GridPane board) {
+    public void setBoard(GridPane board) {
         this.board = board;
     }
 

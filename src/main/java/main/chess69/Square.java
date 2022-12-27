@@ -192,28 +192,28 @@ public class Square extends StackPane {
 
 
     public void refreshAllPossibleMoves() {
-        Game.getInstance().getBoard().getChildren().forEach(
-                node -> {
-                    Square square = (Square) node;
-                    if (square.hasPiece()) {
-                        try {
-                            square.getPiece().getAllPossibleMoves(true);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        for (Position move : square.getPiece().possibleMoves) {
-                            Square squareById = Square.getSquareById(move.row, move.colomn);
-                            ImageView imageView = (ImageView) squareById.getChildren().get(2);
-                            if (squareById.getPiece() instanceof King king) {
-                                king.setChecked(!squareById.getPiece().color.equals(square.getPiece().color));
-                                imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
-                            } else
-                                imageView.setImage(null);
-                        }
-
-                    }
+        for (Node node : Game.getInstance().getBoard().getChildren()) {
+            Square square = (Square) node;
+            if (square.hasPiece()) {
+                try {
+                    square.getPiece().getAllPossibleMoves(true);
+                    //todo:after this,the square has not pieces zio porco
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-        );
+                for (Position move : square.getPiece().possibleMoves) {
+                    Square squareById = Square.getSquareById(move.row, move.colomn);
+                    ImageView imageView = (ImageView) squareById.getChildren().get(2);
+                    if (squareById.getPiece() instanceof King king) {
+                        king.setChecked(!squareById.getPiece().color.equals(square.getPiece().color));
+                        imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
+                    } else
+                        imageView.setImage(null);
+                }
+
+            }
+        }
+
     }
 
     public boolean hasPiece() {
@@ -257,39 +257,42 @@ public class Square extends StackPane {
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
         Piece pezzo = this.getPiece();
-        if (Utils.hasPosition(this.piece.possibleMoves, position)) {
-            //controllo arrocco
-            if ((position.row == 6 || position.row == 2) && this.getPiece() instanceof King && this.getPiece().lastMove == null) {
-                int y;
-                if (this.getPiece().color.equals(Color.black)) {
-                    y = 0;
-                } else {
-                    y = 7;
+        if (pezzo != null) {
+            if (Utils.hasPosition(pezzo.possibleMoves, position)) {
+                //controllo arrocco
+                if ((position.row == 6 || position.row == 2) && this.getPiece() instanceof King && this.getPiece().lastMove == null) {
+                    int y;
+                    if (this.getPiece().color.equals(Color.black)) {
+                        y = 0;
+                    } else {
+                        y = 7;
+                    }
+                    if (position.row == 2) {
+                        Square.getSquareById(0, y).deletePiece();
+                        Square.getSquareById(3, y).setPiece(new Rook(new Position(3, y), this.getPiece().color));
+                    } else {
+                        Square.getSquareById(7, y).deletePiece();
+                        Square.getSquareById(5, y).setPiece(new Rook(new Position(5, y), this.getPiece().color));
+                    }
                 }
-                if (position.row == 2) {
-                    Square.getSquareById(0, y).deletePiece();
-                    Square.getSquareById(3, y).setPiece(new Rook(new Position(3, y), this.getPiece().color));
-                } else {
-                    Square.getSquareById(7, y).deletePiece();
-                    Square.getSquareById(5, y).setPiece(new Rook(new Position(5, y), this.getPiece().color));
+                //controllo l'en passant
+                if (!getSquareById(position.row, position.colomn).hasPiece() && this.getPiece() instanceof Pawn) {
+                    if (position.row != this.row)
+                        getSquareById(position.row, this.getPiece().color.equals(Color.BLACK) ? 4 : 3).deletePiece();
+                    else if (position.colomn == 7 || position.colomn == 0) {
+                        //promozione
+                        pezzo = new Queen(position, this.getPiece().color);
+                    }
                 }
-            }
-            //controllo l'en passant
-            if (!getSquareById(position.row, position.colomn).hasPiece() && this.getPiece() instanceof Pawn) {
-                if (position.row != this.row)
-                    getSquareById(position.row, this.getPiece().color.equals(Color.BLACK) ? 4 : 3).deletePiece();
-                else if (position.colomn == 7 || position.colomn == 0) {
-                    //promozione
-                    pezzo = new Queen(position, this.getPiece().color);
-                }
-            }
-            pezzo.setPosition(position);
-            pezzo.lastMove = new Position(this.row, this.col);
-            getSquareById(position.row, position.colomn).setPiece(pezzo);
-            deletePiece();
-            return true;
-        } else
-            return false;
+                pezzo.setPosition(position);
+                pezzo.lastMove = new Position(this.row, this.col);
+                getSquareById(position.row, position.colomn).setPiece(pezzo);
+                deletePiece();
+                return true;
+            } else
+                return false;
+        }
+        return false;
     }
 
     public void tryMovePiece(Position position, GridPane gridPane) throws IOException {
