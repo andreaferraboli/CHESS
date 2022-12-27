@@ -3,6 +3,7 @@ package main.chess69;
 import javafx.scene.Node;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Piece {
@@ -19,7 +20,7 @@ public class Piece {
         this.color = color;
     }
 
-    public void getAllPossibleMoves(boolean check) {
+    public void getAllPossibleMoves(boolean check) throws IOException {
     }
 
     public Color getColor() {
@@ -30,15 +31,19 @@ public class Piece {
         return position;
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Position position) throws IOException {
         this.position = position;
         getAllPossibleMoves(true);
     }
-    public void tryPosition(Position position) {
-        this.position = position;
-        getAllPossibleMoves(false);
+    public boolean tryPosition(Position position) throws IOException {
+        Position startPosition = this.position;
+        Piece piece=this;
+        Square.getSquareById(startPosition.row, startPosition.colomn).movePiece(position);
+        boolean bool=Square.getSquareById(startPosition.row, startPosition.colomn).pieceMakeCheck();
+        Square.getSquareById(position.row, position.colomn).moveUndo(startPosition,-1);
+        return bool;
     }
-    public void removeMovesCreateCheck(){
+    public void removeMovesCreateCheck() throws IOException {
         for (Position position:this.possibleMoves)
             if(createsDiscoveredCheck(position))
                 this.possibleMoves.remove(position);
@@ -47,24 +52,11 @@ public class Piece {
         return lastMove;
     }
 
-    public boolean createsDiscoveredCheck(Position newPosition) {
+    public boolean createsDiscoveredCheck(Position newPosition) throws IOException {
         // Salva la posizione attuale del pezzo
-        Position currentPosition = this.getPosition();
         // Sposta il pezzo alla nuova posizione
-        this.tryPosition(newPosition);
-        // Trova il re avversario
-        Square kingSquare = findKing();
-        King king = null;
-        if (kingSquare != null) {
-            king = (King) kingSquare.getPiece();
-            // Verifica se il re avversario è sotto scacco
-            boolean check = king.isCheck();
-            // Riporta il pezzo alla sua posizione originale
-            this.tryPosition(currentPosition);
-            // Restituisci il risultato della verifica
-            return check;
-        }
-        return true;
+        return this.tryPosition(newPosition);
+
     }
 
     private Square findKing() {

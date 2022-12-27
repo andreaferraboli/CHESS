@@ -2,6 +2,7 @@ package main.chess69;
 
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Knight extends Piece {
@@ -10,7 +11,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) {
+    public void getAllPossibleMoves(boolean check) throws IOException {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();
@@ -37,7 +38,6 @@ public class Knight extends Piece {
                 }
             }
         }
-        if (check)
             removeMovesCreateCheck();
 
 
@@ -48,7 +48,7 @@ public class Knight extends Piece {
         return this.color.equals(Color.BLACK) ? "bn" : "wn";
     }
 
-    public void setPosition(Position position) {
+    public void setPosition(Position position) throws IOException {
         this.position = position;
         getAllPossibleMoves(true);
     }

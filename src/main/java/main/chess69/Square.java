@@ -197,17 +197,21 @@ public class Square extends StackPane {
                 node -> {
                     Square square = (Square) node;
                     if (square.hasPiece()) {
-                        square.getPiece().getAllPossibleMoves(true);
+                        try {
+                            square.getPiece().getAllPossibleMoves(true);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         for (Position move : square.getPiece().possibleMoves) {
                             Square squareById = Square.getSquareById(move.row, move.colomn);
                             ImageView imageView = (ImageView) squareById.getChildren().get(2);
                             if (squareById.getPiece() instanceof King) {
-                                King king=(King)squareById.getPiece();
-                                if(!squareById.getPiece().color.equals(square.getPiece().color))
+                                King king = (King) squareById.getPiece();
+                                if (!squareById.getPiece().color.equals(square.getPiece().color)) {
                                     king.setChecked(true);
-                                else
+                                    imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
+                                } else
                                     king.setChecked(false);
-                                imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
                             } else
                                 imageView.setImage(null);
                         }
@@ -258,39 +262,42 @@ public class Square extends StackPane {
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
         Piece pezzo = this.getPiece();
-        if (Utils.hasPosition(this.piece.possibleMoves, position)) {
-            //controllo arrocco
-            if ((position.row == 6 || position.row == 2) && this.getPiece() instanceof King && this.getPiece().lastMove == null) {
-                int y;
-                if (this.getPiece().color.equals(Color.black)) {
-                    y = 0;
-                } else {
-                    y = 7;
+        if (pezzo != null) {
+            if (Utils.hasPosition(this.piece.possibleMoves, position)) {
+                //controllo arrocco
+                if ((position.row == 6 || position.row == 2) && this.getPiece() instanceof King && this.getPiece().lastMove == null) {
+                    int y;
+                    if (this.getPiece().color.equals(Color.black)) {
+                        y = 0;
+                    } else {
+                        y = 7;
+                    }
+                    if (position.row == 2) {
+                        Square.getSquareById(0, y).deletePiece();
+                        Square.getSquareById(3, y).setPiece(new Rook(new Position(3, y), this.getPiece().color));
+                    } else {
+                        Square.getSquareById(7, y).deletePiece();
+                        Square.getSquareById(5, y).setPiece(new Rook(new Position(5, y), this.getPiece().color));
+                    }
                 }
-                if (position.row == 2) {
-                    Square.getSquareById(0, y).deletePiece();
-                    Square.getSquareById(3, y).setPiece(new Rook(new Position(3, y), this.getPiece().color));
-                } else {
-                    Square.getSquareById(7, y).deletePiece();
-                    Square.getSquareById(5, y).setPiece(new Rook(new Position(5, y), this.getPiece().color));
+                //controllo l'en passant
+                if (!getSquareById(position.row, position.colomn).hasPiece() && this.getPiece() instanceof Pawn) {
+                    if (position.row != this.row)
+                        getSquareById(position.row, this.getPiece().color.equals(Color.BLACK) ? 4 : 3).deletePiece();
+                    else if (position.colomn == 7 || position.colomn == 0) {
+                        //promozione
+                        pezzo = new Queen(position, this.getPiece().color);
+                    }
                 }
-            }
-            //controllo l'en passant
-            if (!getSquareById(position.row, position.colomn).hasPiece() && this.getPiece() instanceof Pawn) {
-                if (position.row != this.row)
-                    getSquareById(position.row, this.getPiece().color.equals(Color.BLACK) ? 4 : 3).deletePiece();
-                else if (position.colomn == 7 || position.colomn == 0) {
-                    //promozione
-                    pezzo = new Queen(position, this.getPiece().color);
-                }
-            }
-            pezzo.setPosition(position);
-            pezzo.lastMove = new Position(this.row, this.col);
-            getSquareById(position.row, position.colomn).setPiece(pezzo);
-            deletePiece();
-            return true;
-        } else
-            return false;
+                pezzo.setPosition(position);
+                pezzo.lastMove = new Position(this.row, this.col);
+                getSquareById(position.row, position.colomn).setPiece(pezzo);
+                deletePiece();
+                return true;
+            } else
+                return false;
+        }
+        return false;
     }
 
     public void moveUndo(Position position, int checkPawn) throws IOException {
@@ -354,4 +361,31 @@ public class Square extends StackPane {
     public boolean equals(Square obj) {
         return (this.row == obj.row && this.col == obj.col);
     }
+
+    public boolean pieceMakeCheck() {
+        AtomicInteger check = new AtomicInteger();
+        Game.getInstance().getBoard().getChildren().forEach(
+                node -> {
+
+                    Square square = (Square) node;
+                    if (square.hasPiece()) {
+                        try {
+                            square.getPiece().getAllPossibleMoves(true);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        for (Position move : square.getPiece().possibleMoves) {
+                            Square squareById = Square.getSquareById(move.row, move.colomn);
+                            if (squareById.getPiece() instanceof King && !squareById.getPiece().color.equals(square.getPiece().color)) {
+                                check.set(1);
+                            }
+                        }
+
+                    }
+                }
+        );
+        return check.get() == 1;
+    }
+
 }
+
