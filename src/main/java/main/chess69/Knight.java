@@ -49,8 +49,5 @@ public class Knight extends Piece {
         return this.color.equals(Color.BLACK) ? "bn" : "wn";
     }
 
-    public void setPosition(Position position) throws IOException {
-        this.position = position;
-        getAllPossibleMoves(true);
-    }
+
 }

@@ -21,10 +21,10 @@ public class Queen extends Piece {
 
         //queen is like having a bishop and a rook
         Bishop bishop = new Bishop(this.position, this.getColor());
-        bishop.getAllPossibleMoves(true);
+        bishop.getAllPossibleMoves(check);
         possibleMoves.addAll(bishop.possibleMoves);
         Rook rook = new Rook(this.position, this.getColor());
-        rook.getAllPossibleMoves(true);
+        rook.getAllPossibleMoves(check);
         possibleMoves.addAll(rook.possibleMoves);
 
         if(check)
@@ -37,8 +37,5 @@ public class Queen extends Piece {
         return this.color.equals(Color.BLACK) ? "bq" : "wq";
     }
 
-    public void setPosition(Position position) throws IOException {
-        this.position = position;
-        getAllPossibleMoves(true);
-    }
+
 }

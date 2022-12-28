@@ -75,8 +75,5 @@ public class Rook extends Piece {
         return this.color.equals(Color.BLACK) ? "br" : "wr";
     }
 
-    public void setPosition(Position position) throws IOException {
-        this.position = position;
-        getAllPossibleMoves(true);
-    }
+
 }

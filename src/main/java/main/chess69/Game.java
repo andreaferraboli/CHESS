@@ -149,7 +149,7 @@ public class Game {
         addPiece(new Queen(new Position(3, 7), java.awt.Color.white));
 
         Square square = new Square();
-        square.refreshAllPossibleMoves();
+        square.refreshAllPossibleMoves(false);
 
     }
 

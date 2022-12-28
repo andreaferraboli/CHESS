@@ -60,7 +60,7 @@ public class gameController {
         squareById.moveUndo(lastMove.pezzo.lastMove, checkPawn);
         Square.removeCheckEffect();
         squareById.deletePiece();
-        squareById.refreshAllPossibleMoves();
+        squareById.refreshAllPossibleMoves(false);
         if (currentPlayer.color.equals(Color.black))
             Game.getInstance().setCurrentPlayer(Game.getInstance().white);
         else

@@ -85,10 +85,7 @@ public class Bishop extends Piece {
         return this.color.equals(Color.BLACK) ? "bb" : "wb";
     }
 
-    public void setPosition(Position position) throws IOException {
-        this.position = position;
-        getAllPossibleMoves(true);
-    }
+
 
 }
 

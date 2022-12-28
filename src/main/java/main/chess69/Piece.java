@@ -34,7 +34,7 @@ public class Piece {
 
     public void setPosition(Position position) throws IOException {
         this.position = position;
-        getAllPossibleMoves(true);
+        getAllPossibleMoves(false);
     }
 
     public void removeMovesCreateCheck() throws IOException {
@@ -44,25 +44,14 @@ public class Piece {
     }
 
     private boolean createsDiscoveredCheck(Position position) throws IOException {
+        boolean isChecked;
         GridPane gridPane = Game.getInstance().getBoard();
-        Square.getSquareById(this.position.row, this.position.colomn).movePiece(position);
-        for (Node node : Game.getInstance().getBoard().getChildren()) {
-            Square square = (Square) node;
-            if (square.hasPiece()) {
-                square.getPiece().getAllPossibleMoves(false);
-                for (Position move : square.getPiece().possibleMoves) {
-                    Square squareById = Square.getSquareById(move.row, move.colomn);
-                    if (squareById.getPiece() instanceof King && !squareById.getPiece().color.equals(square.getPiece().color)) {
-                        Game.getInstance().setBoard(gridPane);
-                        return true;
-                    }
-                }
-
-            }
-
-        }
+        Square.getSquareById(this.position.row, this.position.colomn).tryMovePiece(position);
+        King king=(King) findKing().getPiece();
+        isChecked= king.isCheck();
+        Square.getSquareById(this.position.row, this.position.colomn).moveUndo(position,-1);
         Game.getInstance().setBoard(gridPane);
-        return false;
+        return isChecked;
     }
 
     protected Position lastMove() {

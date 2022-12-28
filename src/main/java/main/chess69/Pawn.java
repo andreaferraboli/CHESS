@@ -72,9 +72,6 @@ public class Pawn extends Piece {
         return this.color.equals(Color.BLACK) ? "bp" : "wp";
     }
 
-    public void setPosition(Position position) throws IOException {
-        this.position = position;
-        getAllPossibleMoves(true);
-    }
+
 }
 

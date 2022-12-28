@@ -127,7 +127,7 @@ public class Square extends StackPane {
                     }
                     //todo:implementa presa del pezzo come mossa e fix reverso con pezzo mangiante
                     selectedSquare.deletePiece();
-                    refreshAllPossibleMoves();
+                    refreshAllPossibleMoves(true);
                     if (isDraw()) {
                         URL url = new File("src/main/resources/main/chess69/draw.fxml").toURI().toURL();
                         Parent root = FXMLLoader.load(url);
@@ -191,21 +191,23 @@ public class Square extends StackPane {
     }
 
 
-    public void refreshAllPossibleMoves() {
+    public void refreshAllPossibleMoves(boolean check) {
         for (Node node : Game.getInstance().getBoard().getChildren()) {
             Square square = (Square) node;
             if (square.hasPiece()) {
+                System.out.println("prima"+square.getPiece().toString());
                 try {
-                    square.getPiece().getAllPossibleMoves(true);
+                    square.getPiece().getAllPossibleMoves(check);
                     //todo:after this,the square has not pieces zio porco
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                System.out.println("dopo"+square.getPiece().toString());
                 for (Position move : square.getPiece().possibleMoves) {
                     Square squareById = Square.getSquareById(move.row, move.colomn);
                     ImageView imageView = (ImageView) squareById.getChildren().get(2);
-                    if (squareById.getPiece() instanceof King king) {
-                        king.setChecked(!squareById.getPiece().color.equals(square.getPiece().color));
+                    if (squareById.getPiece() instanceof King king && !squareById.getPiece().color.equals(square.getPiece().color)) {
+                        king.setChecked(true);
                         imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
                     } else
                         imageView.setImage(null);
@@ -295,14 +297,14 @@ public class Square extends StackPane {
         return false;
     }
 
-    public void tryMovePiece(Position position, GridPane gridPane) throws IOException {
+    public void tryMovePiece(Position position) throws IOException {
 
         Piece pezzo = this.getPiece();
         if (pezzo != null) {
             if (Utils.hasPosition(pezzo.possibleMoves, position)) {
                 pezzo.setPosition(position);
                 pezzo.lastMove = new Position(this.row, this.col);
-                Game.getNodeByCoordinate(position.row, position.colomn, gridPane).setPiece(pezzo);
+                Square.getSquareById(position.row, position.colomn).setPiece(pezzo);
                 deletePiece();
             }
         }

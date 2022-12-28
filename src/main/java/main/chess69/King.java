@@ -9,7 +9,7 @@ public class King extends Piece {
 
     public boolean checked;
 
-    public King(Position position, Color color) {
+    public King(Position position, Color color) throws IOException {
         super(position, color);
         checked = false;
     }
@@ -59,7 +59,7 @@ public class King extends Piece {
                 }
             }
         }
-        if(check)
+        if (check)
             removeMovesCreateCheck();
 
 
@@ -70,8 +70,34 @@ public class King extends Piece {
         return this.color.equals(Color.BLACK) ? "bk" : "wk";
     }
 
-    public boolean isCheck() {
-        return checked;
+    public boolean isCheck() throws IOException {
+        //reverse check
+        Knight knight = new Knight(this.position, this.color);
+        knight.getAllPossibleMoves(false);
+        for (Position position : knight.possibleMoves) {
+
+            if (Square.getSquareById(position.row, position.colomn).hasPiece())
+                if (!Square.getSquareById(position.row, position.colomn).getPiece().getColor().equals(this.color))
+                    if (Square.getSquareById(position.row, position.colomn).getPiece() instanceof Knight)
+                        return true;
+        }
+        Bishop bishop = new Bishop(this.position, this.color);
+        bishop.getAllPossibleMoves(false);
+        for (Position position : bishop.possibleMoves) {
+            if (Square.getSquareById(position.row, position.colomn).hasPiece())
+                if (!Square.getSquareById(position.row, position.colomn).getPiece().getColor().equals(this.color))
+                    if (Square.getSquareById(position.row, position.colomn).getPiece() instanceof Bishop || Square.getSquareById(position.row, position.colomn).getPiece() instanceof Queen)
+                        return true;
+        }
+        Rook rook = new Rook(this.position, this.color);
+        rook.getAllPossibleMoves(false);
+        for (Position position : rook.possibleMoves) {
+            if (Square.getSquareById(position.row, position.colomn).hasPiece())
+                if (!Square.getSquareById(position.row, position.colomn).getPiece().getColor().equals(this.color))
+                    if (Square.getSquareById(position.row, position.colomn).getPiece() instanceof Rook || Square.getSquareById(position.row, position.colomn).getPiece() instanceof Queen)
+                        return true;
+        }
+        return false;
     }
 
 
@@ -79,8 +105,5 @@ public class King extends Piece {
         this.checked = checked;
     }
 
-    public void setPosition(Position position) throws IOException {
-        this.position = position;
-        getAllPossibleMoves(true);
-    }
+
 }
