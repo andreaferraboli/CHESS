@@ -11,13 +11,20 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves() throws IOException {
+        movement();
+        if(this.color.equals(Game.getInstance().getCurrentPlayer().getColor()))
+            removeMovesCreateCheck();
+
+
+    }
+
+    public void movement() {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();
+
         ArrayList<Position> moves = new ArrayList<>();
-
-
         moves.add(new Position(x + 2, y + 1));
         moves.add(new Position(x - 2, y + 1));
         moves.add(new Position(x + 1, y + 2));
@@ -38,10 +45,6 @@ public class Knight extends Piece {
                 }
             }
         }
-        if(check)
-            removeMovesCreateCheck();
-
-
     }
 
     @Override

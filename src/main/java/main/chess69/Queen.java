@@ -15,16 +15,16 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves() throws IOException {
 
         this.possibleMoves = new ArrayList<>();
 
         //queen is like having a bishop and a rook
         Bishop bishop = new Bishop(this.position, this.getColor());
-        bishop.getAllPossibleMoves(check);
+        bishop.movement();
         possibleMoves.addAll(bishop.possibleMoves);
         Rook rook = new Rook(this.position, this.getColor());
-        rook.getAllPossibleMoves(check);
+        rook.movement();
         possibleMoves.addAll(rook.possibleMoves);
 
         if(check)

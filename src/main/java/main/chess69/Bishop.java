@@ -16,12 +16,18 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves() throws IOException {
+        movement();
+        if(this.color.equals(Game.getInstance().getCurrentPlayer().getColor()))
+            removeMovesCreateCheck();
+
+    }
+
+    public void movement() {
         int x = position.row;
         int y = position.colomn;
 
         this.possibleMoves = new ArrayList<>();
-
         int diagonals = 4;
         boolean nextDiagonal = false;
 
@@ -75,16 +81,12 @@ public class Bishop extends Piece {
             y = position.colomn;
             nextDiagonal = false;
         }
-        if(check)
-            removeMovesCreateCheck();
-
     }
 
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bb" : "wb";
     }
-
 
 
 }

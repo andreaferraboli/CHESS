@@ -13,11 +13,16 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves() throws IOException {
+        movement();
+        if(this.color.equals(Game.getInstance().getCurrentPlayer().getColor()))
+            removeMovesCreateCheck();
+    }
+
+    public void movement() {
         int x = this.position.row;
         int y = this.position.colomn;
         this.possibleMoves = new ArrayList<>();
-
         int sides = 4;
         boolean nextDiagonal = false;
 
@@ -66,8 +71,6 @@ public class Rook extends Piece {
             y = position.colomn;
             nextDiagonal = false;
         }
-        if(check)
-            removeMovesCreateCheck();
     }
 
     @Override
