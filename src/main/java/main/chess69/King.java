@@ -73,7 +73,7 @@ public class King extends Piece {
     public boolean isCheck() throws IOException {
         //reverse check
         Knight knight = new Knight(this.position, this.color);
-        knight.getAllPossibleMoves(false);
+        knight.movement();
         for (Position position : knight.possibleMoves) {
 
             if (Square.getSquareById(position.row, position.colomn).hasPiece())
@@ -82,7 +82,7 @@ public class King extends Piece {
                         return true;
         }
         Bishop bishop = new Bishop(this.position, this.color);
-        bishop.getAllPossibleMoves(false);
+        bishop.movement();
         for (Position position : bishop.possibleMoves) {
             if (Square.getSquareById(position.row, position.colomn).hasPiece())
                 if (!Square.getSquareById(position.row, position.colomn).getPiece().getColor().equals(this.color))
@@ -90,7 +90,7 @@ public class King extends Piece {
                         return true;
         }
         Rook rook = new Rook(this.position, this.color);
-        rook.getAllPossibleMoves(false);
+        rook.movement();
         for (Position position : rook.possibleMoves) {
             if (Square.getSquareById(position.row, position.colomn).hasPiece())
                 if (!Square.getSquareById(position.row, position.colomn).getPiece().getColor().equals(this.color))
