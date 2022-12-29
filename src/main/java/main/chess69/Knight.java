@@ -1,6 +1,8 @@
 package main.chess69;
 
 
+import javafx.scene.layout.GridPane;
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,14 +14,14 @@ public class Knight extends Piece {
 
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException {
-        movement();
+        movement(Game.getInstance().getBoard());
         if(check)
             removeMovesCreateCheck();
 
 
     }
 
-    public void movement() {
+    public void movement(GridPane gridPane) {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();
@@ -36,7 +38,7 @@ public class Knight extends Piece {
 
 
         for (Position move : moves) {
-            Square squareById = Square.getSquareById(move.row, move.colomn);
+            Square squareById = Square.getSquareById(move.row, move.colomn,gridPane);
             if (squareById != null) {
                 if (!squareById.hasPiece())
                     this.possibleMoves.add(move);

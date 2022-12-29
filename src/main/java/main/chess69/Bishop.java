@@ -1,6 +1,8 @@
 package main.chess69;
 
 
+import javafx.scene.layout.GridPane;
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,13 +19,13 @@ public class Bishop extends Piece {
 
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException {
-        movement();
+        movement(Game.getInstance().getBoard());
         if(check)
             removeMovesCreateCheck();
 
     }
 
-    public void movement() {
+    public void movement(GridPane gridPane) {
         int x = position.row;
         int y = position.colomn;
 
@@ -66,7 +68,7 @@ public class Bishop extends Piece {
                         break;
                 }
                 if (!nextDiagonal) {
-                    Square squareById = Square.getSquareById(x, y);
+                    Square squareById = Square.getSquareById(x, y,gridPane);
 
                     if (squareById.getPiece() == null)
                         this.possibleMoves.add(new Position(x, y));

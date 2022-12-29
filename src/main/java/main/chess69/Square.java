@@ -46,6 +46,9 @@ public class Square extends StackPane {
     public static Square getSquareById(int x, int y) {
         return Game.getNodeByCoordinate(x, y);
     }
+    public static Square getSquareById(int x, int y,GridPane grid) {
+        return Game.getNodeByCoordinate(x, y,grid);
+    }
 
     public static void removeCheckEffect() {
         // Verifica se la casella contiene un Re
@@ -105,6 +108,9 @@ public class Square extends StackPane {
         Square selectedSquare = Game.getInstance().getSelectedSquare();
         if (selectedSquare == null) {
             if (this.piece.getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
+                refreshAllPossibleMoves(false);
+                //this.piece instanceof Bishop && this.piece.position.row==3
+                this.piece.getAllPossibleMoves(true);
                 Game.getInstance().setSelectedSquare(this);
                 this.isSelected();
             }
@@ -126,8 +132,7 @@ public class Square extends StackPane {
                         Game.getInstance().setCurrentPlayer(Game.getInstance().black);
                     }
                     //todo:implementa presa del pezzo come mossa e fix reverso con pezzo mangiante
-                    selectedSquare.deletePiece();
-                    refreshAllPossibleMoves(false);
+
                     if (isDraw()) {
                         URL url = new File("src/main/resources/main/chess69/draw.fxml").toURI().toURL();
                         Parent root = FXMLLoader.load(url);
@@ -297,16 +302,15 @@ public class Square extends StackPane {
         return false;
     }
 
-    public void tryMovePiece(Position position) throws IOException {
+    public void tryMovePiece(Position position,GridPane gridPane) throws IOException {
 
-        Piece pezzo = this.getPiece();
-        if (pezzo != null) {
-            if (Utils.hasPosition(pezzo.possibleMoves, position)) {
-                pezzo.setPosition(position);
-                pezzo.lastMove = new Position(this.row, this.col);
-                Square.getSquareById(position.row, position.colomn).setPiece(pezzo);
-                deletePiece();
-            }
+        // Aggiorna la posizione del pezzo
+        if(this.getPiece()!=null) {
+            this.getPiece().trySetPosition(position);
+            // Imposta il pezzo nella nuova posizione
+            Square.getSquareById(position.row, position.colomn,gridPane).trySetPiece(this.getPiece());
+
+            this.trySetPiece(null);
         }
     }
 
@@ -324,7 +328,14 @@ public class Square extends StackPane {
             deletePiece();
         }
     }
-
+    public void tryMoveUndo(Position position) throws IOException {
+        if (this.getPiece() != null) {
+            Piece pezzo = this.getPiece();
+            pezzo.setPosition(position);
+            getSquareById(position.row, position.colomn).setPiece(pezzo);
+            deletePiece();
+        }
+    }
     private void deleteEffects() {
         Node child = this.getChildren().get(0);
         if (child instanceof ImageView imageView) {
@@ -358,7 +369,9 @@ public class Square extends StackPane {
         this.piece = piece;
         setPieceImage();
     }
-
+    public void trySetPiece(Piece piece){
+        this.piece=piece;
+    }
     @Override
     public String toString() {
         return "Square{" +
@@ -369,6 +382,9 @@ public class Square extends StackPane {
     }
 
     public boolean equals(Square obj) {
-        return (this.row == obj.row && this.col == obj.col);
+        if(this.hasPiece() != obj.hasPiece())
+            return false;
+        else
+            return (this.row == obj.row && this.col == obj.col);
     }
 }

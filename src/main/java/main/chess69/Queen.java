@@ -21,10 +21,10 @@ public class Queen extends Piece {
 
         //queen is like having a bishop and a rook
         Bishop bishop = new Bishop(this.position, this.getColor());
-        bishop.movement();
+        bishop.movement(Game.getInstance().getBoard());
         possibleMoves.addAll(bishop.possibleMoves);
         Rook rook = new Rook(this.position, this.getColor());
-        rook.movement();
+        rook.movement(Game.getInstance().getBoard());
         possibleMoves.addAll(rook.possibleMoves);
 
         if(check)

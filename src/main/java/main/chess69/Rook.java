@@ -1,6 +1,8 @@
 package main.chess69;
 
 
+import javafx.scene.layout.GridPane;
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,12 +16,12 @@ public class Rook extends Piece {
 
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException {
-        movement();
+        movement(Game.getInstance().getBoard());
         if(check)
             removeMovesCreateCheck();
     }
 
-    public void movement() {
+    public void movement(GridPane gridPane) {
         int x = this.position.row;
         int y = this.position.colomn;
         this.possibleMoves = new ArrayList<>();
@@ -57,7 +59,7 @@ public class Rook extends Piece {
                         break;
                 }
                 if (!nextDiagonal) {
-                    Square squareById = Square.getSquareById(x, y);
+                    Square squareById = Square.getSquareById(x, y,gridPane);
                     if (!squareById.hasPiece()) {
                         this.possibleMoves.add(new Position(x, y));
                     } else if (!squareById.getPiece().getColor().equals(this.color)) {

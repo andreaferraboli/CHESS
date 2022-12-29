@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Piece {
     public Position position;
@@ -37,11 +38,16 @@ public class Piece {
         this.position = position;
         getAllPossibleMoves(false);
     }
+    public void trySetPosition(Position position){
+        this.position=position;
+    }
 
     public void removeMovesCreateCheck() throws IOException {
+        ArrayList<Position> filteredList=new ArrayList<>();
         for (Position position : this.possibleMoves)
-            if (createsDiscoveredCheck(position))
-                this.possibleMoves.remove(position);
+            if (!createsDiscoveredCheck(position))
+                filteredList.add(position);
+        this.possibleMoves=filteredList;
     }
 
     private boolean createsDiscoveredCheck(Position position) throws IOException {
@@ -63,11 +69,11 @@ public class Piece {
             }
             copyBoard.add(squareCopy, square.row, square.col);
         }
-//        Square.getSquareById(this.position.row, this.position.colomn).tryMovePiece(position);
-        King king = (King) findKing().getPiece();
-        isChecked = king.isCheck();
-//        Square.getSquareById(this.position.row, this.position.colomn).moveUndo(position,-1);
-        Game.getInstance().setBoard(copyBoard);
+        Square.getSquareById(this.position.row, this.position.colomn,copyBoard).tryMovePiece(position,copyBoard);
+        List<Square> differences=Utils.getDifferentSquares(originalBoard,copyBoard);
+        King king = (King) findKing(copyBoard).getPiece();
+        isChecked = king.isCheck(copyBoard);
+        Game.getInstance().setBoard(originalBoard);
         return isChecked;
     }
 
@@ -76,9 +82,9 @@ public class Piece {
     }
 
 
-    private Square findKing() {
+    private Square findKing(GridPane gridPane) {
         // Cerca la casella con il re dello stesso colore
-        for (Node node : Game.getInstance().getBoard().getChildren()) {
+        for (Node node : gridPane.getChildren()) {
             Square square = (Square) node;
             if (square.hasPiece() && square.getPiece() instanceof King && square.getPiece().getColor() == this.color) {
                 return square;
