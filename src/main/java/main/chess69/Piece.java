@@ -1,6 +1,7 @@
 package main.chess69;
 
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.awt.*;

@@ -11,9 +11,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves() throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException {
         movement();
-        if(this.color.equals(Game.getInstance().getCurrentPlayer().getColor()))
+        if(check)
             removeMovesCreateCheck();
 
 

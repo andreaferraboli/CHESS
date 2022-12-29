@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves() throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();

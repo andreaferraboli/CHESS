@@ -127,7 +127,7 @@ public class Square extends StackPane {
                     }
                     //todo:implementa presa del pezzo come mossa e fix reverso con pezzo mangiante
                     selectedSquare.deletePiece();
-                    refreshAllPossibleMoves(true);
+                    refreshAllPossibleMoves(false);
                     if (isDraw()) {
                         URL url = new File("src/main/resources/main/chess69/draw.fxml").toURI().toURL();
                         Parent root = FXMLLoader.load(url);

@@ -15,7 +15,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves() throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException {
 
         this.possibleMoves = new ArrayList<>();
 
