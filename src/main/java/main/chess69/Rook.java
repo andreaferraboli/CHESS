@@ -14,8 +14,12 @@ public class Rook extends Piece {
         super(position, color);
     }
 
+    public Rook() {
+
+    }
+
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         movement(Game.getInstance().getBoard());
         if(check)
             removeMovesCreateCheck();
@@ -75,6 +79,17 @@ public class Rook extends Piece {
         }
     }
 
+    protected Rook clone() throws CloneNotSupportedException {
+        Rook clone = new Rook();
+        // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
+        clone.setColor(this.getColor());
+        try {
+            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "br" : "wr";

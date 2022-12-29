@@ -12,8 +12,12 @@ public class Knight extends Piece {
         super(position, color);
     }
 
+    public Knight() {
+
+    }
+
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         movement(Game.getInstance().getBoard());
         if(check)
             removeMovesCreateCheck();
@@ -49,6 +53,17 @@ public class Knight extends Piece {
         }
     }
 
+    protected Knight clone() throws CloneNotSupportedException {
+        Knight clone = new Knight();
+        // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
+        clone.setColor(this.getColor());
+        try {
+            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bn" : "wn";

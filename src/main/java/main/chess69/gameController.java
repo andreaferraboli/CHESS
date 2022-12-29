@@ -39,7 +39,7 @@ public class gameController {
     }
 
     @FXML
-    private void cancelMove(ActionEvent event) throws IOException {
+    private void cancelMove(ActionEvent event) throws IOException, CloneNotSupportedException {
         Player currentPlayer = Game.getInstance().getCurrentPlayer();
         Mossa lastMove;
         int checkPawn;

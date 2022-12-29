@@ -11,8 +11,11 @@ public class Pawn extends Piece {
         super(position, color);
     }
 
+    public Pawn() {
+    }
+
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         int x = position.row;
         int y = position.colomn;
         this.possibleMoves = new ArrayList<>();
@@ -67,6 +70,17 @@ public class Pawn extends Piece {
 
     }
 
+    protected Pawn clone() throws CloneNotSupportedException {
+        Pawn clone = new Pawn();
+        // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
+        clone.setColor(this.getColor());
+        try {
+            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bp" : "wp";

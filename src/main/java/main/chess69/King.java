@@ -11,13 +11,14 @@ public class King extends Piece {
 
     public boolean checked;
 
-    public King(Position position, Color color) throws IOException {
+    public King(Position position, Color color) {
         super(position, color);
         checked = false;
     }
-
+    public King(){
+    }
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         int x = position.row;
         int y = position.colomn;
         ArrayList<Position> moves = new ArrayList<>();
@@ -72,6 +73,17 @@ public class King extends Piece {
         return this.color.equals(Color.BLACK) ? "bk" : "wk";
     }
 
+    protected King clone() throws CloneNotSupportedException {
+        King clone = new King();
+        // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
+        clone.setColor(this.getColor());
+        try {
+            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
     public boolean isCheck(GridPane gridPane) throws IOException {
         //reverse check
         Knight knight = new Knight(this.position, this.color);

@@ -104,7 +104,7 @@ public class Square extends StackPane {
         }
     }
 
-    public void onClick() throws IOException, InterruptedException {
+    public void onClick() throws IOException, InterruptedException, CloneNotSupportedException {
         Square selectedSquare = Game.getInstance().getSelectedSquare();
         if (selectedSquare == null) {
             if (this.piece.getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
@@ -204,7 +204,7 @@ public class Square extends StackPane {
                 try {
                     square.getPiece().getAllPossibleMoves(check);
                     //todo:after this,the square has not pieces zio porco
-                } catch (IOException e) {
+                } catch (IOException | CloneNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
                 System.out.println("dopo"+square.getPiece().toString());
@@ -259,7 +259,7 @@ public class Square extends StackPane {
         }
     }
 
-    public boolean movePiece(Position position) throws IOException {
+    public boolean movePiece(Position position) throws IOException, CloneNotSupportedException {
 
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
@@ -314,7 +314,7 @@ public class Square extends StackPane {
         }
     }
 
-    public void moveUndo(Position position, int checkPawn) throws IOException {
+    public void moveUndo(Position position, int checkPawn) throws IOException, CloneNotSupportedException {
         Game.getInstance().setSelectedSquare(null);
         deleteEffects();
         if (this.getPiece() != null) {
@@ -328,7 +328,7 @@ public class Square extends StackPane {
             deletePiece();
         }
     }
-    public void tryMoveUndo(Position position) throws IOException {
+    public void tryMoveUndo(Position position) throws IOException, CloneNotSupportedException {
         if (this.getPiece() != null) {
             Piece pezzo = this.getPiece();
             pezzo.setPosition(position);

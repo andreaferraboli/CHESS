@@ -75,7 +75,7 @@ public class Game {
                 if (square.hasPiece() || selectedSquare != null) {
                     try {
                         square.onClick();
-                    } catch (IOException | InterruptedException e) {
+                    } catch (IOException | InterruptedException | CloneNotSupportedException e) {
                         throw new RuntimeException(e);
                     }
                 } else

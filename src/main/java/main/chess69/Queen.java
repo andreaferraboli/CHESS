@@ -15,7 +15,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
 
         this.possibleMoves = new ArrayList<>();
 
@@ -32,6 +32,17 @@ public class Queen extends Piece {
 
     }
 
+    protected Queen clone() throws CloneNotSupportedException {
+        Queen clone = new Queen();
+        // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
+        clone.setColor(this.getColor());
+        try {
+            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bq" : "wq";

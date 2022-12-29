@@ -23,7 +23,7 @@ public class Piece {
         this.color = color;
     }
 
-    public void getAllPossibleMoves(boolean check) throws IOException {
+    public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
     }
 
     public Color getColor() {
@@ -34,30 +34,31 @@ public class Piece {
         return position;
     }
 
-    public void setPosition(Position position) throws IOException {
+    public void setPosition(Position position) throws IOException, CloneNotSupportedException {
         this.position = position;
         getAllPossibleMoves(false);
     }
-    public void trySetPosition(Position position){
-        this.position=position;
+
+    public void trySetPosition(Position position) {
+        this.position = position;
     }
 
-    public void removeMovesCreateCheck() throws IOException {
-        ArrayList<Position> filteredList=new ArrayList<>();
+    public void removeMovesCreateCheck() throws IOException, CloneNotSupportedException {
+        ArrayList<Position> filteredList = new ArrayList<>();
         for (Position position : this.possibleMoves)
             if (!createsDiscoveredCheck(position))
                 filteredList.add(position);
-        this.possibleMoves=filteredList;
+        this.possibleMoves = filteredList;
     }
 
-    private boolean createsDiscoveredCheck(Position position) throws IOException {
+    private boolean createsDiscoveredCheck(Position position) throws IOException, CloneNotSupportedException {
         //this instanceof Bishop && position.row==4 && position.colomn==5 && this.position.row==3 && this.position.colomn==6
         boolean isChecked;
         GridPane originalBoard = Game.getInstance().getBoard();
         GridPane copyBoard = new GridPane();
         for (Node node : originalBoard.getChildren()) {
             Square square = (Square) node;
-            Square squareCopy = new Square(square.row, square.col, square.getPiece());
+            Square squareCopy = new Square(square.row, square.col, square.hasPiece() ?square.getPiece().clone() : null);
             for (Node child : square.getChildren()) {
                 ImageView originalImageView = (ImageView) child;
                 ImageView copyImageView = new ImageView();
@@ -69,12 +70,28 @@ public class Piece {
             }
             copyBoard.add(squareCopy, square.row, square.col);
         }
-        Square.getSquareById(this.position.row, this.position.colomn,copyBoard).tryMovePiece(position,copyBoard);
-        List<Square> differences=Utils.getDifferentSquares(originalBoard,copyBoard);
+        Square.getSquareById(this.position.row, this.position.colomn, copyBoard).tryMovePiece(position, copyBoard);
+        List<Square> differences = Utils.getDifferentSquares(originalBoard, copyBoard);
         King king = (King) findKing(copyBoard).getPiece();
         isChecked = king.isCheck(copyBoard);
         Game.getInstance().setBoard(originalBoard);
         return isChecked;
+    }
+
+    protected Piece clone() throws CloneNotSupportedException {
+        Piece clone = new Piece();
+        // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
+        clone.setColor(this.getColor());
+        try {
+            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     protected Position lastMove() {
