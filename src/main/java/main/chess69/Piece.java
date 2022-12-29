@@ -44,13 +44,29 @@ public class Piece {
     }
 
     private boolean createsDiscoveredCheck(Position position) throws IOException {
+        //this instanceof Bishop && position.row==4 && position.colomn==5 && this.position.row==3 && this.position.colomn==6
         boolean isChecked;
-        GridPane gridPane = Game.getInstance().getBoard();
-        Square.getSquareById(this.position.row, this.position.colomn).tryMovePiece(position);
-        King king=(King) findKing().getPiece();
-        isChecked= king.isCheck();
-        Square.getSquareById(this.position.row, this.position.colomn).moveUndo(position,-1);
-        Game.getInstance().setBoard(gridPane);
+        GridPane originalBoard = Game.getInstance().getBoard();
+        GridPane copyBoard = new GridPane();
+        for (Node node : originalBoard.getChildren()) {
+            Square square = (Square) node;
+            Square squareCopy = new Square(square.row, square.col, square.getPiece());
+            for (Node child : square.getChildren()) {
+                ImageView originalImageView = (ImageView) child;
+                ImageView copyImageView = new ImageView();
+                copyImageView.setImage(originalImageView.getImage());
+                copyImageView.setFitHeight(originalImageView.getFitHeight());
+                copyImageView.setFitWidth(originalImageView.getFitWidth());
+                copyImageView.setPreserveRatio(originalImageView.isPreserveRatio());
+                squareCopy.getChildren().add(copyImageView);
+            }
+            copyBoard.add(squareCopy, square.row, square.col);
+        }
+//        Square.getSquareById(this.position.row, this.position.colomn).tryMovePiece(position);
+        King king = (King) findKing().getPiece();
+        isChecked = king.isCheck();
+//        Square.getSquareById(this.position.row, this.position.colomn).moveUndo(position,-1);
+        Game.getInstance().setBoard(copyBoard);
         return isChecked;
     }
 
