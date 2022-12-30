@@ -62,6 +62,8 @@ public class Square extends StackPane {
                 ImageView imageView = (ImageView) square.getChildren().get(2);
                 if (imageView.getImage() != null && imageView.getImage().getUrl().contains("check.png")) {
                     // Rimuovi l'effetto di scacco dalla casella
+                    King king=(King)square.getPiece();
+                    king.setChecked(false);
                     imageView.setImage(null);
                 }
             }
@@ -96,24 +98,69 @@ public class Square extends StackPane {
         }
     }
 
-    public void winGame() throws IOException {
-        if (this.piece instanceof King && !this.piece.color.equals(Game.getInstance().getCurrentPlayer().color)) {
-            URL url = new File("src/main/resources/main/chess69/end.fxml").toURI().toURL();
-            Parent root = FXMLLoader.load(url);
+    public void gameIsEnd() throws IOException {
+        int numberPiecesWhite = piecesOfColor(Color.white)[0];
+        int numberPiecesBlack = piecesOfColor(Color.black)[0];
+        int numberKnightWhite = piecesOfColor(Color.white)[1];
+        int numberKnightBlack = piecesOfColor(Color.black)[1];
+        int numberBishopWhite = piecesOfColor(Color.white)[2];
+        int numberBishopBlack = piecesOfColor(Color.black)[2];
+
+        int numberOfWhitePossibleMoves = numberOfPossibleMoves(Color.white);
+        int numberOfBlackPossibleMoves = numberOfPossibleMoves(Color.black);
+        King whiteKing = (King) findKing(Game.getInstance().getBoard(), Color.white).getPiece();
+        King blackKing = (King) findKing(Game.getInstance().getBoard(), Color.black).getPiece();
+        if (numberOfBlackPossibleMoves == 0 && blackKing.checked)
+            winGame(Color.white);
+        if (numberOfWhitePossibleMoves == 0 && whiteKing.checked)
+            winGame(Color.black);
+        //pareggio se sono solo due re
+        if (numberPiecesWhite == 1 && numberPiecesBlack == 1)
+            drawGame();
+        //pareggio se solo c'è un cavallo con i due re
+        if ((numberKnightBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberKnightWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1))
+            drawGame();
+        //pareggio se solo c'è un cavallo con i due re
+        if ((numberBishopBlack == 1 && numberPiecesBlack == 2 && numberPiecesWhite == 1) || (numberBishopWhite == 1 && numberPiecesWhite == 2 && numberPiecesBlack == 1))
+            drawGame();
+    }
+
+    private void drawGame() throws IOException {
+        URL url = new File("src/main/resources/main/chess69/winWhite.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
 //
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void winGame(Color color) throws IOException {
+        URL url = new File("src/main/resources/main/chess69/win" + (color.toString().contains("r=255,g=255,b=255") ? "White" : "Black") + ".fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
+//
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private int numberOfPossibleMoves(Color color) {
+        int numberofAllPossibleMoves = 0;
+        for (Node node : Game.getInstance().getBoard().getChildren()) {
+            Square square = (Square) node;
+            if (square.hasPiece())
+                if (square.getPiece().getColor().equals(color))
+                    numberofAllPossibleMoves+=square.getPiece().possibleMoves.size();
         }
+        return numberofAllPossibleMoves;
     }
 
     public void onClick() throws IOException, InterruptedException, CloneNotSupportedException {
         Square selectedSquare = Game.getInstance().getSelectedSquare();
         if (selectedSquare == null) {
             if (this.piece.getColor().equals(Game.getInstance().getCurrentPlayer().color)) {
-                refreshAllPossibleMoves(false);
-                //this.piece instanceof Bishop && this.piece.position.row==3
-                this.piece.getAllPossibleMoves(true);
+//                refreshAllPossibleMoves(false);
+//                //this.piece instanceof Bishop && this.piece.position.row==3
+//                this.piece.getAllPossibleMoves(true);
                 Game.getInstance().setSelectedSquare(this);
                 this.isSelected();
             }
@@ -137,15 +184,9 @@ public class Square extends StackPane {
                         Game.getInstance().setCurrentPlayer(Game.getInstance().black);
                     }
 
-                    if (isDraw()) {
-                        URL url = new File("src/main/resources/main/chess69/draw.fxml").toURI().toURL();
-                        Parent root = FXMLLoader.load(url);
-//
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.show();
-                    }
-                    refreshAllPossibleMoves(false);
+                    refreshAllPossibleMoves(true);
+                    gameIsEnd();
+
                     gameController.getInstance().cancelMoveButton.setDisable(false);
                 }
             }
@@ -154,6 +195,10 @@ public class Square extends StackPane {
             deleteEffects();
         }
 
+
+    }
+
+    private static void extracted(String pathname) throws IOException {
 
     }
 
@@ -182,11 +227,10 @@ public class Square extends StackPane {
         // che le operazioni di lettura e scrittura del valore intero sono thread-safe,
         // il che significa che più thread possono accedere allo stesso oggetto AtomicInteger
         // in modo sicuro senza dover sincronizzare manualmente l'accesso
-        AtomicInteger[] counters = new AtomicInteger[]{new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0)};
+        AtomicInteger[] counters = new AtomicInteger[]{new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0)};
         Game.getInstance().getBoard().getChildren().forEach(node -> {
             Square square = (Square) node;
-            if (square.getPiece() != null) {
-                if (square.getPiece().color.equals(color))
+            if (square.getPiece() != null && square.getPiece().color.equals(color)) {
                     counters[0].getAndIncrement();
                 if (square.getPiece() instanceof Knight)
                     counters[1].getAndIncrement();
@@ -214,9 +258,12 @@ public class Square extends StackPane {
                 for (Position move : square.getPiece().possibleMoves) {
                     Square squareById = Square.getSquareById(move.row, move.colomn);
                     ImageView imageView = (ImageView) squareById.getChildren().get(2);
-                    if (squareById.getPiece() instanceof King king && !squareById.getPiece().color.equals(square.getPiece().color)) {
-                        king.setChecked(true);
-                        imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
+                    if (squareById.getPiece() instanceof King king ) {
+                        if (!squareById.getPiece().color.equals(square.getPiece().color)) {
+                            king.setChecked(true);
+                            imageView.setImage(new Image(getClass().getResource("/main/chess69/board/check.png").toExternalForm(), true));
+                        }else
+                            king.setChecked(false);
                     } else
                         imageView.setImage(null);
                 }
@@ -260,6 +307,17 @@ public class Square extends StackPane {
             } else
                 imageView.setImage(null);
         }
+    }
+
+    public static Square findKing(GridPane gridPane, Color color) {
+        // Cerca la casella con il re dello stesso colore
+        for (Node node : gridPane.getChildren()) {
+            Square square = (Square) node;
+            if (square.hasPiece() && square.getPiece() instanceof King && square.getPiece().getColor().equals(color)) {
+                return square;
+            }
+        }
+        return null;
     }
 
     public boolean movePiece(Position position) throws IOException, CloneNotSupportedException {
@@ -361,7 +419,6 @@ public class Square extends StackPane {
     }
 
     public void deletePiece() throws IOException {
-        winGame();
         if (this.piece != null)
             this.lastPiece = this.piece;
         this.piece = null;
@@ -377,7 +434,6 @@ public class Square extends StackPane {
     }
 
     public void setPiece(Piece piece) throws IOException, CloneNotSupportedException {
-        winGame();
         if (this.piece != null)
             this.lastPiece = this.piece;
         if (piece != null)

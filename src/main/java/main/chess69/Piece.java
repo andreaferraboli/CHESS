@@ -76,7 +76,7 @@ public class Piece {
         }
         Square.getSquareById(this.position.row, this.position.colomn, copyBoard).tryMovePiece(position, copyBoard);
         List<Square> differences = Utils.getDifferentSquares(originalBoard, copyBoard);
-        King king = (King) findKing(copyBoard).getPiece();
+        King king = (King) Square.findKing(copyBoard,this.color).getPiece();
         isChecked = king.isCheck(copyBoard);
         Game.getInstance().setBoard(originalBoard);
         return isChecked;
@@ -99,15 +99,6 @@ public class Piece {
     }
 
 
-    private Square findKing(GridPane gridPane) {
-        // Cerca la casella con il re dello stesso colore
-        for (Node node : gridPane.getChildren()) {
-            Square square = (Square) node;
-            if (square.hasPiece() && square.getPiece() instanceof King && square.getPiece().getColor() == this.color) {
-                return square;
-            }
-        }
-        return null;
-    }
+
 }
 

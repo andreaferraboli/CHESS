@@ -28,7 +28,7 @@ public class King extends Piece {
 
         moves.add(new Position(x + 1, y));
         moves.add(new Position(x - 1, y));
-        if (this.lastMove == null) {
+        if (this.lastMove == null && !this.checked) {
             moves.add(new Position(x + 2, y));
             moves.add(new Position(x - 2, y));
         }
