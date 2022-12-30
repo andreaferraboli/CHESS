@@ -1,26 +1,33 @@
-.board{
+.board {
     -fx-background-color: #312e2b;
-}.game_menu{
+}
+
+.game_menu {
     -fx-background-color: #272522;
 }
-.button_menu{
+
+.button_menu {
     -fx-font: 14px "Serif";
     -fx-background-color: #312e2b;
     -fx-text-fill: #B6B5B4;
 }
-.button_menu:hover{
-    -fx-background-color:#B6B5B4;
-    -fx-text-fill:  #585450;
+
+.button_menu:hover {
+    -fx-background-color: #B6B5B4;
+    -fx-text-fill: #585450;
 }
-.box_main{
-    -fx-background-color:#B6B5B4;
+
+.box_main {
+    -fx-background-color: #B6B5B4;
 }
-.text_main{
+
+.text_main {
     -fx-text-fill: gold;
     -fx-font-size: 40px;
     -fx-font-family: "Lucida Handwriting";
 }
-.main_button{
+
+.main_button {
     -fx-font: 20px "Lucida Handwriting";
     -fx-background-color: #312e2b;
     -fx-text-fill: #B6B5B4;
@@ -43,6 +50,7 @@
     /* Imposta il colore del bordo della ListView */
     -fx-border-color: #555;
 }
+
 .list-view .list-cell {
     /* Imposta lo sfondo dei figli della ListView */
     -fx-background-color: #312e2b;

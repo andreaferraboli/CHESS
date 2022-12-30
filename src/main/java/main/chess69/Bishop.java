@@ -20,7 +20,7 @@ public class Bishop extends Piece {
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         movement(Game.getInstance().getBoard());
-        if(check)
+        if (check)
             removeMovesCreateCheck();
 
     }
@@ -68,7 +68,7 @@ public class Bishop extends Piece {
                         break;
                 }
                 if (!nextDiagonal) {
-                    Square squareById = Square.getSquareById(x, y,gridPane);
+                    Square squareById = Square.getSquareById(x, y, gridPane);
 
                     if (squareById.getPiece() == null)
                         this.possibleMoves.add(new Position(x, y));
@@ -97,6 +97,7 @@ public class Bishop extends Piece {
         }
         return clone;
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bb" : "wb";

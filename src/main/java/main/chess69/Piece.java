@@ -30,6 +30,10 @@ public class Piece {
         return color;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public Position getPosition() {
         return position;
     }
@@ -58,7 +62,7 @@ public class Piece {
         GridPane copyBoard = new GridPane();
         for (Node node : originalBoard.getChildren()) {
             Square square = (Square) node;
-            Square squareCopy = new Square(square.row, square.col, square.hasPiece() ?square.getPiece().clone() : null);
+            Square squareCopy = new Square(square.row, square.col, square.hasPiece() ? square.getPiece().clone() : null);
             for (Node child : square.getChildren()) {
                 ImageView originalImageView = (ImageView) child;
                 ImageView copyImageView = new ImageView();
@@ -88,10 +92,6 @@ public class Piece {
             throw new RuntimeException(e);
         }
         return clone;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     protected Position lastMove() {

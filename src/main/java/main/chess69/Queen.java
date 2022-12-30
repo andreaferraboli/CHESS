@@ -27,7 +27,7 @@ public class Queen extends Piece {
         rook.movement(Game.getInstance().getBoard());
         possibleMoves.addAll(rook.possibleMoves);
 
-        if(check)
+        if (check)
             removeMovesCreateCheck();
 
     }
@@ -43,6 +43,7 @@ public class Queen extends Piece {
         }
         return clone;
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bq" : "wq";

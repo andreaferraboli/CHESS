@@ -23,7 +23,7 @@ public class Utils {
         // Confronta ogni casella dei due GridPane
         for (Node node1 : gridPane1.getChildren()) {
             Square square1 = (Square) node1;
-            Square square2 = Square.getSquareById(square1.row, square1.col,gridPane2);
+            Square square2 = Square.getSquareById(square1.row, square1.col, gridPane2);
             // Se le caselle sono diverse, aggiungile alla lista delle caselle differenti
             if (!square1.equals(square2)) {
                 differentSquares.add(square1);

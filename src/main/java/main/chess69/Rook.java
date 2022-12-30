@@ -21,7 +21,7 @@ public class Rook extends Piece {
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         movement(Game.getInstance().getBoard());
-        if(check)
+        if (check)
             removeMovesCreateCheck();
     }
 
@@ -63,7 +63,7 @@ public class Rook extends Piece {
                         break;
                 }
                 if (!nextDiagonal) {
-                    Square squareById = Square.getSquareById(x, y,gridPane);
+                    Square squareById = Square.getSquareById(x, y, gridPane);
                     if (!squareById.hasPiece()) {
                         this.possibleMoves.add(new Position(x, y));
                     } else if (!squareById.getPiece().getColor().equals(this.color)) {
@@ -90,6 +90,7 @@ public class Rook extends Piece {
         }
         return clone;
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "br" : "wr";

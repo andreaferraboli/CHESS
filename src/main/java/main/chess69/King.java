@@ -15,8 +15,10 @@ public class King extends Piece {
         super(position, color);
         checked = false;
     }
-    public King(){
+
+    public King() {
     }
+
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         int x = position.row;
@@ -26,7 +28,7 @@ public class King extends Piece {
 
         moves.add(new Position(x + 1, y));
         moves.add(new Position(x - 1, y));
-        if (this.lastMove==null) {
+        if (this.lastMove == null) {
             moves.add(new Position(x + 2, y));
             moves.add(new Position(x - 2, y));
         }
@@ -51,13 +53,13 @@ public class King extends Piece {
                         if (this.lastMove == null)
                             if (rookShort != null)
                                 if (rookShort.lastMove == null)
-                                //arrocco corto
+                                    //arrocco corto
                                     this.possibleMoves.add(move);
-                            else if (rookLong != null ) {
-                                //arrocco lungo
-                                    if(rookLong.lastMove == null && !Square.getSquareById(move.row - 3, move.colomn).hasPiece())
+                                else if (rookLong != null) {
+                                    //arrocco lungo
+                                    if (rookLong.lastMove == null && !Square.getSquareById(move.row - 3, move.colomn).hasPiece())
                                         this.possibleMoves.add(move);
-                            }
+                                }
 
 
                     } else {
@@ -88,31 +90,32 @@ public class King extends Piece {
         }
         return clone;
     }
+
     public boolean isCheck(GridPane gridPane) throws IOException {
         //reverse check
         Knight knight = new Knight(this.position, this.color);
         knight.movement(gridPane);
         for (Position position : knight.possibleMoves) {
 
-            if (Square.getSquareById(position.row, position.colomn,gridPane).hasPiece())
-                if (!Square.getSquareById(position.row, position.colomn,gridPane).getPiece().getColor().equals(this.color))
-                    if (Square.getSquareById(position.row, position.colomn,gridPane).getPiece() instanceof Knight)
+            if (Square.getSquareById(position.row, position.colomn, gridPane).hasPiece())
+                if (!Square.getSquareById(position.row, position.colomn, gridPane).getPiece().getColor().equals(this.color))
+                    if (Square.getSquareById(position.row, position.colomn, gridPane).getPiece() instanceof Knight)
                         return true;
         }
         Bishop bishop = new Bishop(this.position, this.color);
         bishop.movement(gridPane);
         for (Position position : bishop.possibleMoves) {
-            if (Square.getSquareById(position.row, position.colomn,gridPane).hasPiece())
-                if (!Square.getSquareById(position.row, position.colomn,gridPane).getPiece().getColor().equals(this.color))
-                    if (Square.getSquareById(position.row, position.colomn,gridPane).getPiece() instanceof Bishop || Square.getSquareById(position.row, position.colomn,gridPane).getPiece() instanceof Queen)
+            if (Square.getSquareById(position.row, position.colomn, gridPane).hasPiece())
+                if (!Square.getSquareById(position.row, position.colomn, gridPane).getPiece().getColor().equals(this.color))
+                    if (Square.getSquareById(position.row, position.colomn, gridPane).getPiece() instanceof Bishop || Square.getSquareById(position.row, position.colomn, gridPane).getPiece() instanceof Queen)
                         return true;
         }
         Rook rook = new Rook(this.position, this.color);
         rook.movement(gridPane);
         for (Position position : rook.possibleMoves) {
-            if (Square.getSquareById(position.row, position.colomn,gridPane).hasPiece())
-                if (!Square.getSquareById(position.row, position.colomn,gridPane).getPiece().getColor().equals(this.color))
-                    if (Square.getSquareById(position.row, position.colomn,gridPane).getPiece() instanceof Rook || Square.getSquareById(position.row, position.colomn,gridPane).getPiece() instanceof Queen)
+            if (Square.getSquareById(position.row, position.colomn, gridPane).hasPiece())
+                if (!Square.getSquareById(position.row, position.colomn, gridPane).getPiece().getColor().equals(this.color))
+                    if (Square.getSquareById(position.row, position.colomn, gridPane).getPiece() instanceof Rook || Square.getSquareById(position.row, position.colomn, gridPane).getPiece() instanceof Queen)
                         return true;
         }
         return false;

@@ -136,7 +136,6 @@ public class Square extends StackPane {
                         Game.getInstance().movesListView.scrollTo(Game.getInstance().movesListView.getItems().size() - 1);
                         Game.getInstance().setCurrentPlayer(Game.getInstance().black);
                     }
-                    //todo:implementa presa del pezzo come mossa e fix reverso con pezzo mangiante
 
                     if (isDraw()) {
                         URL url = new File("src/main/resources/main/chess69/draw.fxml").toURI().toURL();
@@ -209,7 +208,6 @@ public class Square extends StackPane {
             if (square.hasPiece()) {
                 try {
                     square.getPiece().getAllPossibleMoves(check);
-                    //todo:after this,the square has not pieces zio porco
                 } catch (IOException | CloneNotSupportedException e) {
                     throw new RuntimeException(e);
                 }

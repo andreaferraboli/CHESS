@@ -19,7 +19,7 @@ public class Knight extends Piece {
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
         movement(Game.getInstance().getBoard());
-        if(check)
+        if (check)
             removeMovesCreateCheck();
 
 
@@ -42,7 +42,7 @@ public class Knight extends Piece {
 
 
         for (Position move : moves) {
-            Square squareById = Square.getSquareById(move.row, move.colomn,gridPane);
+            Square squareById = Square.getSquareById(move.row, move.colomn, gridPane);
             if (squareById != null) {
                 if (!squareById.hasPiece())
                     this.possibleMoves.add(move);
@@ -64,6 +64,7 @@ public class Knight extends Piece {
         }
         return clone;
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bn" : "wn";

@@ -64,7 +64,7 @@ public class Pawn extends Piece {
                 }
             }
         }
-        if(check)
+        if (check)
             removeMovesCreateCheck();
 
 
@@ -81,6 +81,7 @@ public class Pawn extends Piece {
         }
         return clone;
     }
+
     @Override
     public String toString() {
         return this.color.equals(Color.BLACK) ? "bp" : "wp";

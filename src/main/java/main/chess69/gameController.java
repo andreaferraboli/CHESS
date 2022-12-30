@@ -1,9 +1,6 @@
 package main.chess69;
 
 
-
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,8 +29,17 @@ public class gameController {
     Button cancelMoveButton;
     @FXML
     ListView<String> movesListView;
+
+    public static gameController getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(gameController instance) {
+        gameController.instance = instance;
+    }
+
     public void initialize() throws IOException, CloneNotSupportedException {
-        instance=this;
+        instance = this;
         Game game = new Game(board, movesListView);
         instance.newGameButton.setOnAction(actionEvent -> {
             URL url = null;
@@ -84,17 +90,6 @@ public class gameController {
             instance.cancelMoveButton.setDisable(true);
 
         });
-    }
-
-
-
-
-    public static gameController getInstance() {
-        return instance;
-    }
-
-    public static void setInstance(gameController instance) {
-        gameController.instance = instance;
     }
 
     public Button getCancelMoveButton() {
