@@ -26,8 +26,10 @@ public class King extends Piece {
 
         moves.add(new Position(x + 1, y));
         moves.add(new Position(x - 1, y));
-        moves.add(new Position(x + 2, y));
-        moves.add(new Position(x - 2, y));
+        if (this.lastMove==null) {
+            moves.add(new Position(x + 2, y));
+            moves.add(new Position(x - 2, y));
+        }
         moves.add(new Position(x, y + 1));
         moves.add(new Position(x - 1, y + 1));
         moves.add(new Position(x + 1, y + 1));
@@ -47,12 +49,14 @@ public class King extends Piece {
                         Rook rookShort = (Rook) Square.getSquareById(7, y).getPiece();
                         Rook rookLong = (Rook) Square.getSquareById(0, y).getPiece();
                         if (this.lastMove == null)
-                            if (rookShort.lastMove == null)
+                            if (rookShort != null)
+                                if (rookShort.lastMove == null)
                                 //arrocco corto
-                                this.possibleMoves.add(move);
-                            else if (rookLong.lastMove == null && !Square.getSquareById(move.row - 3, move.colomn).hasPiece()) {
+                                    this.possibleMoves.add(move);
+                            else if (rookLong != null ) {
                                 //arrocco lungo
-                                this.possibleMoves.add(move);
+                                    if(rookLong.lastMove == null && !Square.getSquareById(move.row - 3, move.colomn).hasPiece())
+                                        this.possibleMoves.add(move);
                             }
 
 

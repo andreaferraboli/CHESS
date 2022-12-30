@@ -25,6 +25,7 @@ public class Square extends StackPane {
     int row, col;
 
     private Piece piece;
+    private Piece lastPiece;
 
 
     public Square(int row, int col, Piece piece) {
@@ -46,8 +47,9 @@ public class Square extends StackPane {
     public static Square getSquareById(int x, int y) {
         return Game.getNodeByCoordinate(x, y);
     }
-    public static Square getSquareById(int x, int y,GridPane grid) {
-        return Game.getNodeByCoordinate(x, y,grid);
+
+    public static Square getSquareById(int x, int y, GridPane grid) {
+        return Game.getNodeByCoordinate(x, y, grid);
     }
 
     public static void removeCheckEffect() {
@@ -68,9 +70,10 @@ public class Square extends StackPane {
 
     public void setPieceImage() {
         Node child = this.getChildren().get(3);
-        if (child instanceof ImageView imageView && this.piece.getClass() != Piece.class) {
-            imageView.setImage(new Image(getClass().getResource("/main/chess69/pieces/" + this.piece.toString() + ".png").toExternalForm(), true));
-        }
+        if (this.piece != null)
+            if (child instanceof ImageView imageView && this.piece.getClass() != Piece.class) {
+                imageView.setImage(new Image(getClass().getResource("/main/chess69/pieces/" + this.piece.toString() + ".png").toExternalForm(), true));
+            }
     }
 
     public void setPieceImage(Image image) {
@@ -124,11 +127,13 @@ public class Square extends StackPane {
                         Game.getInstance().black.lastMove = new Mossa(this.row, this.col, this.piece);
                         mossePartita.get(mossePartita.size() - 1).setMossa2(Game.getInstance().black.lastMove);
                         Game.getInstance().movesListView.getItems().set(mossePartita.size() - 1, mossePartita.get(mossePartita.size() - 1).toString());
+                        Game.getInstance().movesListView.scrollTo(Game.getInstance().movesListView.getItems().size() - 1);
                         Game.getInstance().setCurrentPlayer(Game.getInstance().white);
                     } else {
                         Game.getInstance().white.lastMove = new Mossa(this.row, this.col, this.piece);
                         mossePartita.add(new Round(mossePartita.size() + 1, Game.getInstance().white.lastMove, null));
                         Game.getInstance().movesListView.getItems().add(mossePartita.size() - 1, mossePartita.get(mossePartita.size() - 1).toString());
+                        Game.getInstance().movesListView.scrollTo(Game.getInstance().movesListView.getItems().size() - 1);
                         Game.getInstance().setCurrentPlayer(Game.getInstance().black);
                     }
                     //todo:implementa presa del pezzo come mossa e fix reverso con pezzo mangiante
@@ -141,6 +146,8 @@ public class Square extends StackPane {
                         primaryStage.setScene(scene);
                         primaryStage.show();
                     }
+                    refreshAllPossibleMoves(false);
+                    gameController.getInstance().cancelMoveButton.setDisable(false);
                 }
             }
         } else {
@@ -200,14 +207,12 @@ public class Square extends StackPane {
         for (Node node : Game.getInstance().getBoard().getChildren()) {
             Square square = (Square) node;
             if (square.hasPiece()) {
-                System.out.println("prima"+square.getPiece().toString());
                 try {
                     square.getPiece().getAllPossibleMoves(check);
                     //todo:after this,the square has not pieces zio porco
                 } catch (IOException | CloneNotSupportedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("dopo"+square.getPiece().toString());
                 for (Position move : square.getPiece().possibleMoves) {
                     Square squareById = Square.getSquareById(move.row, move.colomn);
                     ImageView imageView = (ImageView) squareById.getChildren().get(2);
@@ -291,7 +296,6 @@ public class Square extends StackPane {
                         pezzo = new Queen(position, this.getPiece().color);
                     }
                 }
-                pezzo.setPosition(position);
                 pezzo.lastMove = new Position(this.row, this.col);
                 getSquareById(position.row, position.colomn).setPiece(pezzo);
                 deletePiece();
@@ -302,13 +306,13 @@ public class Square extends StackPane {
         return false;
     }
 
-    public void tryMovePiece(Position position,GridPane gridPane) throws IOException {
+    public void tryMovePiece(Position position, GridPane gridPane) throws IOException {
 
         // Aggiorna la posizione del pezzo
-        if(this.getPiece()!=null) {
+        if (this.getPiece() != null) {
             this.getPiece().trySetPosition(position);
             // Imposta il pezzo nella nuova posizione
-            Square.getSquareById(position.row, position.colomn,gridPane).trySetPiece(this.getPiece());
+            Square.getSquareById(position.row, position.colomn, gridPane).trySetPiece(this.getPiece());
 
             this.trySetPiece(null);
         }
@@ -320,14 +324,21 @@ public class Square extends StackPane {
         if (this.getPiece() != null) {
             Piece pezzo = this.getPiece();
             pezzo.setPosition(position);
-            if (pezzo instanceof Pawn && pezzo.lastMove.colomn == checkPawn)
-                pezzo.lastMove = null;
-            else
+            if (pezzo instanceof Pawn && pezzo.lastMove != null) {
+                if (pezzo.lastMove.colomn == checkPawn)
+                    pezzo.lastMove = null;
+            } else
                 pezzo.lastMove = new Position(this.row, this.col);
             getSquareById(position.row, position.colomn).setPiece(pezzo);
-            deletePiece();
+            if (this.lastPiece != null) {
+                this.setPiece(this.lastPiece);
+                this.lastPiece = null;
+            } else
+                this.deletePiece();
+
         }
     }
+
     public void tryMoveUndo(Position position) throws IOException, CloneNotSupportedException {
         if (this.getPiece() != null) {
             Piece pezzo = this.getPiece();
@@ -336,6 +347,7 @@ public class Square extends StackPane {
             deletePiece();
         }
     }
+
     private void deleteEffects() {
         Node child = this.getChildren().get(0);
         if (child instanceof ImageView imageView) {
@@ -352,6 +364,8 @@ public class Square extends StackPane {
 
     public void deletePiece() throws IOException {
         winGame();
+        if (this.piece != null)
+            this.lastPiece = this.piece;
         this.piece = null;
         this.setPieceImage(null);
     }
@@ -364,14 +378,20 @@ public class Square extends StackPane {
         return this.piece;
     }
 
-    public void setPiece(Piece piece) throws IOException {
+    public void setPiece(Piece piece) throws IOException, CloneNotSupportedException {
         winGame();
+        if (this.piece != null)
+            this.lastPiece = this.piece;
+        if (piece != null)
+            piece.setPosition(this.getPosition());
         this.piece = piece;
         setPieceImage();
     }
-    public void trySetPiece(Piece piece){
-        this.piece=piece;
+
+    public void trySetPiece(Piece piece) {
+        this.piece = piece;
     }
+
     @Override
     public String toString() {
         return "Square{" +
@@ -382,9 +402,17 @@ public class Square extends StackPane {
     }
 
     public boolean equals(Square obj) {
-        if(this.hasPiece() != obj.hasPiece())
+        if (this.hasPiece() != obj.hasPiece())
             return false;
         else
             return (this.row == obj.row && this.col == obj.col);
+    }
+
+    public Piece getLastPiece() {
+        return lastPiece;
+    }
+
+    public void setLastPiece(Piece lastPiece) {
+        this.lastPiece = lastPiece;
     }
 }

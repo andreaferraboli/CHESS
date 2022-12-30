@@ -28,7 +28,7 @@ public class Game {
     private Square selectedSquare;
 
 
-    public Game(GridPane chessBoard, ListView<String> movesListView) throws IOException {
+    public Game(GridPane chessBoard, ListView<String> movesListView) throws IOException, CloneNotSupportedException {
         instance = this;
         instance.movesListView = movesListView;
         instance.mossePartita = new ArrayList<>();
@@ -115,7 +115,7 @@ public class Game {
         return instance;
     }
 
-    public void fillBoard() throws IOException {
+    public void fillBoard() throws IOException, CloneNotSupportedException {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 0)
@@ -161,7 +161,7 @@ public class Game {
         this.selectedSquare = selectedSquare;
     }
 
-    public void addPiece(Piece piece) throws IOException {
+    public void addPiece(Piece piece) throws IOException, CloneNotSupportedException {
         Square squareById = Square.getSquareById(piece.position.row, piece.position.colomn);
         squareById.setPiece(piece);
         squareById.setColorOfSquare();
