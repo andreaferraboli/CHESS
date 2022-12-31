@@ -62,12 +62,12 @@ public class King extends Piece {
                         Rook rookLong = (Rook) Square.getSquareById(0, y).getPiece();
                         if (this.lastMove == null)
                             if (rookShort != null)
-                                if (rookShort.lastMove == null && !Square.getSquareById(6, y).hasPiece()&& !Square.getSquareById(5, y).hasPiece())
+                                if (rookShort.lastMove == null && !Square.getSquareById(6, y).hasPiece() && !Square.getSquareById(5, y).hasPiece())
                                     //arrocco corto
                                     this.possibleMoves.add(move);
                                 else if (rookLong != null) {
                                     //arrocco lungo
-                                    if (rookLong.lastMove == null && !Square.getSquareById(1, y).hasPiece()&& !Square.getSquareById(2, y).hasPiece()&& !Square.getSquareById(3, y).hasPiece())
+                                    if (rookLong.lastMove == null && !Square.getSquareById(1, y).hasPiece() && !Square.getSquareById(2, y).hasPiece() && !Square.getSquareById(3, y).hasPiece())
                                         this.possibleMoves.add(move);
                                 }
 
@@ -124,7 +124,7 @@ public class King extends Piece {
                         return true;
         }
         King king = new King(this.position, this.color);
-        king.lastMove=new Mossa(this.position.getRow(),this.position.getColumn());
+        king.lastMove = new Mossa(this.position.getRow(), this.position.getColumn());
         king.movement();
         for (Position position : king.possibleMoves) {
             if (Square.getSquareById(position.getRow(), position.getColumn(), gridPane).hasPiece())
@@ -137,7 +137,7 @@ public class King extends Piece {
         for (Position position : pawn.possibleMoves) {
             if (Square.getSquareById(position.getRow(), position.getColumn(), gridPane).hasPiece())
                 if (!Square.getSquareById(position.getRow(), position.getColumn(), gridPane).getPiece().getColor().equals(this.color))
-                    if (Square.getSquareById(position.getRow(), position.getColumn(), gridPane).getPiece() instanceof Pawn && this.position.getRow()!=position.getRow())
+                    if (Square.getSquareById(position.getRow(), position.getColumn(), gridPane).getPiece() instanceof Pawn && this.position.getRow() != position.getRow())
                         return true;
         }
         return false;

@@ -71,6 +71,17 @@ public class Square extends StackPane {
         });
     }
 
+    public static Square findKing(GridPane gridPane, Color color) {
+        // Cerca la casella con il re dello stesso colore
+        for (Node node : gridPane.getChildren()) {
+            Square square = (Square) node;
+            if (square.hasPiece() && square.getPiece() instanceof King && square.getPiece().getColor().equals(color)) {
+                return square;
+            }
+        }
+        return null;
+    }
+
     public void setPieceImage() {
         Node child = this.getChildren().get(3);
         if (this.piece != null)
@@ -200,7 +211,6 @@ public class Square extends StackPane {
 
     }
 
-
     private int[] piecesOfColor(Color color) {
         // AtomicInteger è una classe che contiene un valore intero e permette
         // che le operazioni di lettura e scrittura del valore intero sono thread-safe,
@@ -223,7 +233,6 @@ public class Square extends StackPane {
         }
         return array;
     }
-
 
     public void refreshAllPossibleMoves(boolean check) {
         for (Node node : Game.getInstance().getBoard().getChildren()) {
@@ -272,7 +281,6 @@ public class Square extends StackPane {
         }
     }
 
-
     private void showPossibleMoves(boolean bool) {
         if (this.piece != null)
             for (Position move : this.piece.possibleMoves) {
@@ -288,17 +296,6 @@ public class Square extends StackPane {
             } else
                 imageView.setImage(null);
         }
-    }
-
-    public static Square findKing(GridPane gridPane, Color color) {
-        // Cerca la casella con il re dello stesso colore
-        for (Node node : gridPane.getChildren()) {
-            Square square = (Square) node;
-            if (square.hasPiece() && square.getPiece() instanceof King && square.getPiece().getColor().equals(color)) {
-                return square;
-            }
-        }
-        return null;
     }
 
     public boolean movePiece(Position position) throws IOException, CloneNotSupportedException {
@@ -375,18 +372,18 @@ public class Square extends StackPane {
             //verifica per ridare al pedone le due mosse disponibili
             if (pezzo instanceof Pawn && pezzo.lastMove != null) {
                 if (pezzo.lastMove.getColumn() == checkPawn) {
-                    int column=pezzo.lastMove.getColumn();
+                    int column = pezzo.lastMove.getColumn();
                     pezzo.lastMove = null;
                     getSquareById(this.row, column).setPiece(pezzo);
                     this.deletePiece();
                 }
             }
-            boolean specialMoveDone=false;
+            boolean specialMoveDone = false;
             if (pezzo.lastMove != null) {
                 if (pezzo.lastMove.specialMove != null) {
                     switch (pezzo.lastMove.specialMove) {
                         case "arrocco_lungo":
-                            specialMoveDone=true;
+                            specialMoveDone = true;
                             // Codice da eseguire per il caso "arrocco_lungo"
                             pezzo.lastMove = null;
                             getSquareById(4, this.col).setPiece(this.getPiece());
@@ -398,7 +395,7 @@ public class Square extends StackPane {
                             getSquareById(0, this.col).getPiece().lastMove = null;
                             break;
                         case "arrocco_corto":
-                            specialMoveDone=true;
+                            specialMoveDone = true;
 
                             // Codice da eseguire per il caso "arrocco_corto"
                             pezzo.lastMove = null;
@@ -410,7 +407,7 @@ public class Square extends StackPane {
                             getSquareById(7, this.col).getPiece().lastMove = null;
                             break;
                         case "en_passant":
-                            specialMoveDone=true;
+                            specialMoveDone = true;
                             Square.getSquareById(this.piece.lastMove.getRow(), this.piece.lastMove.getColumn()).setPiece(this.piece);
                             this.setPiece(this.lastPiece);
                             Square.getSquareById(this.row, this.getPiece().getColor().equals(Color.BLACK) ? this.col - 1 : this.col + 1).setPiece(Square.getSquareById(this.row, this.getPiece().getColor().equals(Color.BLACK) ? this.col - 1 : this.col + 1).lastPiece);
@@ -422,7 +419,7 @@ public class Square extends StackPane {
                             break;
                     }
                 }
-                if(!specialMoveDone){
+                if (!specialMoveDone) {
                     int row = this.piece.lastMove.getRow();
                     int column = this.piece.lastMove.getColumn();
                     getSquareById(row, column).setPiece(pezzo);
@@ -482,7 +479,7 @@ public class Square extends StackPane {
         if (this.piece != null)
             this.lastPiece = this.piece;
         else
-            this.lastPiece=null;
+            this.lastPiece = null;
         if (piece != null)
             piece.setPosition(this.getPosition());
         this.piece = piece;
@@ -509,11 +506,5 @@ public class Square extends StackPane {
             return (this.row == obj.row && this.col == obj.col);
     }
 
-    public Piece getLastPiece() {
-        return lastPiece;
-    }
 
-    public void setLastPiece(Piece lastPiece) {
-        this.lastPiece = lastPiece;
-    }
 }

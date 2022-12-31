@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import static main.chess69.GameMain.primaryStage;
 
@@ -60,8 +59,8 @@ public class gameController {
             primaryStage.show();
         });
         instance.cancelMoveButton.setOnAction(actionEvent -> {
-            GridPane board=Game.getInstance().getBoard();
-            Game currentgame=Game.getInstance();
+            GridPane board = Game.getInstance().getBoard();
+            Game currentgame = Game.getInstance();
             Player currentPlayer = Game.getInstance().getCurrentPlayer();
             Mossa lastMove;
             int checkPawn;

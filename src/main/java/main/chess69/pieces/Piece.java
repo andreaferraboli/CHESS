@@ -77,7 +77,7 @@ public class Piece {
         }
         Square.getSquareById(this.position.getRow(), this.position.getColumn(), copyBoard).tryMovePiece(position, copyBoard);
         List<Square> differences = Utils.getDifferentSquares(originalBoard, copyBoard);
-        King king = (King) Square.findKing(copyBoard,this.color).getPiece();
+        King king = (King) Square.findKing(copyBoard, this.color).getPiece();
         isChecked = king.isCheck(copyBoard);
         Game.getInstance().setBoard(originalBoard);
         return isChecked;
@@ -98,7 +98,6 @@ public class Piece {
     protected Mossa lastMove() {
         return lastMove;
     }
-
 
 
 }

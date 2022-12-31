@@ -71,7 +71,7 @@ public class Pawn extends Piece {
                     if (!squareById.hasPiece()) {
                         possibleMoves.add(new Position(x, y));
                         Square nextSquare = Square.getSquareById(x, this.color.equals(Color.black) ? y + 1 : y - 1);
-                        if (nextSquare!=null)
+                        if (nextSquare != null)
                             if (this.lastMove == null && nextSquare.getPiece() == null)
                                 possibleMoves.add(new Position(x, this.color.equals(Color.black) ? y + 1 : y - 1));
 

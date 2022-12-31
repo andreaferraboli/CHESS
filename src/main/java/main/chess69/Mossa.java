@@ -2,20 +2,20 @@ package main.chess69;
 
 import main.chess69.pieces.*;
 
-public class Mossa{
+public class Mossa {
 
     public Piece pezzo;
+    public String specialMove;
     private int column;
     private int row;
-    public String specialMove;
 
     public Mossa(int row, int column, String specialMove) {
         this.column = column;
         this.row = row;
-        this.specialMove=specialMove;
+        this.specialMove = specialMove;
     }
 
-    public Mossa(int row, int column,Piece pezzo) {
+    public Mossa(int row, int column, Piece pezzo) {
         this.column = column;
         this.row = row;
         this.pezzo = pezzo;
@@ -26,11 +26,12 @@ public class Mossa{
         this.row = row;
     }
 
-    public boolean isSpecialMove(){
-        return this.specialMove != null;
-    }
     public static String rowToChar(int row) {
         return String.valueOf(Position.convention.get(row));
+    }
+
+    public boolean isSpecialMove() {
+        return this.specialMove != null;
     }
 
     @Override
@@ -69,9 +70,10 @@ public class Mossa{
         this.row = row;
     }
 
-    public Position toPosition(){
-        return new Position(this.row,this.column);
+    public Position toPosition() {
+        return new Position(this.row, this.column);
     }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Mossa move) {

@@ -21,6 +21,7 @@ public class Position {
         this.column = column;
         this.row = row;
     }
+
     public Position(String move) {
         this.column = move.indexOf(0);
         this.row = move.indexOf(1);
@@ -35,7 +36,6 @@ public class Position {
         position.row = move.indexOf(1);
         return position;
     }
-
 
 
     public String getPos() {
