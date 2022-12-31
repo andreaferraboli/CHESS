@@ -1,7 +1,10 @@
-package main.chess69;
+package main.chess69.pieces;
 
 
 import javafx.scene.layout.GridPane;
+import main.chess69.Game;
+import main.chess69.Position;
+import main.chess69.Square;
 
 import java.awt.*;
 import java.io.IOException;
@@ -25,9 +28,9 @@ public class Knight extends Piece {
 
     }
 
-    public void movement(GridPane gridPane) {
-        int x = position.row;
-        int y = position.colomn;
+    protected void movement(GridPane gridPane) {
+        int x = position.getRow();
+        int y = position.getColumn();
         this.possibleMoves = new ArrayList<>();
 
         ArrayList<Position> moves = new ArrayList<>();
@@ -42,7 +45,7 @@ public class Knight extends Piece {
 
 
         for (Position move : moves) {
-            Square squareById = Square.getSquareById(move.row, move.colomn, gridPane);
+            Square squareById = Square.getSquareById(move.getRow(), move.getColumn(), gridPane);
             if (squareById != null) {
                 if (!squareById.hasPiece())
                     this.possibleMoves.add(move);
@@ -58,7 +61,7 @@ public class Knight extends Piece {
         // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
         clone.setColor(this.getColor());
         try {
-            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+            clone.setPosition(new Position(this.getPosition().getRow(), this.getPosition().getColumn()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

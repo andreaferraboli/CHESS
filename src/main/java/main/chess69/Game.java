@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import main.chess69.pieces.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -162,7 +163,7 @@ public class Game {
     }
 
     public void addPiece(Piece piece) throws IOException, CloneNotSupportedException {
-        Square squareById = Square.getSquareById(piece.position.row, piece.position.colomn);
+        Square squareById = Square.getSquareById(piece.position.getRow(), piece.position.getColumn());
         squareById.setPiece(piece);
         squareById.setColorOfSquare();
     }

@@ -1,7 +1,10 @@
-package main.chess69;
+package main.chess69.pieces;
 
 
 import javafx.scene.layout.GridPane;
+import main.chess69.Game;
+import main.chess69.Position;
+import main.chess69.Square;
 
 import java.awt.*;
 import java.io.IOException;
@@ -25,9 +28,9 @@ public class Bishop extends Piece {
 
     }
 
-    public void movement(GridPane gridPane) {
-        int x = position.row;
-        int y = position.colomn;
+    protected void movement(GridPane gridPane) {
+        int x = position.getRow();
+        int y = position.getColumn();
 
         this.possibleMoves = new ArrayList<>();
         int diagonals = 4;
@@ -79,8 +82,8 @@ public class Bishop extends Piece {
                         nextDiagonal = true;
                 }
             } while ((x != 7 && x >= 0 && y >= 0 && y != 7) && !nextDiagonal);
-            x = position.row;
-            y = position.colomn;
+            x = position.getRow();
+            y = position.getColumn();
             nextDiagonal = false;
         }
     }
@@ -91,7 +94,7 @@ public class Bishop extends Piece {
         // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
         clone.setColor(this.getColor());
         try {
-            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+            clone.setPosition(new Position(this.getPosition().getRow(), this.getPosition().getColumn()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

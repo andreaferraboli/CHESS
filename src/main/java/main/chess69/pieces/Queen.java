@@ -1,5 +1,8 @@
-package main.chess69;
+package main.chess69.pieces;
 
+
+import main.chess69.Game;
+import main.chess69.Position;
 
 import java.awt.*;
 import java.io.IOException;
@@ -37,7 +40,7 @@ public class Queen extends Piece {
         // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
         clone.setColor(this.getColor());
         try {
-            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+            clone.setPosition(new Position(this.getPosition().getRow(), this.getPosition().getColumn()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

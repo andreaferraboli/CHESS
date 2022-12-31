@@ -1,8 +1,9 @@
-package main.chess69;
+package main.chess69.pieces;
 
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import main.chess69.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class Piece {
     public Position position;
     public ArrayList<Position> possibleMoves;
     public Color color;
-    protected Position lastMove;
+    public Mossa lastMove;
 
     public Piece() {
     }
@@ -56,7 +57,7 @@ public class Piece {
     }
 
     private boolean createsDiscoveredCheck(Position position) throws IOException, CloneNotSupportedException {
-        //this instanceof Bishop && position.row==4 && position.colomn==5 && this.position.row==3 && this.position.colomn==6
+        //this instanceof Bishop && position.getRow()==4 && position.getColumn()==5 && this.position.getRow()==3 && this.position.getColumn()==6
         boolean isChecked;
         GridPane originalBoard = Game.getInstance().getBoard();
         GridPane copyBoard = new GridPane();
@@ -74,7 +75,7 @@ public class Piece {
             }
             copyBoard.add(squareCopy, square.row, square.col);
         }
-        Square.getSquareById(this.position.row, this.position.colomn, copyBoard).tryMovePiece(position, copyBoard);
+        Square.getSquareById(this.position.getRow(), this.position.getColumn(), copyBoard).tryMovePiece(position, copyBoard);
         List<Square> differences = Utils.getDifferentSquares(originalBoard, copyBoard);
         King king = (King) Square.findKing(copyBoard,this.color).getPiece();
         isChecked = king.isCheck(copyBoard);
@@ -87,14 +88,14 @@ public class Piece {
         // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
         clone.setColor(this.getColor());
         try {
-            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+            clone.setPosition(new Position(this.getPosition().getRow(), this.getPosition().getColumn()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return clone;
     }
 
-    protected Position lastMove() {
+    protected Mossa lastMove() {
         return lastMove;
     }
 

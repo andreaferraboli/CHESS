@@ -7,4 +7,6 @@ module main.chess69 {
 
     opens main.chess69 to javafx.fxml;
     exports main.chess69;
+    exports main.chess69.pieces;
+    opens main.chess69.pieces to javafx.fxml;
 }

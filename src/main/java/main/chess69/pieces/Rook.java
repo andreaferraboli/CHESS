@@ -1,7 +1,10 @@
-package main.chess69;
+package main.chess69.pieces;
 
 
 import javafx.scene.layout.GridPane;
+import main.chess69.Game;
+import main.chess69.Position;
+import main.chess69.Square;
 
 import java.awt.*;
 import java.io.IOException;
@@ -25,9 +28,9 @@ public class Rook extends Piece {
             removeMovesCreateCheck();
     }
 
-    public void movement(GridPane gridPane) {
-        int x = this.position.row;
-        int y = this.position.colomn;
+    protected void movement(GridPane gridPane) {
+        int x = this.position.getRow();
+        int y = this.position.getColumn();
         this.possibleMoves = new ArrayList<>();
         int sides = 4;
         boolean nextDiagonal = false;
@@ -73,8 +76,8 @@ public class Rook extends Piece {
                         nextDiagonal = true;
                 }
             } while ((x <= 7 && x >= 0 && y >= 0 && y <= 7) && !nextDiagonal);
-            x = position.row;
-            y = position.colomn;
+            x = position.getRow();
+            y = position.getColumn();
             nextDiagonal = false;
         }
     }
@@ -84,7 +87,7 @@ public class Rook extends Piece {
         // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
         clone.setColor(this.getColor());
         try {
-            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+            clone.setPosition(new Position(this.getPosition().getRow(), this.getPosition().getColumn()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

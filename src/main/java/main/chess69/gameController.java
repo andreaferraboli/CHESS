@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import static main.chess69.GameMain.primaryStage;
 
@@ -59,6 +60,8 @@ public class gameController {
             primaryStage.show();
         });
         instance.cancelMoveButton.setOnAction(actionEvent -> {
+            GridPane board=Game.getInstance().getBoard();
+            Game currentgame=Game.getInstance();
             Player currentPlayer = Game.getInstance().getCurrentPlayer();
             Mossa lastMove;
             int checkPawn;
@@ -75,7 +78,7 @@ public class gameController {
                 Game.getInstance().movesListView.getItems().set(index, Game.getInstance().mossePartita.get(index).toString());
             }
 
-            Square squareById = Square.getSquareById(lastMove.row, lastMove.colomn);
+            Square squareById = Square.getSquareById(lastMove.pezzo.position.getRow(), lastMove.pezzo.position.getColumn());
             try {
                 squareById.moveUndo(lastMove.pezzo.lastMove, checkPawn);
             } catch (IOException | CloneNotSupportedException e) {

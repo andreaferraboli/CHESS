@@ -1,5 +1,7 @@
-package main.chess69;
+package main.chess69.pieces;
 
+
+import main.chess69.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -16,8 +18,16 @@ public class Pawn extends Piece {
 
     @Override
     public void getAllPossibleMoves(boolean check) throws IOException, CloneNotSupportedException {
-        int x = position.row;
-        int y = position.colomn;
+        movement();
+        if (check)
+            removeMovesCreateCheck();
+
+
+    }
+
+    protected void movement() {
+        int x = position.getRow();
+        int y = position.getColumn();
         this.possibleMoves = new ArrayList<>();
 
         if (this.color.equals(Color.black))
@@ -37,19 +47,23 @@ public class Pawn extends Piece {
                             possibleMoves.add(new Position(x, y));
                     } else {
                         //check en passant
-                        if ((this.getColor().equals(Color.WHITE) && this.position.colomn == 3)) {
+                        if ((this.getColor().equals(Color.WHITE) && this.position.getColumn() == 3)) {
                             squareById = Square.getSquareById(x, 2);
                             if (!squareById.hasPiece()) {
                                 squareById = Square.getSquareById(x, 3);
-                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.BLACK) && squareById.getPiece().lastMove.equals(new Position(x, 1)) && Game.getInstance().black.lastMove.equals(new Mossa(squareById.getPiece().position.row, squareById.getPiece().position.colomn)))
-                                    possibleMoves.add(new Position(x, 2));
+                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.BLACK) && Game.getInstance().black.lastMove.equals(new Mossa(squareById.getPiece().position.getRow(), squareById.getPiece().position.getColumn())))
+                                    if (squareById.getPiece().lastMove != null)
+                                        if (squareById.getPiece().lastMove.equals(new Mossa(x, 1)))
+                                            possibleMoves.add(new Position(x, 2));
                             }
-                        } else if (this.getColor().equals(Color.BLACK) && this.position.colomn == 4) {
+                        } else if (this.getColor().equals(Color.BLACK) && this.position.getColumn() == 4) {
                             squareById = Square.getSquareById(x, 5);
                             if (!squareById.hasPiece()) {
                                 squareById = Square.getSquareById(x, 4);
-                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.WHITE) && squareById.getPiece().lastMove.equals(new Position(x, 6)) && Game.getInstance().white.lastMove.equals(new Mossa(squareById.getPiece().position.row, squareById.getPiece().position.colomn)))
-                                    possibleMoves.add(new Position(x, 5));
+                                if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.WHITE) && Game.getInstance().white.lastMove.equals(new Mossa(squareById.getPiece().position.getRow(), squareById.getPiece().position.getColumn())))
+                                    if (squareById.getPiece().lastMove != null)
+                                        if (squareById.getPiece().lastMove.equals(new Position(x, 6)))
+                                            possibleMoves.add(new Position(x, 5));
                             }
                         }
                     }
@@ -57,17 +71,14 @@ public class Pawn extends Piece {
                     if (!squareById.hasPiece()) {
                         possibleMoves.add(new Position(x, y));
                         Square nextSquare = Square.getSquareById(x, this.color.equals(Color.black) ? y + 1 : y - 1);
-                        if (this.lastMove == null && nextSquare.getPiece() == null)
-                            possibleMoves.add(new Position(x, this.color.equals(Color.black) ? y + 1 : y - 1));
+                        if (nextSquare!=null)
+                            if (this.lastMove == null && nextSquare.getPiece() == null)
+                                possibleMoves.add(new Position(x, this.color.equals(Color.black) ? y + 1 : y - 1));
 
                     }
                 }
             }
         }
-        if (check)
-            removeMovesCreateCheck();
-
-
     }
 
     protected Pawn clone() throws CloneNotSupportedException {
@@ -75,7 +86,7 @@ public class Pawn extends Piece {
         // Crea un nuovo oggetto Piece con gli stessi valori dei campi dell'oggetto originale
         clone.setColor(this.getColor());
         try {
-            clone.setPosition(new Position(this.getPosition().row, this.getPosition().colomn));
+            clone.setPosition(new Position(this.getPosition().getRow(), this.getPosition().getColumn()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
