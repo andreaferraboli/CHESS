@@ -429,7 +429,8 @@ public class Square extends StackPane {
                     } else {
                         this.deletePiece();
                     }
-                    refreshAllPossibleMoves(true);
+//                    refreshAllPossibleMoves(true);
+                    getSquareById(row, column).getPiece().getAllPossibleMoves(true);
                 }
             }
 
