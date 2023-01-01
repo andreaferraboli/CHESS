@@ -84,7 +84,7 @@ public class gameController {
                 throw new RuntimeException(e);
             }
             Square.removeCheckEffect();
-            squareById.refreshAllPossibleMoves(false);
+            squareById.refreshAllPossibleMoves(true);
             if (currentPlayer.color.equals(Color.black))
                 Game.getInstance().setCurrentPlayer(Game.getInstance().white);
             else
