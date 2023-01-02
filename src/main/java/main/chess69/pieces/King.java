@@ -140,11 +140,6 @@ public class King extends Piece {
                     if (Square.getSquareById(position.getRow(), position.getColumn(), gridPane).getPiece() instanceof Pawn && this.position.getRow() != position.getRow())
                         return true;
         }
-        king=null;
-        knight=null;
-        rook=null;
-        bishop=null;
-        pawn=null;
         return false;
     }
 
