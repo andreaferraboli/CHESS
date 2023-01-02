@@ -3,12 +3,14 @@ package main.chess69.pieces;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import main.chess69.*;
+import main.chess69.Game;
+import main.chess69.Mossa;
+import main.chess69.Position;
+import main.chess69.Square;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Piece {
     public Position position;
@@ -55,13 +57,11 @@ public class Piece {
                 filteredList.add(position);
 
         //controllo arrocco, se il re è sotto scacco durante il movimento non può fare l'arrocco
-        if(this instanceof King && this.lastMove==null) {
-            if(!filteredList.contains(new Position(this.position.getRow()+1,this.position.getColumn())))
-                if(filteredList.contains(new Position(this.position.getRow()+2,this.position.getColumn())))
-                    filteredList.remove(new Position(this.position.getRow()+2,this.position.getColumn()));
-            if(!filteredList.contains(new Position(this.position.getRow()-1,this.position.getColumn())))
-                if(filteredList.contains(new Position(this.position.getRow()-2,this.position.getColumn())))
-                    filteredList.remove(new Position(this.position.getRow()-2,this.position.getColumn()));
+        if (this instanceof King && this.lastMove == null) {
+            if (!filteredList.contains(new Position(this.position.getRow() + 1, this.position.getColumn())))
+                filteredList.remove(new Position(this.position.getRow() + 2, this.position.getColumn()));
+            if (!filteredList.contains(new Position(this.position.getRow() - 1, this.position.getColumn())))
+                filteredList.remove(new Position(this.position.getRow() - 2, this.position.getColumn()));
         }
 
         this.possibleMoves = filteredList;

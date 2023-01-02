@@ -434,7 +434,7 @@ public class Square extends StackPane {
                     Piece piece = getSquareById(row, column).getPiece();
                     // se è la prima mossa del re devo settare la sua ultima mossa a null
                     if (piece instanceof King) {
-                        int counter=0;
+                        int counter = 0;
                         for (Round round : Game.getInstance().mossePartita) {
                             if (piece.color.equals(Color.black)) {
                                 if (round.mossa2.toString().contains("K"))
@@ -444,7 +444,7 @@ public class Square extends StackPane {
                                     counter++;
                             }
                         }
-                        piece.lastMove=null;
+                        piece.lastMove = null;
                     }
 
                     piece.getAllPossibleMoves(true);

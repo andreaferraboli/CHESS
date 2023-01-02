@@ -1,10 +1,6 @@
 package main.chess69;
 
-import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Utils {
     public static boolean between(int num, int min, int max) {
