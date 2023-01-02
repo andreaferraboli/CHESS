@@ -18,17 +18,5 @@ public class Utils {
         return false;
     }
 
-    public static List<Square> getDifferentSquares(GridPane gridPane1, GridPane gridPane2) {
-        List<Square> differentSquares = new ArrayList<>();
-        // Confronta ogni casella dei due GridPane
-        for (Node node1 : gridPane1.getChildren()) {
-            Square square1 = (Square) node1;
-            Square square2 = Square.getSquareById(square1.row, square1.col, gridPane2);
-            // Se le caselle sono diverse, aggiungile alla lista delle caselle differenti
-            if (!square1.equals(square2)) {
-                differentSquares.add(square1);
-            }
-        }
-        return differentSquares;
-    }
+
 }
