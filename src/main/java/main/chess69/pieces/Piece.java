@@ -53,6 +53,17 @@ public class Piece {
         for (Position position : this.possibleMoves)
             if (!createsDiscoveredCheck(position))
                 filteredList.add(position);
+
+        //controllo arrocco, se il re è sotto scacco durante il movimento non può fare l'arrocco
+        if(this instanceof King && this.lastMove==null) {
+            if(!filteredList.contains(new Position(this.position.getRow()+1,this.position.getColumn())))
+                if(filteredList.contains(new Position(this.position.getRow()+2,this.position.getColumn())))
+                    filteredList.remove(new Position(this.position.getRow()+2,this.position.getColumn()));
+            if(!filteredList.contains(new Position(this.position.getRow()-1,this.position.getColumn())))
+                if(filteredList.contains(new Position(this.position.getRow()-2,this.position.getColumn())))
+                    filteredList.remove(new Position(this.position.getRow()-2,this.position.getColumn()));
+        }
+
         this.possibleMoves = filteredList;
     }
 
