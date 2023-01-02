@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static main.chess69.GameMain.primaryStage;
@@ -121,8 +122,8 @@ public class Square extends StackPane {
 
         int numberOfWhitePossibleMoves = numberOfPossibleMoves(Color.white);
         int numberOfBlackPossibleMoves = numberOfPossibleMoves(Color.black);
-        King whiteKing = (King) findKing(Game.getInstance().getBoard(), Color.white).getPiece();
-        King blackKing = (King) findKing(Game.getInstance().getBoard(), Color.black).getPiece();
+        King whiteKing = (King) Objects.requireNonNull(findKing(Game.getInstance().getBoard(), Color.white)).getPiece();
+        King blackKing = (King) Objects.requireNonNull(findKing(Game.getInstance().getBoard(), Color.black)).getPiece();
         if (numberOfBlackPossibleMoves == 0 && blackKing.checked)
             winGame(Color.white);
         if (numberOfWhitePossibleMoves == 0 && whiteKing.checked)
@@ -145,7 +146,6 @@ public class Square extends StackPane {
     private void drawGame() throws IOException {
         URL url = new File("src/main/resources/main/chess69/winWhite.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
-//
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -154,7 +154,6 @@ public class Square extends StackPane {
     private void winGame(Color color) throws IOException {
         URL url = new File("src/main/resources/main/chess69/win" + (color.toString().contains("r=255,g=255,b=255") ? "White" : "Black") + ".fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
-//
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -352,7 +351,7 @@ public class Square extends StackPane {
         return false;
     }
 
-    public void tryMovePiece(Position position, GridPane gridPane) throws IOException {
+    public void tryMovePiece(Position position, GridPane gridPane){
 
         // Aggiorna la posizione del pezzo
         if (this.getPiece() != null) {
@@ -456,15 +455,6 @@ public class Square extends StackPane {
         }
     }
 
-    public void tryMoveUndo(Position position) throws IOException, CloneNotSupportedException {
-        if (this.getPiece() != null) {
-            Piece pezzo = this.getPiece();
-            pezzo.setPosition(position);
-            getSquareById(position.getRow(), position.getColumn()).setPiece(pezzo);
-            deletePiece();
-        }
-    }
-
     private void deleteEffects() {
         Node child = this.getChildren().get(0);
         if (child instanceof ImageView imageView) {
@@ -479,7 +469,7 @@ public class Square extends StackPane {
         showPossibleMoves(false);
     }
 
-    public void deletePiece() throws IOException {
+    public void deletePiece(){
         if (this.piece != null)
             this.lastPiece = this.piece;
         this.piece = null;

@@ -34,10 +34,6 @@ public class gameController {
         return instance;
     }
 
-    public static void setInstance(gameController instance) {
-        gameController.instance = instance;
-    }
-
     public void initialize() throws IOException, CloneNotSupportedException {
         instance = this;
         Game game = new Game(board, movesListView);
@@ -59,8 +55,6 @@ public class gameController {
             primaryStage.show();
         });
         instance.cancelMoveButton.setOnAction(actionEvent -> {
-            GridPane board = Game.getInstance().getBoard();
-            Game currentgame = Game.getInstance();
             Player currentPlayer = Game.getInstance().getCurrentPlayer();
             Mossa lastMove;
             int checkPawn;
@@ -94,11 +88,4 @@ public class gameController {
         });
     }
 
-    public Button getCancelMoveButton() {
-        return cancelMoveButton;
-    }
-
-    public void setCancelMoveButton(Button cancelMoveButton) {
-        this.cancelMoveButton = cancelMoveButton;
-    }
 }

@@ -17,11 +17,8 @@ import java.util.ArrayList;
 public class Game {
 
     private static Game instance;
-    public final Object lock = new Object();
     public ArrayList<Round> mossePartita = new ArrayList<>();
     public ListView<String> movesListView;
-    public String selectedPieceForPromotion;
-    public boolean promotion;
     public Player white;
     public Player black;
     private GridPane board;
@@ -79,8 +76,7 @@ public class Game {
                     } catch (IOException | InterruptedException | CloneNotSupportedException e) {
                         throw new RuntimeException(e);
                     }
-                } else
-                    System.out.println("cella selezionata vuota" + square.row + " " + square.col);
+                }
             });
         });
     }
@@ -184,11 +180,4 @@ public class Game {
         this.board = board;
     }
 
-    public String getSelectedPieceForPromotion() {
-        return this.selectedPieceForPromotion;
-    }
-
-    public void setSelectedPieceForPromotion(String selectedPieceForPromotion) {
-        this.selectedPieceForPromotion = selectedPieceForPromotion;
-    }
 }
