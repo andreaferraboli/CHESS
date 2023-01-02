@@ -55,12 +55,11 @@ public class Square extends StackPane {
 
     public static void removeCheckEffect() {
         // Verifica se la casella contiene un Re
-        Game.getInstance().getBoard().getChildren().forEach(node -> {
-
+        for (Node node : Game.getInstance().getBoard().getChildren()) {
             Square square = (Square) node;
+            ImageView imageView = (ImageView) square.getChildren().get(2);
             if (square.getPiece() instanceof King) {
                 // Verifica se la casella ha l'effetto di scacco
-                ImageView imageView = (ImageView) square.getChildren().get(2);
                 if (imageView.getImage() != null && imageView.getImage().getUrl().contains("check.png")) {
                     // Rimuovi l'effetto di scacco dalla casella
                     King king = (King) square.getPiece();
@@ -68,7 +67,10 @@ public class Square extends StackPane {
                     imageView.setImage(null);
                 }
             }
-        });
+            else {
+                imageView.setImage(null);
+            }
+        }
     }
 
     public static Square findKing(GridPane gridPane, Color color) {
