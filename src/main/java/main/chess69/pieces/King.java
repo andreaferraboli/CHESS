@@ -57,24 +57,26 @@ public class King extends Piece {
                         this.possibleMoves.add(move);
                 } else {
                     //check arrocco
-                    if ((move.getRow() == x - 2 || move.getRow() == x + 2) && (this.color.equals(Color.black) ? move.getColumn() == 0 : move.getColumn() == 7)) {
-                        Rook rookShort = (Rook) Square.getSquareById(7, y).getPiece();
-                        Rook rookLong = (Rook) Square.getSquareById(0, y).getPiece();
-                        if (this.lastMove == null)
-                            if (rookShort != null)
-                                if (rookShort.lastMove == null && !Square.getSquareById(6, y).hasPiece() && !Square.getSquareById(5, y).hasPiece())
+                    if (this.lastMove == null)
+                        if ((move.getRow() == x - 2 || move.getRow() == x + 2) && (this.color.equals(Color.black) ? move.getColumn() == 0 : move.getColumn() == 7)) {
+                            if(Square.getSquareById(7, y).getPiece() instanceof King) {
+                                Rook rookShort = (Rook) Square.getSquareById(7, y).getPiece();
+                                if (rookShort != null)
+                                    if (rookShort.lastMove == null && !Square.getSquareById(6, y).hasPiece() && !Square.getSquareById(5, y).hasPiece())
                                     //arrocco corto
-                                    this.possibleMoves.add(move);
-                                else if (rookLong != null) {
+                                        this.possibleMoves.add(move);
+                            }
+                            if(Square.getSquareById(0, y).getPiece() instanceof King) {
+                                Rook rookLong = (Rook) Square.getSquareById(0, y).getPiece();
+                                if (rookLong != null) {
                                     //arrocco lungo
                                     if (rookLong.lastMove == null && !Square.getSquareById(1, y).hasPiece() && !Square.getSquareById(2, y).hasPiece() && !Square.getSquareById(3, y).hasPiece())
                                         this.possibleMoves.add(move);
                                 }
-
-
-                    } else {
-                        this.possibleMoves.add(move);
-                    }
+                            }
+                        } else {
+                            this.possibleMoves.add(move);
+                        }
                 }
             }
         }
@@ -97,7 +99,7 @@ public class King extends Piece {
         return clone;
     }
 
-    public boolean isCheck(GridPane gridPane) throws IOException {
+    public boolean isCheck(GridPane gridPane) {
         //reverse check
         Knight knight = new Knight(this.position, this.color);
         knight.movement(gridPane);
