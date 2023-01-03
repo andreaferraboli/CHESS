@@ -36,15 +36,15 @@ public class gameController {
 
     public void initialize() throws IOException, CloneNotSupportedException {
         instance = this;
-        Game game = new Game(board, movesListView);
+        new Game(board, movesListView);
         instance.newGameButton.setOnAction(actionEvent -> {
-            URL url = null;
+            URL url;
             try {
                 url = new File("src/main/resources/main/chess69/game.fxml").toURI().toURL();
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
-            Parent root = null;
+            Parent root;
             try {
                 root = FXMLLoader.load(url);
             } catch (IOException e) {

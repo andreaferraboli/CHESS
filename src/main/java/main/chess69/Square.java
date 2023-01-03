@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static main.chess69.GameMain.primaryStage;
 
@@ -212,26 +211,18 @@ public class Square extends StackPane {
     }
 
     private int[] piecesOfColor(Color color) {
-        // AtomicInteger è una classe che contiene un valore intero e permette
-        // che le operazioni di lettura e scrittura del valore intero sono thread-safe,
-        // il che significa che più thread possono accedere allo stesso oggetto AtomicInteger
-        // in modo sicuro senza dover sincronizzare manualmente l'accesso
-        AtomicInteger[] counters = new AtomicInteger[]{new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0), new AtomicInteger(0)};
-        Game.getInstance().getBoard().getChildren().forEach(node -> {
+        int[] counters = {0, 0, 0};
+        for (Node node : Game.getInstance().getBoard().getChildren()) {
             Square square = (Square) node;
             if (square.getPiece() != null && square.getPiece().color.equals(color)) {
-                counters[0].getAndIncrement();
+                counters[0] += 1;
                 if (square.getPiece() instanceof Knight)
-                    counters[1].getAndIncrement();
+                    counters[1] += 1;
                 if (square.getPiece() instanceof Bishop)
-                    counters[2].getAndIncrement();
+                    counters[2] += 1;
             }
-        });
-        int[] array = new int[counters.length];
-        for (int i = 0; i < counters.length; i++) {
-            array[i] = counters[i].get();
         }
-        return array;
+        return counters;
     }
 
     public void refreshAllPossibleMoves(boolean check) {
@@ -351,7 +342,7 @@ public class Square extends StackPane {
         return false;
     }
 
-    public void tryMovePiece(Position position, GridPane gridPane){
+    public void tryMovePiece(Position position, GridPane gridPane) {
 
         // Aggiorna la posizione del pezzo
         if (this.getPiece() != null) {
@@ -443,7 +434,8 @@ public class Square extends StackPane {
                                     counter++;
                             }
                         }
-                        piece.lastMove = null;
+                        if (counter == 0)
+                            piece.lastMove = null;
                     }
 
                     piece.getAllPossibleMoves(true);
@@ -469,7 +461,7 @@ public class Square extends StackPane {
         showPossibleMoves(false);
     }
 
-    public void deletePiece(){
+    public void deletePiece() {
         if (this.piece != null)
             this.lastPiece = this.piece;
         this.piece = null;

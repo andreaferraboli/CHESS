@@ -59,19 +59,20 @@ public class King extends Piece {
                     //check arrocco
                     if (this.lastMove == null) {
                         if ((move.getRow() == x - 2 || move.getRow() == x + 2) && (this.color.equals(Color.black) ? move.getColumn() == 0 : move.getColumn() == 7)) {
-                            if (Square.getSquareById(7, y).getPiece() instanceof Rook rookShort) {
-                                if (rookShort != null)
+                            Square squareById = Square.getSquareById(7, y);
+                            if (squareById.hasPiece())
+                                if (squareById.getPiece() instanceof Rook rookShort) {
                                     if (rookShort.lastMove == null && !Square.getSquareById(6, y).hasPiece() && !Square.getSquareById(5, y).hasPiece())
                                         //arrocco corto
                                         this.possibleMoves.add(move);
-                            }
-                            if (Square.getSquareById(0, y).getPiece() instanceof Rook rookLong) {
-                                if (rookLong != null) {
+                                }
+                            squareById = Square.getSquareById(0, y);
+                            if (squareById.hasPiece())
+                                if (squareById.getPiece() instanceof Rook rookLong) {
                                     //arrocco lungo
                                     if (rookLong.lastMove == null && !Square.getSquareById(1, y).hasPiece() && !Square.getSquareById(2, y).hasPiece() && !Square.getSquareById(3, y).hasPiece())
                                         this.possibleMoves.add(move);
                                 }
-                            }
                         } else {
                             this.possibleMoves.add(move);
                         }

@@ -48,7 +48,7 @@ public class Mossa {
         } else if (this.pezzo instanceof Queen) {
             mossa += "Q";
         }
-        return mossa + rowToChar(this.row) + this.column;
+        return mossa + rowToChar(this.row) + (8 - this.column);
     }
 
     public int getColumn() {
