@@ -47,6 +47,7 @@ public class Pawn extends Piece {
                             possibleMoves.add(new Position(x, y));
                     } else {
                         //check en passant
+                        //TODO::non va en passant per il nero
                         if ((this.getColor().equals(Color.WHITE) && this.position.getColumn() == 3)) {
                             squareById = Square.getSquareById(x, 2);
                             if (!squareById.hasPiece()) {
