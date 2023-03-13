@@ -36,6 +36,7 @@ public class Game {
         instance.setCurrentPlayer(instance.white);
         ArrayList<Square> squares = new ArrayList<>();
 
+        //create the initial board
         for (int i = 0; i < 8; i++) {
             instance.board.getRowConstraints().add(new RowConstraints(65));
             instance.board.getColumnConstraints().add(new ColumnConstraints(65));
@@ -66,7 +67,7 @@ public class Game {
             }
         }
         fillBoard();
-
+        //add onClick on every square
         instance.board.getChildren().forEach(node -> {
             Square square = (Square) node;
             square.setOnMouseClicked(event -> {
@@ -82,7 +83,6 @@ public class Game {
     }
 
     public static Square getNodeByCoordinate(int row, int col) {
-        int colNode, rowNode;
         ObservableList<Node> children = instance.getBoard().getChildren();
 
         for (Node node : children) {

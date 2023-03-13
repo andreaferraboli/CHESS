@@ -57,14 +57,17 @@ public class gameController {
         instance.cancelMoveButton.setOnAction(actionEvent -> {
             Player currentPlayer = Game.getInstance().getCurrentPlayer();
             Mossa lastMove;
+            //checkPawn is the initial position of the pawn, if the last move of the pawn is the initial position we must set the last move to null
             int checkPawn;
             int index = Game.getInstance().movesListView.getItems().size() - 1;
             if (currentPlayer.color.equals(Color.black)) {
+                //reverse white move
                 lastMove = Game.getInstance().white.lastMove;
                 checkPawn = 6;
                 Game.getInstance().movesListView.getItems().remove(index);
                 Game.getInstance().mossePartita.remove(index);
             } else {
+                //reverse black move
                 lastMove = Game.getInstance().black.lastMove;
                 checkPawn = 1;
                 Game.getInstance().mossePartita.get(index).setMossa2(null);
@@ -83,6 +86,7 @@ public class gameController {
                 Game.getInstance().setCurrentPlayer(Game.getInstance().white);
             else
                 Game.getInstance().setCurrentPlayer(Game.getInstance().black);
+            //you can move undo the piece only one time
             instance.cancelMoveButton.setDisable(true);
 
         });
