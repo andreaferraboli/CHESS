@@ -3,10 +3,7 @@ package main.chess69.pieces;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import main.chess69.Game;
-import main.chess69.Mossa;
-import main.chess69.Position;
-import main.chess69.Square;
+import main.chess69.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -86,7 +83,7 @@ public class Piece {
             }
             copyBoard.add(squareCopy, square.row, square.col);
         }
-        Square.getSquareById(this.position.getRow(), this.position.getColumn(), copyBoard).tryMovePiece(position, copyBoard);
+        Utils.tryMovePiece(Square.getSquareById(this.position.getRow(), this.position.getColumn(), copyBoard),position, copyBoard);
         King king = (King) Square.findKing(copyBoard, this.color).getPiece();
         isChecked = king.isCheck(copyBoard);
         Game.getInstance().setBoard(originalBoard);

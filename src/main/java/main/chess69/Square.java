@@ -342,17 +342,7 @@ public class Square extends StackPane {
         return false;
     }
 
-    public void tryMovePiece(Position position, GridPane gridPane) {
 
-        // Aggiorna la posizione del pezzo
-        if (this.getPiece() != null) {
-            this.getPiece().trySetPosition(position);
-            // Imposta il pezzo nella nuova posizione
-            Square.getSquareById(position.getRow(), position.getColumn(), gridPane).trySetPiece(this.getPiece());
-
-            this.trySetPiece(null);
-        }
-    }
 
     public void moveUndo(Mossa pos, int checkPawn) throws IOException, CloneNotSupportedException {
         Game.getInstance().setSelectedSquare(null);
@@ -487,9 +477,6 @@ public class Square extends StackPane {
         setPieceImage();
     }
 
-    public void trySetPiece(Piece piece) {
-        this.piece = piece;
-    }
 
     @Override
     public String toString() {
