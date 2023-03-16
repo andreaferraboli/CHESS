@@ -50,7 +50,7 @@ public class Square extends StackPane {
     }
 
     public static Square getSquareById(int x, int y, GridPane grid) {
-        return Game.getNodeByCoordinate(x, y, grid);
+        return Utils.getNodeByCoordinate(x, y, grid);
     }
 
     public static void removeCheckEffect() {
@@ -72,16 +72,7 @@ public class Square extends StackPane {
         }
     }
 
-    public static Square findKing(GridPane gridPane, Color color) {
-        // Cerca la casella con il re dello stesso colore
-        for (Node node : gridPane.getChildren()) {
-            Square square = (Square) node;
-            if (square.hasPiece() && square.getPiece() instanceof King && square.getPiece().getColor().equals(color)) {
-                return square;
-            }
-        }
-        return null;
-    }
+
 
     public void setPieceImage() {
         Node child = this.getChildren().get(3);
@@ -121,8 +112,8 @@ public class Square extends StackPane {
 
         int numberOfWhitePossibleMoves = numberOfPossibleMoves(Color.white);
         int numberOfBlackPossibleMoves = numberOfPossibleMoves(Color.black);
-        King whiteKing = (King) Objects.requireNonNull(findKing(Game.getInstance().getBoard(), Color.white)).getPiece();
-        King blackKing = (King) Objects.requireNonNull(findKing(Game.getInstance().getBoard(), Color.black)).getPiece();
+        King whiteKing = (King) Objects.requireNonNull(Utils.findKing(Game.getInstance().getBoard(), Color.white)).getPiece();
+        King blackKing = (King) Objects.requireNonNull(Utils.findKing(Game.getInstance().getBoard(), Color.black)).getPiece();
         if (numberOfBlackPossibleMoves == 0 && blackKing.checked)
             winGame(Color.white);
         if (numberOfWhitePossibleMoves == 0 && whiteKing.checked)

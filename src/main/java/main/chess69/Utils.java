@@ -1,8 +1,12 @@
 package main.chess69;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import main.chess69.pieces.King;
 import main.chess69.pieces.Piece;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -38,6 +42,28 @@ public class Utils {
         }
     }
 
+    public static Square getNodeByCoordinate(int row, int col, GridPane grid) {
+        ObservableList<Node> children = grid.getChildren();
 
+        for (Node node : children) {
+            if (node instanceof Square square) {
+                if (square.col == col && square.row == row) {
+                    return square;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Square findKing(GridPane gridPane, Color color) {
+        // Cerca la casella con il re dello stesso colore
+        for (Node node : gridPane.getChildren()) {
+            Square square = (Square) node;
+            if (square.hasPiece() && square.getPiece() instanceof King && square.getPiece().getColor().equals(color)) {
+                return square;
+            }
+        }
+        return null;
+    }
 
 }

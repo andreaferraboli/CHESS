@@ -95,19 +95,6 @@ public class Game {
         return null;
     }
 
-    public static Square getNodeByCoordinate(int row, int col, GridPane grid) {
-        ObservableList<Node> children = grid.getChildren();
-
-        for (Node node : children) {
-            if (node instanceof Square square) {
-                if (square.col == col && square.row == row) {
-                    return square;
-                }
-            }
-        }
-        return null;
-    }
-
     public static Game getInstance() {
         return instance;
     }
@@ -116,7 +103,7 @@ public class Game {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
                 if (i == 0)
-                    addPiece(new Pawn(new Position(j, 6), java.awt.Color.white));
+                    addPiece(new Pawn(new Position(j, 6), Color.white));
                 else
                     addPiece(new Pawn(new Position(j, 1), Color.black));
 
@@ -124,26 +111,26 @@ public class Game {
 
         }
         //create bishops
-        addPiece(new Bishop(new Position(5, 7), java.awt.Color.white));
-        addPiece(new Bishop(new Position(2, 7), java.awt.Color.white));
-        addPiece(new Bishop(new Position(5, 0), java.awt.Color.black));
-        addPiece(new Bishop(new Position(2, 0), java.awt.Color.black));
+        addPiece(new Bishop(new Position(5, 7), Color.white));
+        addPiece(new Bishop(new Position(2, 7), Color.white));
+        addPiece(new Bishop(new Position(5, 0), Color.black));
+        addPiece(new Bishop(new Position(2, 0), Color.black));
         //crete knights
-        addPiece(new Knight(new Position(6, 7), java.awt.Color.white));
-        addPiece(new Knight(new Position(1, 7), java.awt.Color.white));
-        addPiece(new Knight(new Position(6, 0), java.awt.Color.black));
-        addPiece(new Knight(new Position(1, 0), java.awt.Color.black));
+        addPiece(new Knight(new Position(6, 7), Color.white));
+        addPiece(new Knight(new Position(1, 7), Color.white));
+        addPiece(new Knight(new Position(6, 0), Color.black));
+        addPiece(new Knight(new Position(1, 0), Color.black));
 //        //create rooks
-        addPiece(new Rook(new Position(0, 7), java.awt.Color.white));
-        addPiece(new Rook(new Position(7, 7), java.awt.Color.white));
-        addPiece(new Rook(new Position(0, 0), java.awt.Color.black));
-        addPiece(new Rook(new Position(7, 0), java.awt.Color.black));
+        addPiece(new Rook(new Position(0, 7), Color.white));
+        addPiece(new Rook(new Position(7, 7), Color.white));
+        addPiece(new Rook(new Position(0, 0), Color.black));
+        addPiece(new Rook(new Position(7, 0), Color.black));
         //create kings
-        addPiece(new King(new Position(4, 0), java.awt.Color.black));
-        addPiece(new King(new Position(4, 7), java.awt.Color.white));
+        addPiece(new King(new Position(4, 0), Color.black));
+        addPiece(new King(new Position(4, 7), Color.white));
         //create queens
-        addPiece(new Queen(new Position(3, 0), java.awt.Color.black));
-        addPiece(new Queen(new Position(3, 7), java.awt.Color.white));
+        addPiece(new Queen(new Position(3, 0), Color.black));
+        addPiece(new Queen(new Position(3, 7), Color.white));
 
         Square square = new Square();
         square.refreshAllPossibleMoves(false);

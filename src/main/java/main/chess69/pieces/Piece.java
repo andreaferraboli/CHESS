@@ -8,6 +8,7 @@ import main.chess69.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Piece {
     public Position position;
@@ -54,11 +55,15 @@ public class Piece {
                 filteredList.add(position);
 
         //controllo arrocco, se il re è sotto scacco durante il movimento non può fare l'arrocco
-        if (this instanceof King && this.lastMove == null) {
-            if (!filteredList.contains(new Position(this.position.getRow() + 1, this.position.getColumn())))
-                filteredList.remove(new Position(this.position.getRow() + 2, this.position.getColumn()));
-            if (!filteredList.contains(new Position(this.position.getRow() - 1, this.position.getColumn())))
-                filteredList.remove(new Position(this.position.getRow() - 2, this.position.getColumn()));
+        //TODO::correggi
+        //TODO::quando ho l'arrocco ho due volte la stessa posizione nell'arraylist
+        if (this instanceof King) {
+            System.out.println(filteredList);
+            System.out.println("possible-moves:"+this.possibleMoves);
+//            if (!filteredList.contains(new Position(this.position.getRow() + 1, this.position.getColumn())))
+//                filteredList.remove(new Position(this.position.getRow() + 2, this.position.getColumn()));
+//            if (!filteredList.contains(new Position(this.position.getRow() - 1, this.position.getColumn())))
+//                filteredList.remove(new Position(this.position.getRow() - 2, this.position.getColumn()));
         }
 
         this.possibleMoves = filteredList;
@@ -84,7 +89,7 @@ public class Piece {
             copyBoard.add(squareCopy, square.row, square.col);
         }
         Utils.tryMovePiece(Square.getSquareById(this.position.getRow(), this.position.getColumn(), copyBoard),position, copyBoard);
-        King king = (King) Square.findKing(copyBoard, this.color).getPiece();
+        King king = (King) Utils.findKing(copyBoard, this.color).getPiece();
         isChecked = king.isCheck(copyBoard);
         Game.getInstance().setBoard(originalBoard);
         return isChecked;
