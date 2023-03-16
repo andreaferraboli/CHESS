@@ -47,7 +47,6 @@ public class Pawn extends Piece {
                             possibleMoves.add(new Position(x, y));
                     } else {
                         //check en passant
-                        //TODO::non va en passant per il nero
                         if ((this.getColor().equals(Color.WHITE) && this.position.getColumn() == 3)) {
                             squareById = Square.getSquareById(x, 2);
                             if (!squareById.hasPiece()) {
@@ -63,7 +62,7 @@ public class Pawn extends Piece {
                                 squareById = Square.getSquareById(x, 4);
                                 if (squareById.getPiece() instanceof Pawn && squareById.getPiece().color.equals(Color.WHITE) && Game.getInstance().white.lastMove.equals(new Mossa(squareById.getPiece().position.getRow(), squareById.getPiece().position.getColumn())))
                                     if (squareById.getPiece().lastMove != null)
-                                        if (squareById.getPiece().lastMove.equals(new Position(x, 6)))
+                                        if (squareById.getPiece().lastMove.equals(new Mossa(x, 6)))
                                             possibleMoves.add(new Position(x, 5));
                             }
                         }

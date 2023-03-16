@@ -381,8 +381,8 @@ public class Square extends StackPane {
                         case "en_passant":
                             specialMoveDone = true;
                             Square.getSquareById(this.piece.lastMove.getRow(), this.piece.lastMove.getColumn()).setPiece(this.piece);
-                            this.setPiece(this.lastPiece);
                             Square.getSquareById(this.row, this.getPiece().getColor().equals(Color.BLACK) ? this.col - 1 : this.col + 1).setPiece(Square.getSquareById(this.row, this.getPiece().getColor().equals(Color.BLACK) ? this.col - 1 : this.col + 1).lastPiece);
+                            this.deletePiece();
                             // Codice da eseguire per il caso "en_passant"
 
                             break;

@@ -64,14 +64,16 @@ public class King extends Piece {
                                 if (squareById.getPiece() instanceof Rook rookShort) {
                                     if (rookShort.lastMove == null && !Square.getSquareById(6, y).hasPiece() && !Square.getSquareById(5, y).hasPiece())
                                         //arrocco corto
-                                        this.possibleMoves.add(move);
+                                        if(!this.possibleMoves.contains(move))
+                                            this.possibleMoves.add(move);
                                 }
                             squareById = Square.getSquareById(0, y);
                             if (squareById.hasPiece())
                                 if (squareById.getPiece() instanceof Rook rookLong) {
                                     //arrocco lungo
                                     if (rookLong.lastMove == null && !Square.getSquareById(1, y).hasPiece() && !Square.getSquareById(2, y).hasPiece() && !Square.getSquareById(3, y).hasPiece())
-                                        this.possibleMoves.add(move);
+                                        if(!this.possibleMoves.contains(move))
+                                            this.possibleMoves.add(move);
                                 }
                         } else {
                             this.possibleMoves.add(move);
