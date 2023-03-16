@@ -28,7 +28,7 @@ public class gameController {
     @FXML
     Button cancelMoveButton;
     @FXML
-    ListView<String> movesListView;
+     ListView<String> movesListView;
 
     public static gameController getInstance() {
         return instance;

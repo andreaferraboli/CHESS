@@ -8,7 +8,6 @@ import main.chess69.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Piece {
     public Position position;
@@ -84,7 +83,7 @@ public class Piece {
             }
             copyBoard.add(squareCopy, square.row, square.col);
         }
-        Utils.tryMovePiece(Square.getSquareById(this.position.getRow(), this.position.getColumn(), copyBoard),position, copyBoard);
+        Utils.tryMovePiece(Square.getSquareById(this.position.getRow(), this.position.getColumn(), copyBoard), position, copyBoard);
         King king = (King) Utils.findKing(copyBoard, this.color).getPiece();
         isChecked = king.isCheck(copyBoard);
         Game.getInstance().setBoard(originalBoard);

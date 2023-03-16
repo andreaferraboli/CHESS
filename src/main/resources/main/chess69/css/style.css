@@ -22,8 +22,8 @@
 }
 
 .text_main {
-    -fx-text-fill: gold;
-    -fx-font-size: 40px;
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
     -fx-font-family: "Lucida Handwriting";
 }
 

@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static main.chess69.GameMain.primaryStage;
+import static main.chess69.GameMain.secondaryStage;
 
 
 public class Square extends StackPane {
@@ -71,7 +71,6 @@ public class Square extends StackPane {
             }
         }
     }
-
 
 
     public void setPieceImage() {
@@ -136,17 +135,17 @@ public class Square extends StackPane {
     private void drawGame() throws IOException {
         URL url = new File("src/main/resources/main/chess69/winWhite.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene scene = new Scene(root, 300, 400);
+        secondaryStage.setScene(scene);
+        secondaryStage.show();
     }
 
     private void winGame(Color color) throws IOException {
         URL url = new File("src/main/resources/main/chess69/win" + (color.toString().contains("r=255,g=255,b=255") ? "White" : "Black") + ".fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene scene = new Scene(root, 300, 400);
+        secondaryStage.setScene(scene);
+        secondaryStage.show();
     }
 
     private int numberOfPossibleMoves(Color color) {
@@ -332,7 +331,6 @@ public class Square extends StackPane {
         }
         return false;
     }
-
 
 
     public void moveUndo(Mossa pos, int checkPawn) throws IOException, CloneNotSupportedException {

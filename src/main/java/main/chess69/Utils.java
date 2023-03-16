@@ -22,19 +22,19 @@ public class Utils {
         return false;
     }
 
-    public static void tryMovePiece(Square square,Position position, GridPane gridPane) {
+    public static void tryMovePiece(Square square, Position position, GridPane gridPane) {
 
         // Aggiorna la posizione del pezzo
         if (square.getPiece() != null) {
             square.getPiece().trySetPosition(position);
             // Imposta il pezzo nella nuova posizione
-            trySetPiece(Square.getSquareById(position.getRow(), position.getColumn(), gridPane),square.getPiece());
+            trySetPiece(Square.getSquareById(position.getRow(), position.getColumn(), gridPane), square.getPiece());
 
-            trySetPiece(square,null);
+            trySetPiece(square, null);
         }
     }
 
-    public static void trySetPiece(Square square,Piece piece) {
+    public static void trySetPiece(Square square, Piece piece) {
         try {
             square.setPiece(piece);
         } catch (IOException | CloneNotSupportedException e) {
